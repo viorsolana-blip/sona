@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { protectResponse } from '../src/security/response-headers.mjs';
 
 test('dapp and technical documents cannot be framed and preserve exact content', async () => {
-  for (const pathname of ['/app/', '/app/index.html', '/technical/', '/api/config']) {
+  for (const pathname of ['/app/', '/app/index.html', '/technical/', '/setup/', '/setup/index.html', '/api/config']) {
     const response = protectResponse(new Response('<p>Existing interface</p>', {headers:{'Content-Type':'text/html','Cache-Control':'no-store'}}), pathname);
     assert.equal(response.headers.get('X-Frame-Options'), 'DENY');
     assert.equal(response.headers.get('Content-Security-Policy'), "frame-ancestors 'none'; base-uri 'self'; object-src 'none'");

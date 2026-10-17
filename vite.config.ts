@@ -74,7 +74,7 @@ export default defineConfig(async ({ command }) => {
         closeBundle() {
           // Keep authored HTML intact; only omit these generated static copies
           // so the hosting asset gateway cannot bypass the Worker's policy.
-          for (const path of ['app/index.html','technical/index.html']) {
+          for (const path of ['app/index.html','technical/index.html','setup/index.html']) {
             const generated = resolve('dist/client',path);
             if (!readFileSync(generated).equals(readFileSync(resolve('marketplace/dist',path)))) {
               throw new Error(`Protected document differs from authored HTML: ${path}`);

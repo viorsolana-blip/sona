@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import { ApiError } from './marketplace.mjs';
+import { quoteSetup } from '../setup/quote.mjs';
 
 const headers = { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'X-Frame-Options': 'DENY' };
 const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers });
@@ -26,7 +27,7 @@ async function body(request) {
 }
 
 /** Only handles API requests; the Sites asset handler owns every other path. */
-export async function handleApi(request, { market, origin, store = market.store }) {
+export async function handleApi(request, { market, origin, store = market.store, setupQuote = quoteSetup }) {
   const url = new URL(request.url), path = url.pathname;
   if (!path.startsWith('/api/')) return null;
   try {
@@ -42,6 +43,9 @@ export async function handleApi(request, { market, origin, store = market.store 
       const client = request.headers.get('cf-connecting-ip') || 'unknown';
       const rateKey = createHash('sha256').update(`${origin}\0${client}`).digest('hex');
       if (!await store.rateLimit(rateKey, Date.now())) throw new ApiError(429, 'RATE_LIMIT', 'Too many requests. Wait a moment and retry.');
+      if (method === 'POST' && path === '/api/setup/quote' && !await store.rateLimit(`setup:${rateKey}`, Date.now(), 6, 60000)) {
+        throw new ApiError(429, 'RATE_LIMIT', 'Cost checks are limited to six per minute. Wait a moment and retry.');
+      }
     }
     const token = request.headers.get('authorization')?.replace(/^Bearer /, ''), owner = lightweight ? null : await market.session(token);
     const auth = () => { if (!owner) throw new ApiError(401, 'AUTH_REQUIRED', 'Authenticate your connected wallet first.'); return owner; };
@@ -60,6 +64,10 @@ export async function handleApi(request, { market, origin, store = market.store 
       output = { receipts: receipts.slice(0, 50), total: receipts.length };
     } else if (method === 'GET' && /^\/api\/verify\/[^/]+$/.test(path)) output = await market.verifyMint(decodeURIComponent(path.slice(12)), { tokenAccount: url.searchParams.get('tokenAccount') ?? undefined });
     else if (method === 'GET' && /^\/api\/wallet\/[^/]+$/.test(path)) output = await market.wallet(decodeURIComponent(path.slice(12)), owner);
+    else if (path === '/api/setup/quote') {
+      if (method !== 'POST') throw new ApiError(405, 'METHOD', 'Use POST for a public-account cost check.');
+      output = await setupQuote({ connection: market.connection, input: await body(request) });
+    }
     else if (method === 'POST' && path === '/api/auth/challenge') output = await market.challenge((await body(request)).address);
     else if (method === 'POST' && path === '/api/auth/verify') output = await market.authenticate(await body(request));
     else if (method === 'POST' && path === '/api/auth/logout') { await market.logout(token); output = { ok: true }; }
@@ -84,9 +92,9 @@ export async function handleApi(request, { market, origin, store = market.store 
     } else throw new ApiError(404, 'NOT_FOUND', 'Endpoint not found.');
     return json(output);
   } catch (error) {
-    const known = error instanceof ApiError || ['SettlementError', 'RaydiumEligibilityError', 'StoreError'].includes(error.name);
-    const code = typeof error.code === 'string' ? error.code : 'UPSTREAM_UNAVAILABLE';
-    const status = error.status || (error.name === 'RaydiumEligibilityError' ? 422 : code.startsWith('INVALID_') ? 400 : 502);
+    const known = error instanceof ApiError || ['SettlementError', 'RaydiumEligibilityError', 'StoreError', 'SetupQuoteError', 'MainnetVerificationError'].includes(error.name);
+    const code = known && typeof error.code === 'string' ? error.code : 'UPSTREAM_UNAVAILABLE';
+    const status = known ? error.status || (error.name === 'RaydiumEligibilityError' ? 422 : code.startsWith('INVALID_') ? 400 : 502) : 502;
     return json({ error: { code, message: known ? error.message : 'The Solana data request could not be completed. Retry shortly; no successful trade is assumed.' } }, status);
   }
 }

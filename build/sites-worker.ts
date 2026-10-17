@@ -8,6 +8,7 @@ import { verifyFeeKey, discoverFeeKeys } from '../marketplace/src/chain/raydium.
 import { protectResponse } from '../marketplace/src/security/response-headers.mjs';
 import appDocument from '../marketplace/dist/app/index.html?raw';
 import technicalDocument from '../marketplace/dist/technical/index.html?raw';
+import setupDocument from '../marketplace/dist/setup/index.html?raw';
 
 const publicOrigin = 'https://sona-liquidity-marketplace.official-alexslobodi.chatgpt.site';
 // An immutable network identity may be cached; orders and authentication never are.
@@ -15,14 +16,15 @@ let verifiedNetwork: {endpoint:string; hash:string; until:number} | undefined;
 export default {
   async fetch(request: Request, env: any, ctx: ExecutionContext) {
     const url = new URL(request.url);
-    if (['/app','/technical','/policies/terms-conditions'].includes(url.pathname)) {
+    if (['/app','/technical','/setup','/policies/terms-conditions'].includes(url.pathname)) {
       url.pathname += '/';
       return protectResponse(Response.redirect(url,307),url.pathname);
     }
     // These exact existing documents are delivered by the Worker, because the
     // production asset gateway does not currently honor custom asset headers.
     const document = ['/app/','/app/index.html'].includes(url.pathname) ? appDocument
-      : ['/technical/','/technical/index.html'].includes(url.pathname) ? technicalDocument : null;
+      : ['/technical/','/technical/index.html'].includes(url.pathname) ? technicalDocument
+      : ['/setup/','/setup/index.html'].includes(url.pathname) ? setupDocument : null;
     if (document !== null) {
       if (!['GET','HEAD'].includes(request.method)) return protectResponse(new Response(null,{status:405,headers:{Allow:'GET, HEAD'}}),url.pathname);
       return protectResponse(new Response(request.method==='HEAD'?null:document,{headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-cache'}}),url.pathname);

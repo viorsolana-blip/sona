@@ -10,7 +10,7 @@ mkdirSync(published,{recursive:true});
 for(const part of ['src','tests','scripts','vendor','evidence','docs','package.json','package-lock.json','README.md']) cpSync(resolve(source,part),resolve(published,part),{recursive:true});
 const files={};
 function walk(path){for(const item of readdirSync(path)){const p=resolve(path,item);if(statSync(p).isDirectory())walk(p);else files[relative(root,p).split(sep).join('/')]=createHash('sha256').update(readFileSync(p)).digest('hex');}}
-walk(resolve(source,'src'));walk(resolve(root,'build'));walk(resolve(root,'drizzle'));
+walk(resolve(source,'src'));walk(resolve(root,'build'));walk(resolve(root,'drizzle'));walk(resolve(source,'dist/setup'));
 files['public/_headers']=createHash('sha256').update(readFileSync(resolve(root,'public/_headers'))).digest('hex');
 for (const path of ['vite.config.ts','marketplace/dist/app/index.html','marketplace/dist/technical/index.html']) files[path]=createHash('sha256').update(readFileSync(resolve(root,path))).digest('hex');
 const revision=process.env.GITHUB_SHA||process.env.SONA_SOURCE_REVISION||null;

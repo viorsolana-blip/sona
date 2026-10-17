@@ -1,0 +1,199 @@
+{
+  "schemaVersion": 1,
+  "executedAt": "2026-10-17T20:51:15.771Z",
+  "origin": "http://127.0.0.1:4180",
+  "deploymentSourceRevision": null,
+  "scope": "Read-only setup route, real mainnet account/rent observation and HTTP protections. No wallet ownership, wallet-extension session, sale, independent audit or customer activity is claimed.",
+  "transactionsSent": 0,
+  "fundsSpent": 0,
+  "checks": [
+    "Setup documents preserve authored HTML and enforce anti-framing headers",
+    "Deployed build manifest matches inspected source",
+    "Actual finalized SOL/USDC pool, balances and current rents read without signatures",
+    "Foreign browser origin is rejected",
+    "Arbitrary RPC override is rejected",
+    "GET cannot start a cost check"
+  ],
+  "documents": [
+    {
+      "path": "/setup/",
+      "authoredHtmlUnchanged": true,
+      "hostingInjection": null
+    },
+    {
+      "path": "/setup/index.html",
+      "authoredHtmlUnchanged": true,
+      "hostingInjection": null
+    }
+  ],
+  "sourceHashes": {
+    "marketplace/src/chain/raydium.mjs": "adc690a86bd0feee28caa45dfffc87582a1eab11e5ee7299658c6457c3250d59",
+    "marketplace/src/chain/settlement.mjs": "92cc7145ba58f6c3533c7f638567e7e68251533ddc5aabb127871cf8cf462451",
+    "marketplace/src/client/polyfills.mjs": "0445cf67876500ac7da8f57c8d882f926f66d801c44c9a723c7b1aafe164f323",
+    "marketplace/src/client/wallet.mjs": "f8e4937f71bbd0d72ab987e38cad6136c2c24ea4354fbd1355d888ebd1cb394e",
+    "marketplace/src/hosted/d1-store.mjs": "5237abb08e2a3878a4dc9ab057a79d9516de8577a712359e70016407b166cd38",
+    "marketplace/src/hosted/http.mjs": "49b77540f4f4560a4f748dd3af7287ae7fc4142eff21698ca1329aa750976ae9",
+    "marketplace/src/hosted/marketplace.mjs": "27a87af854303881377edf2cbf8cfe7524aa18f7de115f704717eb48fc34538d",
+    "marketplace/src/hosted/migration.sql": "828d719926771cb971d0185a524c6b7f3598d8a2a14c9548b5b133b668840d82",
+    "marketplace/src/security/response-headers.mjs": "912d7e57893d8b9899b8c133ebfb43340a0220e66b3d55cdda6cd21868a2a5b7",
+    "marketplace/src/server/http.mjs": "3787c63a5eac27ad75fb639f5c3572c09490a7d3edfdfd32b5b304f2ddbc5876",
+    "marketplace/src/server/index.mjs": "5279f41b6b110409a4f62fb762c6cd6c7c509d45897f0294693bb5be2ff4bd2e",
+    "marketplace/src/server/marketplace.mjs": "75f5aca9343b0b83d03e8a673780e5b64ae71e642002c7c61afc5092c0fb3813",
+    "marketplace/src/server/network.mjs": "9d4bc7aefa1deee638fead4327c9613c4af291cf536736772a692ce966d292b0",
+    "marketplace/src/server/store.mjs": "6cbe88d4e48426af505027be1c4c797d5a85278d4e56963c36d1661796c8d9c7",
+    "marketplace/src/setup/quote.mjs": "9ccefa54b07a993486cea8edd94e3024462234bd11f1590d285ca6055103b83b",
+    "marketplace/src/verification/mainnet-sale.mjs": "17f0894c5fd1f30fa7fc5b9f372a3b734eec64410c02ab39a19f7c17168415f7",
+    "build/connector-preview-plugin.mjs": "a6a9fe2086e302f94a3f91e3c1a68a45bb3aa07d4a79faf01b14732191eb4e80",
+    "build/connector-preview-worker.mjs": "c1b6b2c420cb67d9e28f8f4ae440f578c0dfd4cb840a12cfe4b58076629a17ba",
+    "build/sites-vite-plugin.LICENSE": "7de1e115d165f176e68f962acdb809b5ab8d8ae78d3981e0701392b2ac50c713",
+    "build/sites-vite-plugin.ts": "07af20e7097d9ed1d76f7c446d02997550b8fc5ca89668b249e25eabd62c6834",
+    "build/sites-worker.ts": "80735e758bcb36dbefa93f208989521fc150cff313a73d776cddc4c4cbb52940",
+    "drizzle/0000_silent_angel.sql": "adfaa738805653be94ee1c3d3ea29ec5dc4f4ee45497a04919356336d992b31e",
+    "drizzle/meta/0000_snapshot.json": "d3ca9a8b7fb0ddce4f53ca2d55287027d92c252eb277a47fa38ea68bf8da9183",
+    "drizzle/meta/_journal.json": "f77280ec209db77303ffd310f24f033d1df105e0cfee0d1b356e17b07714f2cf",
+    "marketplace/dist/setup/index.html": "3ee025471646361b4117d7c9df35ae906120e5e5bb0bf5ba0f11031ea92557ba",
+    "marketplace/dist/setup/setup.css": "89d03878f7b2c6cca78f615276d19017d9b665f83a7adb6ccf16265071e09d11",
+    "marketplace/dist/setup/setup.js": "3ece669ec3fecf8cb0e310fdc5eceabdb43a5f24c681b3e023158c6326ab1ca9",
+    "marketplace/dist/setup/state.mjs": "eb0d3852d05b9828d9ca011d8e7873b0cb203c4a9b234a822d90d19ff077d0da",
+    "public/_headers": "da66add6686f6d7fd096fdd9e2dbcb66a70ddef45712e3341de2e6b80b6b226e",
+    "vite.config.ts": "f2cd15d4dc8103c5347dfd2634599e6f3be9bff0f0dad9991a4c724a03f23769",
+    "marketplace/dist/app/index.html": "ee57c3292b0ed27bfadf58ad131fb42d8a659d0695db87bc2db4c8e2d51a9766",
+    "marketplace/dist/technical/index.html": "0cf227c026dfb54c1f11e8d4531502e9a8a71864e20f48aef09cfa8b4606d9ba"
+  },
+  "input": {
+    "seller": "VeFWndEokdniKGyidVgPvwoKu54Z9rzF8MxnPFUEGNs",
+    "buyer": "BFX7vwibXyJN87XTWgpU4KmhfXSsdzGkk7N9mDXpaNFc",
+    "priceLamports": "1000"
+  },
+  "quote": {
+    "schemaVersion": 1,
+    "kind": "sona-setup-quote",
+    "mode": "create-fee-key",
+    "readOnly": true,
+    "networkWrites": 0,
+    "transactionsSent": 0,
+    "cluster": "mainnet-beta",
+    "genesisHash": "5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d",
+    "commitment": "finalized",
+    "observedAt": "2026-10-17T20:51:15.751Z",
+    "wallets": {
+      "snapshotSlot": 458175426,
+      "seller": {
+        "address": "VeFWndEokdniKGyidVgPvwoKu54Z9rzF8MxnPFUEGNs",
+        "nativeBalanceLamports": "0"
+      },
+      "buyer": {
+        "address": "BFX7vwibXyJN87XTWgpU4KmhfXSsdzGkk7N9mDXpaNFc",
+        "nativeBalanceLamports": "0"
+      }
+    },
+    "pool": {
+      "address": "47hq28mcL7q5GhBg7epyGF2dnuJd4MKFt8QhT7CzYUp4",
+      "lpMint": "7QwB6ESUMKRLZzJWcCsAvjn26Frorhb6sg9HV8xcKKuG",
+      "mintA": "So11111111111111111111111111111111111111112",
+      "mintB": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "lpDecimals": 9,
+      "slot": 458175425,
+      "verified": true,
+      "protocol": "raydium-cpmm",
+      "suggestedCreationPool": true,
+      "status": 0,
+      "evidence": {
+        "commitment": "finalized",
+        "snapshotSlot": 458175425,
+        "accounts": {
+          "47hq28mcL7q5GhBg7epyGF2dnuJd4MKFt8QhT7CzYUp4": {
+            "owner": "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C",
+            "bytes": 637,
+            "sha256": "4ce76fb1d612bb153b382d21431ad5ce0a8db29dcc5bbe0890bfc64ec8c090ef"
+          },
+          "7QwB6ESUMKRLZzJWcCsAvjn26Frorhb6sg9HV8xcKKuG": {
+            "owner": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+            "bytes": 82,
+            "sha256": "6956b20a71a2ef580367ccf1e3751008f7b39e9c4cd1aab123e656cc46a69f9c"
+          },
+          "So11111111111111111111111111111111111111112": {
+            "owner": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+            "bytes": 82,
+            "sha256": "b0f919425a529f4971ef8dabd535aec34947d5c8c4885df80dae91635b98c5f3"
+          },
+          "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v": {
+            "owner": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+            "bytes": 82,
+            "sha256": "61011b9cca75b4465ef86483b8b8deed4d2d27b769c10321b91b8f33574be1a1"
+          },
+          "9tAoQUNB1wKnBSUyc6ukg2pWbeofZJVHxur2UaRBZNZc": {
+            "owner": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+            "bytes": 165,
+            "sha256": "139c1825d5e0f38074e308788c7e65ed464f04c9ca3a784300bbcbcb914660aa"
+          },
+          "BArWLNarRzS7N1GCwBjNgVnC4866c8oJNRqhb5axf6y4": {
+            "owner": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+            "bytes": 165,
+            "sha256": "9fa6667d5ded78cf894e8e46e958fda1d5315899d16916892cbf85187d2b8f68"
+          },
+          "13e6vWkWEmZTmgeCjd7sLaHfLryVDuKULrS8TSRyh4W5": null
+        }
+      }
+    },
+    "creation": {
+      "snapshotSlot": 458175426,
+      "poolSnapshotSlot": 458175425,
+      "walletSnapshotSlot": 458175426,
+      "sellerTokenAccounts": {
+        "sol": {
+          "address": "42W2AwPTqzwhnkcanAdSFJRXobX5aCMS5n3vLiuGBSR1",
+          "mint": "So11111111111111111111111111111111111111112",
+          "exists": false,
+          "amount": "0",
+          "decimals": 9,
+          "delegated": false,
+          "thirdPartyCloseAuthority": false
+        },
+        "usdc": {
+          "address": "5vzyANffF7uvAZGfwhWM9jt4j2tCYuJCTTazkzgk2JqR",
+          "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "exists": false,
+          "amount": "0",
+          "decimals": 6,
+          "delegated": false,
+          "thirdPartyCloseAuthority": false
+        },
+        "lp": {
+          "address": "Ee6ub5TpwnscZT7uRXJu9f1fZZjWeykAp6oxMN8UQwMx",
+          "mint": "7QwB6ESUMKRLZzJWcCsAvjn26Frorhb6sg9HV8xcKKuG",
+          "exists": false,
+          "amount": "0",
+          "decimals": 9,
+          "delegated": false,
+          "thirdPartyCloseAuthority": false
+        }
+      },
+      "rentExemptionLamports": {
+        "mint": "1066800",
+        "tokenAccount": "1488440",
+        "lockAccount": "1950720"
+      },
+      "lockAccountRent": {
+        "feeKeyMint": "1066800",
+        "feeKeyTokenAccount": "1488440",
+        "lockAccount": "1950720",
+        "lpEscrow": "1488440",
+        "knownSubtotalLamports": "5994400"
+      },
+      "missingSellerTokenAccountRentLamports": "4465320",
+      "depositPrincipal": null,
+      "transactionFeesLamports": null,
+      "metadataCostLamports": null,
+      "allInCostLamports": null,
+      "principalIsPermanentlyLocked": true,
+      "unknownCosts": [
+        "The deposit amounts, LP amount and slippage must be quoted by Raydium before approval; permanently locking LP makes its principal unwithdrawable.",
+        "Deposit and lock transaction fees, priority fees and any protocol or optional metadata charges are not quoted until the actual transactions are built.",
+        "Missing seller token-account rent is conditional: Raydium may reuse other accounts or use a temporary wrapped-SOL account. The listed balances cover canonical token accounts only."
+      ]
+    },
+    "settlement": null,
+    "statement": "This verifies the suggested existing pool and reports observed balances and current rent components. Pool accounts and wallet balances are separate finalized snapshots with their respective slots, not one atomic observation. It is not an all-in funding quote, deposit quote, lock authorization or a promise that the pool currently accepts a deposit. No wallet is created and no funds are moved."
+  }
+}

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Prepare a controlled mainnet settlement test with your own wallets and a Raydium CPMM Fee Key.">
+  <title>Settlement setup · Sona</title>
+  <link rel="icon" href="../assets/Ra1fh0MoVH2kB555Dxfse0f7d8E.png">
+  <link rel="stylesheet" href="./setup.css">
+  <script type="module" src="./setup.js"></script>
+</head>
+<body>
+  <header class="header"><a href="/" aria-label="Sona home"><img class="wordmark" src="../assets/sona-wordmark.svg" alt="Sona" width="104" height="34"></a><a class="back" href="/app/">Marketplace <span aria-hidden="true">↗</span></a></header>
+  <main>
+    <div class="intro"><p class="eyebrow"><img src="../assets/brands/sol.svg" alt="" width="18" height="18"> Solana mainnet</p><h1>Your first settlement.</h1><p>Two wallets. One Fee Key. A verifiable transfer.</p></div>
+    <div class="layout">
+      <div class="steps">
+        <section class="panel" aria-labelledby="wallets-title">
+          <div class="section-title"><span class="step">1</span><h2 id="wallets-title">Choose your wallets</h2></div>
+          <p class="section-copy">Use two wallets you control. The seller holds the Fee Key; the buyer pays for it. Connection shares your public address only.</p>
+          <div class="wallet-connection"><span id="connection-status">No wallet connected</span><button id="connect" class="button small" type="button">Connect wallet</button><button id="disconnect" class="text-button" type="button" hidden>Disconnect</button></div>
+          <div class="field"><div class="label-row"><label for="seller">Seller · wallet A</label><button type="button" class="text-button capture" data-role="seller" disabled>Use connected wallet</button></div><input id="seller" maxlength="44" autocomplete="off" spellcheck="false" placeholder="Paste your seller’s public address"><small id="seller-origin">Public address only. Never enter a seed phrase.</small></div>
+          <div class="field"><div class="label-row"><label for="buyer">Buyer · wallet B</label><button type="button" class="text-button capture" data-role="buyer" disabled>Use connected wallet</button></div><input id="buyer" maxlength="44" autocomplete="off" spellcheck="false" placeholder="Paste your buyer’s public address"><small id="buyer-origin">Switch accounts in your wallet to capture a second address.</small></div>
+        </section>
+        <section class="panel" aria-labelledby="key-title">
+          <div class="section-title"><span class="step">2</span><h2 id="key-title">Get a Fee Key</h2></div>
+          <p class="section-copy">Already have a Raydium CPMM Fee Key? Find it in the seller’s wallet or paste its mint address below.</p>
+          <button id="find-keys" class="button secondary small" type="button">Find my Fee Keys</button>
+          <p id="inventory-status" class="helper" role="status"></p><div id="inventory" class="inventory"></div>
+          <div class="field"><label for="mint">Fee Key mint <span class="optional">Optional until created</span></label><input id="mint" maxlength="44" autocomplete="off" spellcheck="false" placeholder="Paste the Fee Key mint address"></div>
+          <details id="creation-guide"><summary>Create one with an existing pool <span aria-hidden="true">+</span></summary><div class="details-content"><p>Add a small, balanced SOL / USDC deposit to an existing CPMM pool, then lock the resulting LP tokens with Raydium Burn &amp; Earn. This avoids creating a new pool.</p><div class="external-actions"><a id="deposit-link" class="button secondary small" href="https://raydium.io/liquidity/increase/?mode=add&amp;pool_id=47hq28mcL7q5GhBg7epyGF2dnuJd4MKFt8QhT7CzYUp4" target="_blank" rel="noopener noreferrer">Add liquidity on Raydium ↗</a><a class="text-button" href="https://raydium.io/liquidity/lock/" target="_blank" rel="noopener noreferrer">Open Burn &amp; Earn ↗</a></div><p class="lock-note">Locking is permanent. The deposited principal cannot be withdrawn; the Fee Key carries the fee rights. Review the deposit, rent and transaction fees in Raydium before approving.</p><p class="helper">The pool above is a supported SOL / USDC route, not a lowest-price guarantee. Return here and find your Fee Key after the lock confirms.</p></div></details>
+        </section>
+        <section class="panel" aria-labelledby="check-title">
+          <div class="section-title"><span class="step">3</span><h2 id="check-title">Check the costs</h2></div>
+          <p class="section-copy">Read live balances and account costs. With a Fee Key, this also verifies the asset and calculates the buyer’s settlement debit.</p>
+          <div class="price-row"><div class="field"><label for="price">Agreed test price</label><div class="amount-input"><input id="price" type="text" inputmode="decimal" value="0.000001" maxlength="24" autocomplete="off" spellcheck="false"><span>SOL</span></div></div><button id="check" type="button" class="button">Check readiness <span aria-hidden="true">↗</span></button></div>
+          <p id="status" class="helper" role="status" aria-live="polite">No transactions are created or sent by this page.</p>
+        </section>
+        <section class="panel" aria-labelledby="settle-title">
+          <div class="section-title"><span class="step">4</span><h2 id="settle-title">Complete the sale</h2></div>
+          <p class="section-copy">Save the preflight before the trade. Then use the existing marketplace with the same addresses, Fee Key and price.</p>
+          <ol class="flow"><li><strong>Seller A</strong><span>List the Fee Key and copy the listing link.</span></li><li><strong>Buyer B</strong><span>Open the listing and request the purchase.</span></li><li><strong>Seller A</strong><span>Review the request and sign the sale.</span></li><li><strong>Buyer B</strong><span>Review and complete the purchase before the transaction expires.</span></li></ol>
+          <a class="button" href="/app/" target="_blank" rel="noopener">Open marketplace <span aria-hidden="true">↗</span></a>
+          <p class="helper">Use separate browser profiles for the two wallets, or disconnect before switching. Keep the transaction signature for <a href="/source/docs/MAINNET-VERIFICATION.md" target="_blank" rel="noopener">finalized receipt verification</a>.</p>
+        </section>
+      </div>
+      <aside class="summary panel" aria-labelledby="summary-title">
+        <div class="summary-top"><h2 id="summary-title">Before you sign</h2><img src="../assets/brands/raydium.svg" width="25" height="25" alt="Raydium"></div>
+        <p id="quote-state" class="section-copy">Add your wallet addresses to get a live breakdown.</p>
+        <dl id="quote-values"></dl><div id="quote-notes"></div>
+        <button id="download" type="button" class="button secondary full" disabled>Save cost check</button>
+        <p class="helper">This page uses public chain data. It never takes custody, asks for private keys or signs transactions.</p>
+        <div class="evidence-note"><span class="dot"></span><p>A sale between your own wallets is a <strong>controlled mainnet test</strong>. Its receipt proves settlement, not independent customer activity.</p></div>
+      </aside>
+    </div>
+    <footer><a href="/technical/">Technical evidence ↗</a><button id="clear" type="button" class="text-button">Clear saved addresses</button><span>Addresses stay in this browser tab.</span></footer>
+  </main>
+  <dialog id="wallet-dialog" aria-labelledby="wallet-dialog-title"><div class="dialog-head"><h2 id="wallet-dialog-title">Connect a wallet</h2><button id="close-dialog" type="button" class="close" aria-label="Close wallet selection">×</button></div><p class="section-copy">Choose an installed Solana wallet.</p><div id="wallet-options"></div><p id="wallet-message" class="helper" role="status"></p></dialog>
+</body>
+</html>

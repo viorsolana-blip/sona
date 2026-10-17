@@ -11,5 +11,6 @@ for(const part of ['src','tests','scripts','vendor','evidence','docs','package.j
 const files={};
 function walk(path){for(const item of readdirSync(path)){const p=resolve(path,item);if(statSync(p).isDirectory())walk(p);else files[relative(root,p).split(sep).join('/')]=createHash('sha256').update(readFileSync(p)).digest('hex');}}
 walk(resolve(source,'src'));walk(resolve(root,'build'));walk(resolve(root,'drizzle'));
+files['public/_headers']=createHash('sha256').update(readFileSync(resolve(root,'public/_headers'))).digest('hex');
 const revision=process.env.GITHUB_SHA||process.env.SONA_SOURCE_REVISION||null;
 writeFileSync(resolve(root,'public/build-manifest.json'),JSON.stringify({schemaVersion:1,project:'Sona',repository:'https://github.com/viorsolana-blip/sona',sourceRevision:revision,builtAt:new Date().toISOString(),runtime:'Cloudflare Workers',persistence:'Cloudflare D1',files},null,2)+'\n');

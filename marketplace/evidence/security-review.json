@@ -137,7 +137,9 @@
     "marketplace/tests/wallet.test.mjs": "9eb9cb7c7e643566535d7f7190a08cc694b7ad71e1d2c81f61ffc49d60766148",
     "package-lock.json": "186d67a7e7dab7bafb81e5d04587295c7c1c0593c35752e9bb37f760f62faabd",
     "package.json": "2f1f3194df3ca93598cb85bf3b64a7582f39eed6a5728e12d5b2a220fc559497",
-    "scripts/verify-public.mjs": "466d919f9aeaf47c46eeec452888793b85fc0ca2390c102e7812f947d8cdf0e2"
+    "scripts/verify-public.mjs": "466d919f9aeaf47c46eeec452888793b85fc0ca2390c102e7812f947d8cdf0e2",
+    "public/_headers": "77d81674ee590115455ba09eb77276eacb3ded885f95c8aaee3d2424b455e772",
+    "scripts/prepare-public.mjs": "bf3b2fa347b2b55237fddf94d4c372f5cbbd4860abdf70fa630bcc4c50dab803"
   },
   "limitations": [
     "This is a development-team AI-assisted review, not an independent security audit.",

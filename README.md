@@ -63,3 +63,9 @@ The [CI template](docs/ci/verify.yml) defines locked dependency installs, market
 The first version excludes CLMM positions, fee claiming, partial rights, principal redemption, confidential settlement, new Raydium locks and program-owned or multisig-held assets. Public RPC can throttle or fail. There is no independent security-audit claim, guaranteed review score, manufactured volume or implied Raydium endorsement.
 
 [Public verification guide](docs/PUBLIC-VERIFICATION.md) · [Protocol provenance](marketplace/evidence/RAYDIUM-SOURCES.md) · [Source and asset provenance](docs/SOURCE-PROVENANCE.md) · [Rights notice](LICENSE)
+
+## Security review
+
+The [18 October internal security review](docs/security/REVIEW-2026-10-18.md) records reproducible findings, fixes, tests and remaining limits. It is AI-assisted development review, **not an independent audit**. Runtime and full build-tool dependency audits are reported separately; an unresolved build-time `braces` advisory is disclosed. The interface layout and assets are retained.
+
+Use the [read-only mainnet verification guide](marketplace/docs/MAINNET-VERIFICATION.md) to prepare public sale terms and inspect an actual finalized exchange. The verifier never signs or sends a transaction. It cannot create the required asset, consent, buyer or network fees, and a controlled transfer is not proof of independent customer demand.

@@ -47,7 +47,7 @@ async function fixture(t) {
   const connection = {
     getBlockHeight: async () => height,
     getSignatureStatuses: async () => ({ value: [status] }),
-    getBalance: async () => 123,
+    getBalance: async () => 2_000_000_000,
     sendRawTransaction: async bytes => { sends++; return bs58.encode(Transaction.from(bytes).signature); },
   };
   const verifyFeeKey = async ({ owner, mint: value }) => {
@@ -326,4 +326,77 @@ test('lightweight public endpoints avoid client-counter writes and reconcile is 
   await f.market.listings(); await f.market.listings();
   assert.equal(first.count, 1);
   assert.equal(f.db.sqlite.prepare("SELECT count FROM sona_limits WHERE key='reconcile:marketplace'").get().count, 1);
+});
+
+
+test('unfunded wallets cannot occupy purchase queues and expired unsigned requests release admission', async t => {
+  const f = await fixture(t), listing = await listed(f);
+  f.connection.getBalance = async () => 0;
+  await assert.rejects(f.market.requestPurchase(f.b, listing.id), { code: 'INSUFFICIENT_BALANCE' });
+  assert.equal((await f.store.all('trade')).length, 0);
+  f.connection.getBalance = async () => 2_000_000_000;
+  const { trade } = await f.market.requestPurchase(f.b, listing.id);
+  assert.equal(Date.parse(trade.expiresAt) - Date.parse(trade.createdAt), 900_000);
+  f.clock(900_000);
+  await assert.rejects(f.market.prepare(f.s, trade.id), { code: 'TRADE_STATE' });
+  assert.notEqual((await f.market.requestPurchase(f.b, listing.id)).trade.id, trade.id);
+  assert.equal((await f.store.get('listing', listing.id)).status, 'active');
+});
+
+test('buyer admission counts existing commitments atomically across concurrent request instances', async t => {
+  const f = await fixture(t), listing = await listed(f), other = await f.reset();
+  const listing2 = { ...listing, id: 'second-owned-fixture', mint: listing.mint };
+  await f.store.put('listing', listing2);
+  f.connection.getBalance = async () => 500_000_001;
+  const results = await Promise.allSettled([f.market.requestPurchase(f.b, listing.id), other.requestPurchase(f.b, listing2.id)]);
+  assert.equal(results.filter(value => value.status === 'fulfilled').length, 1);
+  assert.equal(results.filter(value => value.status === 'rejected' && value.reason.code === 'INSUFFICIENT_BALANCE').length, 1);
+  assert.equal((await f.store.all('trade')).length, 1);
+});
+
+test('retired unsigned listings cannot fill the durable store through repeated list/cancel', async t => {
+  const f = await fixture(t); f.store.maxRecords = 40;
+  for (let i = 0; i < 100; i++) {
+    const listing = await listed(f);
+    await f.market.changeListing(f.s, listing.id, {}, true); f.clock(1);
+  }
+  assert((await f.store.all('listing')).length <= 5);
+  assert.equal((await listed(f)).status, 'active');
+});
+
+
+test('expired queue entries cannot block new buyers and unsigned expiry never revokes released approvals', async t => {
+  const f = await fixture(t), listing = await listed(f);
+  const createdAt = new Date(Date.now() - 1_000_000).toISOString(), expiresAt = new Date(Date.now() - 1).toISOString();
+  for (let i = 0; i < 20; i++) await f.store.put('trade', { id: `expired-${i}`, listingId: listing.id, buyer: f.o, seller: f.s, mint: f.mint, priceLamports: listing.priceLamports, status: 'requested', version: 1, createdAt, expiresAt });
+  const { trade } = await f.market.requestPurchase(f.b, listing.id);
+  const prepared = await f.market.prepare(f.s, trade.id);
+  const tx = Transaction.from(Buffer.from(prepared.settlement.transactionBase64, 'base64')); tx.partialSign(f.seller);
+  await f.market.approve(f.s, trade.id, wire(tx));
+  f.clock(900_001); await f.market.reconcile({ tradeId: trade.id });
+  assert.equal((await f.store.get('trade', trade.id)).status, 'approved');
+  assert.equal((await f.store.get('listing', listing.id)).status, 'reserved');
+});
+
+test('listing retention preserves any listing with a released signature or receipt history', async t => {
+  const f = await fixture(t); f.store.maxRecords = 60;
+  const { listing, trade } = await approved(f);
+  f.height(101); f.clock(1001); await f.market.reconcile({ tradeId: trade.id });
+  assert.equal((await f.store.get('trade', trade.id)).status, 'expired');
+  await f.market.changeListing(f.s, listing.id, {}, true);
+  for (let i = 0; i < 100; i++) {
+    const next = await listed(f); await f.market.changeListing(f.s, next.id, {}, true); f.clock(1);
+  }
+  assert.equal((await f.store.get('listing', listing.id)).status, 'canceled');
+  assert((await f.store.get('trade', trade.id)).approvedTransaction);
+});
+
+test('hosted authentication binds origin/network and expires at the exact boundary', async t => {
+  const f = await fixture(t), challenge = await f.market.challenge(f.s);
+  const rebound = new HostedMarketplace({ ...f.options, origin: 'https://different.example' });
+  await assert.rejects(auth(rebound, f.seller, challenge), { code: 'CHALLENGE_EXPIRED' });
+  const networkChanged = new HostedMarketplace({ ...f.options, cluster: 'devnet' });
+  await assert.rejects(auth(networkChanged, f.seller, challenge), { code: 'CHALLENGE_EXPIRED' });
+  f.clock(300_000); await assert.rejects(auth(f.market, f.seller, challenge), { code: 'CHALLENGE_EXPIRED' });
+  assert.equal(f.db.sqlite.prepare('SELECT count(*) AS n FROM sona_sessions').get().n, 0);
 });

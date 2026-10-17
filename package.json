@@ -18,8 +18,8 @@
   "dependencies": {
     "drizzle-orm": "0.45.2",
     "next": "16.4.2",
-    "react": "19.2.6",
-    "react-dom": "19.2.6",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "@solana/spl-token": "0.4.14",
     "@solana/web3.js": "1.98.4",
     "@wallet-standard/app": "1.1.0",
@@ -39,11 +39,11 @@
     "drizzle-kit": "0.31.10",
     "json-rpc-2.0": "1.7.1",
     "raw-body": "3.0.2",
-    "react-server-dom-webpack": "19.2.6",
+    "react-server-dom-webpack": "19.2.8",
     "tailwindcss": "4.2.1",
     "typescript": "5.9.3",
     "vinext": "1.0.0-beta.5",
-    "vite": "8.0.13",
+    "vite": "8.0.16",
     "wrangler": "4.92.0"
   },
   "type": "module",
@@ -54,6 +54,13 @@
     "jayson": "5.0.0",
     "bigint-buffer": "file:./marketplace/vendor/bigint-buffer",
     "sharp": "0.35.5",
-    "ws@>=8.0.0 <8.21.0": "8.21.0"
+    "ws@>=8.0.0 <8.21.0": "8.21.0",
+    "react-server-dom-webpack": "$react-server-dom-webpack",
+    "react": "$react",
+    "react-dom": "$react-dom",
+    "image-size": "2.0.4",
+    "undici@>=7.0.0 <7.29.1": "7.29.1",
+    "esbuild@<=0.24.2": "0.25.12",
+    "esbuild@>=0.27.3 <0.28.1": "0.28.2"
   }
 }

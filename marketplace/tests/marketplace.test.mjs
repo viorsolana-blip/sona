@@ -11,7 +11,7 @@ function fixture(t){
   const s=seller.publicKey.toBase58(),b=buyer.publicKey.toBase58(),x=stranger.publicKey.toBase58();
   const store=new Store();t.after(()=>store.close());let time=Date.now(),holder=s,height=1,status=null;
   const verified={verified:true,mint,owner:s,tokenAccount:Keypair.generate().publicKey.toBase58(),mintA:mint,mintB:mint,poolId:mint,lpMint:mint,slot:8};
-  const connection={getBlockHeight:async()=>height,getSignatureStatuses:async()=>({value:[status]})};
+  const connection={getBalance:async()=>2_000_000_000,getBlockHeight:async()=>height,getSignatureStatuses:async()=>({value:[status]})};
   const market=new Marketplace({store,connection,origin:'http://127.0.0.1:4173',now:()=>time,verifyFeeKey:async({owner,mint:m})=>{if(owner!==holder||m!==mint)throw Error('Not owned');return {...verified,owner};},discoverFeeKeys:async()=>({positions:[]})});
   return {market,store,seller,buyer,stranger,s,b,x,mint,clock:v=>time+=v,owner:v=>holder=v,height:v=>height=v,status:v=>status=v};
 }
@@ -86,4 +86,26 @@ test('network identity is checked and persistent data cannot cross clusters',asy
   assert.equal(await verifyNetwork({getGenesisHash:async()=>GENESIS_HASHES['mainnet-beta']},'mainnet-beta'),GENESIS_HASHES['mainnet-beta']);
   await assert.rejects(verifyNetwork({getGenesisHash:async()=>GENESIS_HASHES.devnet},'mainnet-beta'),/genesis/);
   const f=fixture(t);assert.throws(()=>new Marketplace({store:f.store,cluster:'devnet'}),/another Solana network/);
+});
+
+
+test('local authentication rejects origin rebinding and exact expiration boundary', t => {
+  const f = fixture(t), challenge = f.market.challenge(f.s);
+  const originalOrigin = f.market.origin; f.market.origin = 'https://another-origin.example';
+  assert.throws(() => authenticate(f.market, f.seller, challenge), { code: 'CHALLENGE_EXPIRED' });
+  f.market.origin = originalOrigin; f.clock(300_000);
+  assert.throws(() => authenticate(f.market, f.seller, challenge), { code: 'CHALLENGE_EXPIRED' });
+});
+
+
+test('local purchase admission rejects unfunded requests and expires unsigned queue entries', async t => {
+  const f = fixture(t), { listing } = await f.market.createListing(f.s, { mint: f.mint, priceLamports: '50' });
+  f.market.connection.getBalance = async () => 0;
+  await assert.rejects(f.market.requestPurchase(f.b, listing.id), { code: 'INSUFFICIENT_BALANCE' });
+  assert.equal(f.store.all('trade').length, 0);
+  f.market.connection.getBalance = async () => 100;
+  const { trade } = await f.market.requestPurchase(f.b, listing.id);
+  f.clock(900_000); await f.market.reconcile();
+  assert.equal(f.store.get('trade', trade.id).status, 'expired');
+  assert.notEqual((await f.market.requestPurchase(f.b, listing.id)).trade.id, trade.id);
 });

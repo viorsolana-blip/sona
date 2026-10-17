@@ -20,7 +20,9 @@ test('actual implementation and recorded evidence remain distinct from productio
  for(const id of ['local-settlement-execution','local-backend-execution','mainnet-read-only'])assert.ok(['recorded-current-source','stale-or-unbound'].includes(check(report,id).status));
  assert.match(check(report,'local-settlement-execution').scope,/No Raydium mainnet sale/);
  assert.match(check(report,'mainnet-read-only').scope,/Not a Sona listing/);
- assert.equal(check(report,'public-deployment').status,'missing');assert.equal(check(report,'mainnet-settlement').status,'missing');
+ // Publishing a URL is a declaration; the offline gate must not certify it.
+ assert.equal(check(report,'public-deployment').status,'declared-unverified');assert.equal(check(report,'mainnet-settlement').status,'missing');
+ assert.equal(check(report,'independent-security-review').status,'missing');
 });
 
 test('production labels, URLs and plausible signatures cannot certify release',async()=>{

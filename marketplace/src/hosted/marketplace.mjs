@@ -13,6 +13,8 @@ const digest = value => createHash('sha256').update(value).digest('hex');
 const iso = ms => new Date(ms).toISOString();
 const short = value => `${value.slice(0, 4)}…${value.slice(-4)}`;
 const finalStates = new Set(['confirmed', 'expired', 'canceled', 'failed']);
+const UNSIGNED_REQUEST_TTL = 15 * 60_000;
+const liveRequest = (t, now) => !finalStates.has(t.status) && (t.status !== 'requested' || Date.parse(t.expiresAt) > now);
 const MINTS = {
   So11111111111111111111111111111111111111112: 'SOL',
   EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v: 'USDC',
@@ -93,15 +95,23 @@ export class HostedMarketplace {
   pruneUnsigned(tx) {
     // Unsigned terminal requests do not constitute settlement evidence. Bound
     // this history so an unfunded request/cancel loop cannot fill durable state.
-    for (const t of tx.all('trade').filter(t => t.status === 'requested' && Date.parse(t.expiresAt) <= this.now()).slice(0, 10)) tx.remove('trade', t.id);
+    for (const t of tx.all('trade').filter(t => t.status === 'requested' && Date.parse(t.expiresAt) <= this.now()).slice(0, 5)) tx.remove('trade', t.id);
     const terminal = tx.all('trade').filter(t => finalStates.has(t.status) && !t.approvedTransaction && !t.submittedTransaction && !t.signature)
       .reverse().sort((a, b) => (b.updatedAt || b.createdAt).localeCompare(a.updatedAt || a.createdAt));
     const limit = Math.min(100, Math.floor(this.store.maxRecords / 10));
-    for (const t of terminal.slice(limit, limit + 10)) tx.remove('trade', t.id);
+    for (const t of terminal.slice(limit, limit + 5)) tx.remove('trade', t.id);
+    // A seller can relist/cancel the same real Fee Key without a chain fee.
+    // Retain recent unsigned history, but never evict a listing referenced by a
+    // trade (especially a released signature or finalized receipt).
+    const referenced = new Set(tx.all('trade').map(t => t.listingId));
+    const retired = tx.all('listing').filter(l => !referenced.has(l.id)
+      && (['canceled', 'expired', 'unavailable'].includes(l.status) || l.status === 'active' && Date.parse(l.expiresAt) <= this.now()))
+      .reverse().sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+    for (const l of retired.slice(limit, limit + 5)) tx.remove('listing', l.id);
   }
   reserveCapacity(tx, additionalRecords, additionalPending = 0) {
     this.pruneUnsigned(tx);
-    const pending = tx.all('trade').filter(t => !finalStates.has(t.status) && (t.status !== 'requested' || Date.parse(t.expiresAt) > this.now())).length + additionalPending;
+    const pending = tx.all('trade').filter(t => liveRequest(t, this.now())).length + additionalPending;
     // A completed trade can add two activity entries and one immutable receipt.
     // Protect that headroom before accepting any new listing or request.
     if (pending > Math.min(200, Math.floor(this.store.maxRecords / 10))
@@ -161,11 +171,12 @@ export class HostedMarketplace {
     // read always checks its own receipt, even during a busy marketplace.
     if (!await this.store.rateLimit(`reconcile:${tradeId || 'marketplace'}`, this.now(), 1, tradeId ? 1000 : 15000)) return;
     const values = tradeId ? [await this.store.get('trade', tradeId)].filter(Boolean) : await this.store.all('trade');
-    const pending = values.filter(t => !finalStates.has(t.status) && (t.settlement || t.status === 'preparing'))
-      .sort((a, b) => (a.checkedAt || a.createdAt).localeCompare(b.checkedAt || b.createdAt)).slice(0, limit);
+    const pending = values.filter(t => !finalStates.has(t.status) && (t.settlement || t.status === 'preparing' || t.status === 'requested' && Date.parse(t.expiresAt) <= this.now()))
+      .sort((a, b) => Number(a.status === 'requested') - Number(b.status === 'requested') || (a.checkedAt || a.createdAt).localeCompare(b.checkedAt || b.createdAt)).slice(0, limit);
     if (!pending.length) return;
     let height;
     for (const t of pending) {
+      if (t.status === 'requested') { await this.finishPending(t, 'expired'); continue; }
       if (t.status === 'preparing') {
         if (Date.parse(t.preparingLeaseUntil) <= this.now()) await this.finishPending(t, 'failed', { error: 'Preparation expired. Request the purchase again.' });
         continue;
@@ -257,15 +268,23 @@ export class HostedMarketplace {
   async requestPurchase(owner, id) {
     owner = address(owner); const l = await this.getListing(id); this.assertActive(l);
     if (l.seller === owner) problem(400, 'SELF_TRADE', 'Choose a Fee Key listed by another wallet.');
+    const balance = await this.connection.getBalance(new PublicKey(owner), 'confirmed');
+    if (!Number.isSafeInteger(balance) || balance < 0) problem(502, 'BALANCE_RANGE', 'RPC balance could not be represented exactly.');
+    if (BigInt(balance) < BigInt(l.priceLamports)) problem(400, 'INSUFFICIENT_BALANCE', 'Your SOL balance must cover the asking price before requesting a purchase. Network fees and token account rent are additional.');
     await this.verifyFeeKey({ connection: this.connection, cluster: this.cluster, mint: l.mint, owner: l.seller, tokenAccount: l.tokenAccount });
     const trade = await this.store.transaction(tx => {
       const latest = listingFrom(tx, id); this.assertActive(latest);
       if (latest.priceLamports !== l.priceLamports) problem(409, 'PRICE_CHANGED', 'Listing price changed. Review it again.');
-      const requests = tx.all('trade').filter(t => t.listingId === id && !finalStates.has(t.status));
+      const open = tx.all('trade').filter(t => liveRequest(t, this.now()));
+      const requests = open.filter(t => t.listingId === id);
       const prior = requests.find(t => t.buyer === owner); if (prior) return prior;
+      const buyerRequests = open.filter(t => t.buyer === owner);
+      if (buyerRequests.length >= 5) problem(409, 'BUYER_REQUEST_LIMIT', 'This wallet already has five pending purchases. Complete or cancel one before requesting another.');
+      const committed = buyerRequests.reduce((total, t) => total + BigInt(t.priceLamports), 0n);
+      if (committed + BigInt(latest.priceLamports) > BigInt(balance)) problem(400, 'INSUFFICIENT_BALANCE', 'Your SOL balance must cover this asking price and your other pending purchases. Network fees and token account rent are additional.');
       if (requests.length >= 20) problem(409, 'REQUEST_LIMIT', 'This listing already has 20 pending purchase requests.');
       this.reserveCapacity(tx, 3, 1);
-      const t = { id: randomUUID(), listingId: id, buyer: owner, seller: l.seller, mint: l.mint, priceLamports: l.priceLamports, cluster: this.cluster, status: 'requested', version: 1, createdAt: iso(this.now()), expiresAt: l.expiresAt };
+      const t = { id: randomUUID(), listingId: id, buyer: owner, seller: l.seller, mint: l.mint, priceLamports: l.priceLamports, cluster: this.cluster, status: 'requested', version: 1, createdAt: iso(this.now()), expiresAt: iso(Math.min(Date.parse(l.expiresAt), this.now() + UNSIGNED_REQUEST_TTL)) };
       tx.put('trade', t); this.activity(tx, l.seller, 'request', 'Purchase approval requested', { tradeId: t.id }); this.activity(tx, owner, 'request', 'Purchase requested', { tradeId: t.id }); return t;
     }); return { trade: this.viewTrade(trade, owner) };
   }
@@ -274,7 +293,7 @@ export class HostedMarketplace {
     const preparationId = randomUUID();
     const { trade, listing } = await this.store.transaction(tx => {
       const t = tradeFrom(tx, id, owner); if (t.seller !== owner) problem(403, 'NOT_SELLER', 'Only the seller can prepare this approval.');
-      if (t.status !== 'requested') problem(409, 'TRADE_STATE', 'This request is already being processed.');
+      if (t.status !== 'requested' || Date.parse(t.expiresAt) <= this.now()) problem(409, 'TRADE_STATE', 'This request expired or is already being processed. Request the purchase again.');
       const l = listingFrom(tx, t.listingId); this.assertActive(l);
       if (l.priceLamports !== t.priceLamports) problem(409, 'PRICE_CHANGED', 'The listing price changed. Request the purchase again.');
       l.status = 'reserved'; l.reservedBy = t.id; tx.put('listing', l);
@@ -330,7 +349,7 @@ export class HostedMarketplace {
     if (t.status === 'approved') {
       await this.settlement.assertSettlementNotExpired({ connection: this.connection, lastValidBlockHeight: t.settlement.lastValidBlockHeight });
       await this.verifyFeeKey({ connection: this.connection, cluster: this.cluster, mint: t.mint, owner: t.seller, tokenAccount: t.settlement.sourceTokenAccount });
-      await this.settlement.inspectSettlementAsset({ connection: this.connection, seller: t.seller, mint: t.mint, sourceTokenAccount: t.settlement.sourceTokenAccount });
+      await this.settlement.inspectSettlementAsset({ connection: this.connection, seller: t.seller, buyer: t.buyer, mint: t.mint, sourceTokenAccount: t.settlement.sourceTokenAccount });
       const snapshot = t;
       t = await this.store.transaction(tx => {
         const current = tradeFrom(tx, id, owner);

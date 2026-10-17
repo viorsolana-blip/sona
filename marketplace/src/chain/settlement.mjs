@@ -13,6 +13,8 @@ import {
   getAssociatedTokenAddressSync,
   getAccount,
   getMint,
+  ACCOUNT_SIZE,
+  unpackAccount,
 } from '@solana/spl-token';
 
 const U64_MAX = (1n << 64n) - 1n;
@@ -60,7 +62,7 @@ export function solToLamports(value) {
  * Re-read chain ownership at prepare/submit time. This proves an NFT is owned,
  * not that it is a Raydium Fee Key: callers must also run the Raydium verifier.
  */
-export async function inspectSettlementAsset({ connection, seller, mint, sourceTokenAccount }) {
+export async function inspectSettlementAsset({ connection, seller, buyer, mint, sourceTokenAccount }) {
   const sellerKey = walletKey(seller, 'Seller');
   const mintKey = publicKey(mint, 'Mint');
   const sourceKey = publicKey(sourceTokenAccount, 'Source token account');
@@ -77,6 +79,31 @@ export async function inspectSettlementAsset({ connection, seller, mint, sourceT
   if (!tokenState.isInitialized || tokenState.isFrozen || !tokenState.owner.equals(sellerKey)
     || !tokenState.mint.equals(mintKey) || tokenState.amount !== 1n) {
     fail('NOT_OWNED', 'Seller no longer owns one transferable token in the listed account.');
+  }
+  if (tokenState.delegate) fail('DELEGATED_NFT', 'Revoke the Fee Key delegate before settlement.');
+  // An existing empty ATA can retain a delegate approved by its owner. Receiving
+  // a token does not clear that approval, so the delegate could immediately take
+  // the purchased NFT. Check at preparation and submission. This is a state read,
+  // not an on-chain guard against the buyer granting new permissions afterward.
+  if (buyer !== undefined) {
+    const buyerKey = walletKey(buyer, 'Buyer');
+    const destination = getAssociatedTokenAddressSync(mintKey, buyerKey, false, TOKEN_PROGRAM_ID);
+    const info = await connection.getAccountInfo(destination, 'confirmed');
+    if (info) {
+      if (info.executable || !info.owner.equals(TOKEN_PROGRAM_ID) || info.data.length !== ACCOUNT_SIZE) {
+        fail('INVALID_DESTINATION', 'The buyer token account has an unsupported owner or layout.');
+      }
+      let target;
+      try { target = unpackAccount(destination, info, TOKEN_PROGRAM_ID); }
+      catch { fail('INVALID_DESTINATION', 'The buyer token account could not be decoded.'); }
+      if (!target.isInitialized || target.isFrozen || !target.owner.equals(buyerKey)
+        || !target.mint.equals(mintKey) || target.amount !== 0n) {
+        fail('INVALID_DESTINATION', 'The buyer token account is not an empty, transferable account for this Fee Key.');
+      }
+      if (target.delegate || (target.closeAuthority && !target.closeAuthority.equals(buyerKey))) {
+        fail('UNSAFE_DESTINATION', 'Revoke the buyer token account delegate and any external close authority before purchasing.');
+      }
+    }
   }
   return { seller: sellerKey.toBase58(), mint: mintKey.toBase58(), sourceTokenAccount: sourceKey.toBase58(),
     tokenProgram: TOKEN_PROGRAM_ID.toBase58(), amount: '1', decimals: 0 };
@@ -130,7 +157,7 @@ export async function prepareSettlement({ connection, listing, buyer, verifyFeeK
   if (feeKey.mint && !publicKey(feeKey.mint, 'Verified mint').equals(publicKey(mint, 'Mint'))) {
     fail('UNVERIFIED_FEE_KEY', 'Verifier returned a different mint.');
   }
-  await inspectSettlementAsset({ connection, seller, mint, sourceTokenAccount });
+  await inspectSettlementAsset({ connection, seller, buyer, mint, sourceTokenAccount });
   const lifetime = await connection.getLatestBlockhash('confirmed');
   return { ...buildSettlementTransaction({ seller, buyer, mint, sourceTokenAccount, priceLamports, ...lifetime }), feeKey };
 }
@@ -219,7 +246,7 @@ export async function submitSettlement({ connection, settlement, transactionBase
   const { transaction } = verifyCanonicalSignedTransaction({ transactionBase64,
     expectedTransactionBase64: settlement.transactionBase64,
     requiredSigners: [settlement.buyer, settlement.seller] });
-  await inspectSettlementAsset({ connection, seller: settlement.seller, mint: settlement.mint,
+  await inspectSettlementAsset({ connection, seller: settlement.seller, buyer: settlement.buyer, mint: settlement.mint,
     sourceTokenAccount: settlement.sourceTokenAccount });
   const signature = await connection.sendRawTransaction(transaction.serialize(), { skipPreflight: false, maxRetries: 3 });
   const confirmation = await connection.confirmTransaction({ signature, blockhash: settlement.blockhash,

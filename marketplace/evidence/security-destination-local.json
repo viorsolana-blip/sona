@@ -1,0 +1,37 @@
+{
+  "schema": "sona-security-destination-local-v1",
+  "generatedAt": "2026-10-17T19:24:39.798Z",
+  "reviewType": "Internal AI-assisted security review; not an independent audit.",
+  "environment": "isolated local solana-test-validator; valueless test SOL and freshly minted SPL NFT fixtures",
+  "validator": {
+    "feature-set": 4215500110,
+    "solana-core": "1.18.20",
+    "genesisHash": "H1umVwvZ5xcb57D4Z8vAt2oQX252Vx6pEn37cUGLCMhZ"
+  },
+  "privateKeysPersisted": false,
+  "scope": "Real SPL delegated-transfer reproduction and off-chain destination-state rejection. No mainnet transaction, Raydium mint, or independent audit is claimed.",
+  "residualRisk": "A buyer can grant new permissions after the state check. This check is not an on-chain guard and does not revoke user permissions.",
+  "baselineSettlementCasesPassed": 6,
+  "cases": [
+    {
+      "name": "an old buyer-approved delegate can transfer a newly received NFT from an existing empty ATA",
+      "passed": true,
+      "exploitPrerequisite": "Buyer previously authorized the third-party delegate on this exact mint ATA.",
+      "guardResult": "UNSAFE_DESTINATION",
+      "transferSignature": "2rYoDKLy8gPsxdUPvNhq3neWYSvmSfQxZ1VaeAUXN3MkSdNncud1UboKU3e7jDu5zmQGZtbzAf8Eeo4kUe4ocRtf",
+      "delegatedTransferSignature": "2PDATsH5cwKdGu5JH4qdVSDFBixfAoHDvSQEgGsxcRLgACvcgVMMfNqby8Sagt9n6MzfUDrL1onjU3jZkQQqs22x"
+    },
+    {
+      "name": "real ATA delegate and foreign close authority block preparation; revoking both permits construction",
+      "passed": true,
+      "raydiumVerifier": "Explicit local SPL fixture stub; not Raydium authenticity evidence."
+    }
+  ],
+  "passed": 2,
+  "failed": 0,
+  "sourceSha256": {
+    "src/chain/settlement.mjs": "92cc7145ba58f6c3533c7f638567e7e68251533ddc5aabb127871cf8cf462451",
+    "tests/settlement-security.test.mjs": "a30a85e3fd856cd3fbcbdd25677c37e0240d7919d577836a7b8d40c1c484a581",
+    "tests/settlement-security-local.test.mjs": "c1f67ba4a38338fc3a208bf6f91ee3eefba88c43eda68c2f699e6e7942791d35"
+  }
+}

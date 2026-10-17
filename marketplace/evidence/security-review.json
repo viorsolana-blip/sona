@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-10-17T19:30:29.412Z",
+  "reviewType": "internal-ai-assisted",
+  "independentAudit": false,
+  "reviewedBaseRevision": "bb7f1e9692bca6ec9e11880f800f6589c1d33f81",
+  "reviewReport": "https://github.com/viorsolana-blip/sona/blob/main/docs/security/REVIEW-2026-10-18.md",
+  "scope": [
+    "Raydium account authenticity and atomic settlement",
+    "Wallet adapters, challenge validation and canonical signatures",
+    "Hosted D1 authorization, concurrency and resource retention",
+    "Node reference authentication",
+    "Hosted response protections and dependency inventory",
+    "Read-only mainnet evidence verifier"
+  ],
+  "mainnetTransactionsSent": 0,
+  "mainnetFundsSpentLamports": "0",
+  "mainnetSaleVerified": false,
+  "independentBrowserWalletSession": false,
+  "findings": [
+    {
+      "id": "SONA-01",
+      "status": "remediated-with-regressions"
+    },
+    {
+      "id": "SONA-02",
+      "status": "remediated-with-regressions"
+    },
+    {
+      "id": "SONA-03",
+      "status": "remediated-with-regressions"
+    },
+    {
+      "id": "SONA-04",
+      "status": "remediated-with-regressions"
+    },
+    {
+      "id": "SONA-05",
+      "status": "remediated-with-regressions"
+    },
+    {
+      "id": "SONA-06",
+      "status": "remediated-with-regressions"
+    },
+    {
+      "id": "SONA-07",
+      "status": "remediated-with-regressions"
+    },
+    {
+      "id": "SONA-08",
+      "status": "partially-remediated-build-advisory-disclosed"
+    }
+  ],
+  "execution": [
+    {
+      "command": "npm test",
+      "tests": 150,
+      "passed": 148,
+      "failed": 0,
+      "skipped": 2,
+      "scope": "Offline automated suite; optional validator cases run separately."
+    },
+    {
+      "command": "npm --prefix marketplace run test:chain",
+      "backendChecksPassed": 14,
+      "settlementChecksPassed": 6,
+      "evidence": [
+        "backend-local.json",
+        "settlement-local.json"
+      ],
+      "scope": "Actual isolated local-validator execution."
+    },
+    {
+      "command": "node marketplace/scripts/test-hosted-local.mjs",
+      "backendChecksPassed": 10,
+      "settlementChecksPassed": 6,
+      "freshRequestInstances": 53,
+      "evidence": [
+        "hosted-local.json",
+        "hosted-settlement-local.json"
+      ],
+      "scope": "Hosted HTTP/D1-compatible adapter against actual local validator; actual Workers runtime checked separately."
+    },
+    {
+      "command": "SONA_LOCAL_VALIDATOR_TESTS=1 node --test marketplace/tests/settlement-security-local.test.mjs",
+      "securityCasesPassed": 2,
+      "baselineCasesPassed": 6,
+      "evidence": [
+        "security-destination-local.json"
+      ],
+      "scope": "Actual local delegated-transfer reproduction and safe-destination checks."
+    },
+    {
+      "command": "node scripts/verify-public.mjs http://127.0.0.1:4180 marketplace/evidence/security-workerd-local.json",
+      "evidence": [
+        "security-workerd-local.json"
+      ],
+      "scope": "Actual local Workers/D1, Ed25519 authentication, client challenge validation, response headers and read-only mainnet Raydium reads."
+    }
+  ],
+  "dependencyReport": "security-dependencies.json",
+  "mainnetVerificationGuide": "https://github.com/viorsolana-blip/sona/blob/main/marketplace/docs/MAINNET-VERIFICATION.md",
+  "sourceSha256": {
+    "build/sites-worker.ts": "f87906a222b9b636de9f586fb38566616e5034f8ab8e640748c6e667b1f1d3a3",
+    "marketplace/dist/app/app.js": "261c20d96772b363584aa2060bc44a14fdec60b7c0ad17544a94e05e2dc8d5fe",
+    "marketplace/dist/app/wallet.js": "b337723f16a6f3a3980b8b7c8046e9d6023d4eb770703fce8231f35bb9fbd584",
+    "marketplace/package-lock.json": "e4efd6bfe42e7c3ea748d4d9862cd0c7259cba3a5ac126847dcda06e610e5de8",
+    "marketplace/package.json": "5119031872ef415c9a42f166c1e78fa242b8fc00910810aae31646c5f38f89bd",
+    "marketplace/scripts/verify-mainnet-sale.mjs": "97a00f74b9e89aeb8db8a27c2a6ed2f8df6b5c37b6b25ad78214f3c74d4982a4",
+    "marketplace/src/chain/raydium.mjs": "adc690a86bd0feee28caa45dfffc87582a1eab11e5ee7299658c6457c3250d59",
+    "marketplace/src/chain/settlement.mjs": "92cc7145ba58f6c3533c7f638567e7e68251533ddc5aabb127871cf8cf462451",
+    "marketplace/src/client/polyfills.mjs": "0445cf67876500ac7da8f57c8d882f926f66d801c44c9a723c7b1aafe164f323",
+    "marketplace/src/client/wallet.mjs": "f8e4937f71bbd0d72ab987e38cad6136c2c24ea4354fbd1355d888ebd1cb394e",
+    "marketplace/src/hosted/d1-store.mjs": "5237abb08e2a3878a4dc9ab057a79d9516de8577a712359e70016407b166cd38",
+    "marketplace/src/hosted/http.mjs": "8429521dc0b2b0a30638ad2e3a6862de6ec7eddf229ea67e16df6f8dc59f8423",
+    "marketplace/src/hosted/marketplace.mjs": "27a87af854303881377edf2cbf8cfe7524aa18f7de115f704717eb48fc34538d",
+    "marketplace/src/hosted/migration.sql": "828d719926771cb971d0185a524c6b7f3598d8a2a14c9548b5b133b668840d82",
+    "marketplace/src/security/response-headers.mjs": "f715e74bff94d8d6e6420d9a4f9e59af0f74ec1b0516b8c772a15fa70804174e",
+    "marketplace/src/server/http.mjs": "3787c63a5eac27ad75fb639f5c3572c09490a7d3edfdfd32b5b304f2ddbc5876",
+    "marketplace/src/server/index.mjs": "5279f41b6b110409a4f62fb762c6cd6c7c509d45897f0294693bb5be2ff4bd2e",
+    "marketplace/src/server/marketplace.mjs": "75f5aca9343b0b83d03e8a673780e5b64ae71e642002c7c61afc5092c0fb3813",
+    "marketplace/src/server/network.mjs": "9d4bc7aefa1deee638fead4327c9613c4af291cf536736772a692ce966d292b0",
+    "marketplace/src/server/store.mjs": "6cbe88d4e48426af505027be1c4c797d5a85278d4e56963c36d1661796c8d9c7",
+    "marketplace/src/verification/mainnet-sale.mjs": "17f0894c5fd1f30fa7fc5b9f372a3b734eec64410c02ab39a19f7c17168415f7",
+    "marketplace/tests/bigint-buffer.test.mjs": "b323c578d9bd9dd1fb54af6252a927176fd6aef619cb93883058f1abb15606de",
+    "marketplace/tests/browser-bundle.test.mjs": "3748e17698cebb5529ee79ffc02427d7c0a90cd6a93d8efbd6cfe9b935ff9cb0",
+    "marketplace/tests/hosted.test.mjs": "cf2e3f9d47d9ab2443c96a9616e37f85a687d6d8624be8fe96e8280393a08470",
+    "marketplace/tests/marketplace.test.mjs": "e0753489a14e917a4607e31ff9fde29ad49c3a452297118cbae9fedf692e0eba",
+    "marketplace/tests/raydium.test.mjs": "87ede8f0e3b0b6e0c2b52091c3e56ab884da5faaeff6972ea5d7c9d3c0b52d07",
+    "marketplace/tests/readiness.test.mjs": "fbee7600807c906188f1e1e1a836f7346922b0146f60f932f1288f90291dcfce",
+    "marketplace/tests/security-headers.test.mjs": "0364d6c1a007948ee6ac3dda1a4ba3226cdfb0340f602e31b513e079cea92dd1",
+    "marketplace/tests/settlement-local.test.mjs": "834a7069c7f33e158e7cc85a206198c8b6106ed01231d8334b92b414f0ef5208",
+    "marketplace/tests/settlement-security-local.test.mjs": "c1f67ba4a38338fc3a208bf6f91ee3eefba88c43eda68c2f699e6e7942791d35",
+    "marketplace/tests/settlement-security.test.mjs": "a30a85e3fd856cd3fbcbdd25677c37e0240d7919d577836a7b8d40c1c484a581",
+    "marketplace/tests/settlement.test.mjs": "09f2255572d87942afcdc73aba8d38aa6224bc6d0566f2c4ec19f57267b6cb63",
+    "marketplace/tests/verification-mainnet-sale.test.mjs": "b4f024c06e6a3bcdc9952823c01b166a90615ff781888585289d285aa647f97f",
+    "marketplace/tests/wallet.test.mjs": "9eb9cb7c7e643566535d7f7190a08cc694b7ad71e1d2c81f61ffc49d60766148",
+    "package-lock.json": "186d67a7e7dab7bafb81e5d04587295c7c1c0593c35752e9bb37f760f62faabd",
+    "package.json": "2f1f3194df3ca93598cb85bf3b64a7582f39eed6a5728e12d5b2a220fc559497",
+    "scripts/verify-public.mjs": "466d919f9aeaf47c46eeec452888793b85fc0ca2390c102e7812f947d8cdf0e2"
+  },
+  "limitations": [
+    "This is a development-team AI-assisted review, not an independent security audit.",
+    "Local-validator transactions are not real mainnet sales.",
+    "A consenting seller, genuine eligible Fee Key, buyer, agreed terms, owner signatures and network fees are required for a real sale.",
+    "The remaining build-tool advisory and RPC/free-service/centralized-coordination risks are described in the review."
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "checkedAt": "2026-10-17T19:30:29.412Z",
+  "scope": "Runtime and full build-tool dependency graphs are separate; zero runtime advisories is not a zero-advisory repository.",
+  "rootLockSha256": "186d67a7e7dab7bafb81e5d04587295c7c1c0593c35752e9bb37f760f62faabd",
+  "marketplaceLockSha256": "e4efd6bfe42e7c3ea748d4d9862cd0c7259cba3a5ac126847dcda06e610e5de8",
+  "rootRuntime": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "rootAll": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 6,
+    "critical": 0,
+    "total": 6
+  },
+  "marketplaceAll": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "unresolved": [
+    {
+      "advisory": "GHSA-vfj7-8cjw-p6xm",
+      "url": "https://github.com/advisories/GHSA-vfj7-8cjw-p6xm",
+      "package": "braces",
+      "version": "3.0.3",
+      "severity": "high",
+      "affectedDependencyNodes": [
+        "braces",
+        "fast-glob",
+        "micromatch",
+        "vinext",
+        "vite-plugin-commonjs",
+        "vite-plugin-dynamic-import"
+      ],
+      "scope": "Build-time parsing of source import glob patterns through Vinext tooling. No request-controlled glob use or braces implementation was found in the inspected Worker output.",
+      "patchedPackageReleaseAvailable": false
+    }
+  ]
+}

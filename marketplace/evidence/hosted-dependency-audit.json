@@ -1,7 +1,7 @@
 {
-  "checkedAt": "2026-10-17T19:08:53.927Z",
-  "scope": "npm audit --omit=dev against root hosted lockfile",
-  "packageLockSha256": "a2a1b3a8cb8de3361f0f644feedb3698439651085ecb3bd6970a4ed65bff13ac",
+  "checkedAt": "2026-10-17T19:30:29.412Z",
+  "scope": "npm audit --omit=dev against root hosted lockfile; see security-dependencies.json for full graph and unresolved build-tool advisory",
+  "packageLockSha256": "186d67a7e7dab7bafb81e5d04587295c7c1c0593c35752e9bb37f760f62faabd",
   "metadata": {
     "vulnerabilities": {
       "info": 0,
@@ -13,11 +13,11 @@
     },
     "dependencies": {
       "prod": 86,
-      "dev": 387,
-      "optional": 203,
+      "dev": 363,
+      "optional": 180,
       "peer": 17,
       "peerOptional": 0,
-      "total": 489
+      "total": 465
     }
   },
   "vulnerabilities": {}

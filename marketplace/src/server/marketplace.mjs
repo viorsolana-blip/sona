@@ -17,6 +17,8 @@ const MINTS={
   Es9vMFrzaCERmJfrF4H2FYD9KZCtNH6nYxn3S9ieYZz:'USDT',
 };
 const finalStates=['confirmed','expired','canceled','failed'];
+const UNSIGNED_REQUEST_TTL=15*60_000;
+const liveRequest=(t,now)=>!finalStates.includes(t.status)&&(t.status!=='requested'||Date.parse(t.expiresAt)>now);
 export function address(value) {
   try { const key=new PublicKey(value); if(!PublicKey.isOnCurve(key.toBytes()))throw Error(); return key.toBase58(); }
   catch { problem(400,'INVALID_WALLET','Enter a valid signing wallet address.'); }
@@ -45,8 +47,8 @@ export class Marketplace {
   }
   authenticate({address:owner,challengeId,signatureBase64}) {
     address(owner);
-    const challenge=this.store.db.prepare('SELECT * FROM challenges WHERE id=?').get(challengeId || '');
-    if(!challenge||challenge.address!==owner||challenge.expires<this.now())problem(401,'CHALLENGE_EXPIRED','Request a fresh wallet authentication message.');
+    const challenge=this.store.db.prepare('SELECT * FROM challenges WHERE id=?').get(typeof challengeId==='string'?challengeId:'');
+    if(!challenge||challenge.address!==owner||challenge.expires<=this.now()||!challenge.message.startsWith(`Sona wallet authentication\nOrigin: ${this.origin}\nNetwork: ${this.cluster}\nWallet: ${owner}\n`))problem(401,'CHALLENGE_EXPIRED','Request a fresh wallet authentication message.');
     const bytes=Buffer.from(typeof signatureBase64==='string'?signatureBase64:'','base64');
     if(bytes.length!==64||bytes.toString('base64')!==signatureBase64||!nacl.sign.detached.verify(Buffer.from(challenge.message),bytes,new PublicKey(owner).toBytes()))problem(401,'INVALID_SIGNATURE','Wallet authentication signature is invalid.');
     const token=randomBytes(32).toString('base64url');
@@ -88,6 +90,7 @@ export class Marketplace {
     try{return await operation;}finally{this.reconciling=null;}
   }
   async reconcileOnce() {
+    for(const t of this.store.all('trade'))if(t.status==='requested'&&Date.parse(t.expiresAt)<=this.now())this.finishPending(t,'expired');
     const pending=this.store.all('trade').filter(t=>!finalStates.includes(t.status)&&t.settlement);
     if(!pending.length)return;
     // Finalized height avoids releasing a seller reservation on a temporary fork.
@@ -182,14 +185,23 @@ export class Marketplace {
   async requestPurchase(owner,id) {
     await this.reconcile();const l=this.getListing(id);this.assertActive(l);
     if(l.seller===owner)problem(400,'SELF_TRADE','Choose a Fee Key listed by another wallet.');
+    const balance=await this.connection.getBalance(new PublicKey(owner),'confirmed');
+    if(!Number.isSafeInteger(balance)||balance<0)problem(502,'BALANCE_RANGE','RPC balance could not be represented exactly.');
+    if(BigInt(balance)<BigInt(l.priceLamports))problem(400,'INSUFFICIENT_BALANCE','Your SOL balance must cover the asking price before requesting a purchase. Network fees and token account rent are additional.');
     await this.verifyFeeKey({connection:this.connection,cluster:this.cluster,mint:l.mint,owner:l.seller,tokenAccount:l.tokenAccount});
     let trade;
     this.store.transaction(()=>{
       const latest=this.getListing(id);this.assertActive(latest);
       if(latest.priceLamports!==l.priceLamports)problem(409,'PRICE_CHANGED','Listing price changed. Review it again.');
-      const prior=this.store.all('trade').find(t=>t.listingId===id&&t.buyer===owner&&!finalStates.includes(t.status));
+      const open=this.store.all('trade').filter(t=>liveRequest(t,this.now()));
+      const prior=open.find(t=>t.listingId===id&&t.buyer===owner);
       if(prior){trade=prior;return;}
-      trade={id:randomUUID(),listingId:id,buyer:owner,seller:l.seller,mint:l.mint,priceLamports:l.priceLamports,cluster:this.cluster,status:'requested',createdAt:iso(this.now()),expiresAt:l.expiresAt};
+      const buyerRequests=open.filter(t=>t.buyer===owner);
+      if(buyerRequests.length>=5)problem(409,'BUYER_REQUEST_LIMIT','This wallet already has five pending purchases. Complete or cancel one before requesting another.');
+      if(open.filter(t=>t.listingId===id).length>=20)problem(409,'REQUEST_LIMIT','This listing already has 20 pending purchase requests.');
+      const committed=buyerRequests.reduce((total,t)=>total+BigInt(t.priceLamports),0n);
+      if(committed+BigInt(latest.priceLamports)>BigInt(balance))problem(400,'INSUFFICIENT_BALANCE','Your SOL balance must cover this asking price and your other pending purchases. Network fees and token account rent are additional.');
+      trade={id:randomUUID(),listingId:id,buyer:owner,seller:l.seller,mint:l.mint,priceLamports:l.priceLamports,cluster:this.cluster,status:'requested',createdAt:iso(this.now()),expiresAt:iso(Math.min(Date.parse(l.expiresAt),this.now()+UNSIGNED_REQUEST_TTL))};
       this.store.put('trade',trade);this.activity(l.seller,'request','Purchase approval requested',{tradeId:trade.id});this.activity(owner,'request','Purchase requested',{tradeId:trade.id});
     });return {trade:this.viewTrade(trade,owner)};
   }
@@ -197,7 +209,7 @@ export class Marketplace {
     await this.reconcile();let t=this.getTrade(id,owner);if(t.seller!==owner)problem(403,'NOT_SELLER','Only the seller can prepare this approval.');
     let l;
     this.store.transaction(()=>{
-      t=this.getTrade(id,owner);if(t.status!=='requested')problem(409,'TRADE_STATE','This request is already being processed.');
+      t=this.getTrade(id,owner);if(t.status!=='requested'||Date.parse(t.expiresAt)<=this.now())problem(409,'TRADE_STATE','This request expired or is already being processed. Request the purchase again.');
       l=this.getListing(t.listingId);this.assertActive(l);
       if(l.priceLamports!==t.priceLamports)problem(409,'PRICE_CHANGED','The listing price changed. Request the purchase again.');
       t.status='preparing';l.status='reserved';l.reservedBy=t.id;this.store.put('trade',t);this.store.put('listing',l);
@@ -247,7 +259,7 @@ export class Marketplace {
     if(t.status==='approved'){
       await assertSettlementNotExpired({connection:this.connection,lastValidBlockHeight:t.settlement.lastValidBlockHeight});
       await this.verifyFeeKey({connection:this.connection,cluster:this.cluster,mint:t.mint,owner:t.seller,tokenAccount:t.settlement.sourceTokenAccount});
-      await inspectSettlementAsset({connection:this.connection,seller:t.seller,mint:t.mint,sourceTokenAccount:t.settlement.sourceTokenAccount});
+      await inspectSettlementAsset({connection:this.connection,seller:t.seller,buyer:t.buyer,mint:t.mint,sourceTokenAccount:t.settlement.sourceTokenAccount});
       t=this.getTrade(id,owner);if(t.status!=='approved')problem(409,'TRADE_STATE','Purchase state changed.');
       t.signature=signature;t.submittedTransaction=checked.transactionBase64;t.status='submitted';this.store.put('trade',t);
     }

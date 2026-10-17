@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Keypair, SystemProgram, Transaction } from '@solana/web3.js';
-import { createWalletController, bytesToBase64, base64ToBytes, shortAddress } from '../src/client/wallet.mjs';
+import { createWalletController, bytesToBase64, base64ToBytes, shortAddress, assertAuthenticationChallenge } from '../src/client/wallet.mjs';
 
 function injectedWallet(key = Keypair.generate()) {
   const listeners = new Map();
@@ -87,6 +87,52 @@ test('wallet-side transaction mutation is rejected before any broadcast', async 
   await assert.rejects(client.signTransaction(bytesToBase64(tx.serialize({ requireAllSignatures: false }))), /changed the transaction/);
 });
 
+test('buyer wallet cannot silently discard the seller signature', async () => {
+  const seller = injectedWallet(), buyer = injectedWallet();
+  const transaction = unsignedTrade(seller.key, buyer.key);
+  transaction.partialSign(seller.key);
+  buyer.provider.signTransaction = async tx => {
+    tx.signatures.find(item => item.publicKey.equals(seller.key.publicKey)).signature = null;
+    tx.partialSign(buyer.key);
+    return tx;
+  };
+  const client = controller(buyer);
+  await client.connect('injected:Phantom');
+  await assert.rejects(client.signTransaction(bytesToBase64(transaction.serialize({ requireAllSignatures: false }))), /existing transaction signature/);
+});
+
+test('invalid incoming seller signatures are rejected before the buyer wallet opens', async () => {
+  const seller = injectedWallet(), buyer = injectedWallet();
+  const transaction = unsignedTrade(seller.key, buyer.key);
+  transaction.partialSign(seller.key);
+  transaction.signatures.find(item => item.publicKey.equals(seller.key.publicKey)).signature[0] ^= 1;
+  let prompts = 0;
+  buyer.provider.signTransaction = async tx => { prompts++; return tx; };
+  const client = controller(buyer);
+  await client.connect('injected:Phantom');
+  await assert.rejects(client.signTransaction(bytesToBase64(transaction.serialize({ requireAllSignatures: false, verifySignatures: false }))), /invalid existing signature/);
+  assert.equal(prompts, 0);
+});
+
+function authenticationChallenge({ address, origin = 'http://127.0.0.1:4173', cluster = 'mainnet-beta', now = Date.now() }) {
+  return { challengeId: '11111111-1111-4111-8111-111111111111', message: `Sona wallet authentication\nOrigin: ${origin}\nNetwork: ${cluster}\nWallet: ${address}\nNonce: ${'ab'.repeat(24)}\nIssued at: ${new Date(now).toISOString()}\nExpires at: ${new Date(now + 300_000).toISOString()}\n\nAuthenticate this wallet with Sona. This message does not authorize an asset transfer.` };
+}
+
+test('authentication accepts only a fresh Sona message bound to this origin, cluster and wallet', () => {
+  const options = { address: Keypair.generate().publicKey.toBase58(), origin: 'http://127.0.0.1:4173', cluster: 'mainnet-beta', now: Date.now() };
+  const challenge = authenticationChallenge(options);
+  assert.equal(assertAuthenticationChallenge(challenge, options), true);
+  for (const changed of [
+    authenticationChallenge({ ...options, origin: 'https://another-service.example' }),
+    authenticationChallenge({ ...options, cluster: 'devnet' }),
+    authenticationChallenge({ ...options, address: Keypair.generate().publicKey.toBase58() }),
+    authenticationChallenge({ ...options, now: options.now - 300_001 }),
+    authenticationChallenge({ ...options, now: options.now + 60_001 }),
+    { ...challenge, message: challenge.message + '\nApprove an order on another service.' },
+    { ...challenge, message: challenge.message.replace('Authenticate this wallet with Sona.', 'Transfer my Fee Key.') },
+  ]) assert.throws(() => assertAuthenticationChallenge(changed, options));
+});
+
 test('Wallet Standard is used when Solana partial signing is supported', async () => {
   const key = Keypair.generate();
   const account = { address: key.publicKey.toBase58(), publicKey: key.publicKey.toBytes(), chains: ['solana:mainnet'], features: ['solana:signMessage', 'solana:signTransaction'] };
@@ -136,7 +182,7 @@ function uiHarness(routes = async () => ({})) {
   };
   const fakeWallet = { address: null, setChain() {}, list() { return []; }, async signMessage() { return ''; }, async signTransaction(tx) { return tx; } };
   const document = { activeElement: null, body: element('body'), querySelector: element, querySelectorAll: () => [], addEventListener(name, handler) { handlers.set(name, [...(handlers.get(name) || []), handler]); } };
-  const context = vm.createContext({ document, console, URL, Date, BigInt, Intl, Map, Set, crypto: { randomUUID: () => 'id' }, window: { addEventListener() {}, scrollTo() {} }, localStorage: { getItem: () => JSON.stringify({ balance: 125, positions: [{ id: 'old-fictional-position' }] }), setItem() {} }, location: { origin: 'http://127.0.0.1:4173', pathname: '/app/', hash: '' }, createWalletController: () => fakeWallet, shortAddress, assertSettlementTransaction, setTimeout: () => 0, clearTimeout() {}, requestAnimationFrame() {}, fetch: async (path, options) => { requests.push({ path, options });const result = await routes(path, options);return { ok: result.status ? result.status < 400 : true, status: result.status || 200, json: async () => result.body || result }; } });
+  const context = vm.createContext({ document, console, URL, Date, BigInt, Intl, Map, Set, crypto: { randomUUID: () => 'id' }, window: { addEventListener() {}, scrollTo() {} }, localStorage: { getItem: () => JSON.stringify({ balance: 125, positions: [{ id: 'old-fictional-position' }] }), setItem() {} }, location: { origin: 'http://127.0.0.1:4173', pathname: '/app/', hash: '' }, createWalletController: () => fakeWallet, shortAddress, assertSettlementTransaction, assertAuthenticationChallenge, setTimeout: () => 0, clearTimeout() {}, requestAnimationFrame() {}, fetch: async (path, options) => { requests.push({ path, options });const result = await routes(path, options);return { ok: result.status ? result.status < 400 : true, status: result.status || 200, json: async () => result.body || result }; } });
   const source = readFileSync(new URL('../dist/app/app.js', import.meta.url), 'utf8').replace(/^import[^\n]+\n/, '').replace(/render\(\);mountIcons\(\);refreshData\(\).then\(hashDeal\);\nsetInterval[^\n]+\n?$/, '');
   vm.runInContext(source, context);
   const run = code => vm.runInContext(code, context);
@@ -147,6 +193,52 @@ function uiHarness(routes = async () => ({})) {
 test('UI starts empty and ignores the previous browser-local fictional holdings', () => {
   const state = uiHarness().state();
   assert.equal(state.balance, null);assert.deepEqual(state.positions, []);assert.deepEqual(state.listings, []);assert.deepEqual(state.saved, []);assert.equal(state.connected, false);
+});
+
+test('UI never asks the wallet to sign an API challenge for another origin', async () => {
+  const address = Keypair.generate().publicKey.toBase58();
+  const ui = uiHarness(async () => authenticationChallenge({ address, origin: 'https://attacker.example' }));
+  ui.connect(address);ui.run('sessionToken=null;sessionAddress=null;');
+  let prompts = 0;ui.fakeWallet.signMessage = async () => { prompts++; return ''; };
+  await assert.rejects(ui.run('ensureSession()'), /does not match this Sona connection/);
+  assert.equal(prompts, 0);
+  assert.equal(ui.requests.length, 1);
+  assert.equal(ui.requests[0].path, '/api/auth/challenge');
+});
+
+test('UI signs and submits a valid origin-bound Sona authentication challenge', async () => {
+  const address = Keypair.generate().publicKey.toBase58();
+  const challenge = authenticationChallenge({ address });
+  const ui = uiHarness(async path => path.endsWith('/challenge') ? challenge : { token: 'verified-session', address });
+  ui.connect(address);ui.run('sessionToken=null;sessionAddress=null;');
+  const messages = [];ui.fakeWallet.signMessage = async message => { messages.push(message); return 'signed-message'; };
+  await ui.run('ensureSession()');
+  assert.deepEqual(messages, [challenge.message]);
+  assert.equal(ui.run('sessionToken'), 'verified-session');
+  assert.equal(ui.requests[1].path, '/api/auth/verify');
+  assert.deepEqual(JSON.parse(ui.requests[1].options.body), { address, challengeId: challenge.challengeId, signatureBase64: 'signed-message' });
+});
+
+test('UI does not open a signature prompt after the account changes during challenge loading', async () => {
+  const address = Keypair.generate().publicKey.toBase58();
+  let deliver;
+  const ui = uiHarness(async () => new Promise(resolve => { deliver = resolve; }));
+  ui.connect(address);ui.run('sessionToken=null;sessionAddress=null;');
+  let prompts = 0;ui.fakeWallet.signMessage = async () => { prompts++; return ''; };
+  const pending = ui.run('ensureSession()');
+  ui.fakeWallet.address = Keypair.generate().publicKey.toBase58();
+  deliver(authenticationChallenge({ address }));
+  await assert.rejects(pending, /wallet changed/);
+  assert.equal(prompts, 0);
+});
+
+test('market table treats unexpected API identifiers and verification slots as text', () => {
+  const ui = uiHarness();
+  const position = { id: 'listing" onclick="alert(1)', base: 'SOL', quote: 'USDC', protocol: 'Raydium', type: 'Fee rights', priceLamports: '1', lockDays: null, verifiedSlot: '<img src=x onerror=alert(1)>' };
+  const html = ui.run(`table([${JSON.stringify(position)}])`);
+  assert.doesNotMatch(html, /<img src=x|data-id="listing" onclick=/);
+  assert.match(html, /listing&quot; onclick=&quot;alert\(1\)/);
+  assert.match(html, /&lt;img src=x onerror=alert\(1\)&gt;/);
 });
 
 test('UI SOL conversion is exact down to a lamport and rejects exponential/negative prices', () => {

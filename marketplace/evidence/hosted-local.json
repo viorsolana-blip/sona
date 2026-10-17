@@ -1,11 +1,11 @@
 {
   "schema": "sona-hosted-local-evidence-v1",
-  "generatedAt": "2026-10-17T19:07:44.379Z",
+  "generatedAt": "2026-10-17T19:26:27.371Z",
   "cluster": "localnet",
-  "genesisHash": "GEBsWC1h69pwpuVVjhymwWbEBvT52eUVwLdkTqk7eo4f",
+  "genesisHash": "7gWLYv48bwM8t6QsnEh8fM6Ft9LkDpb5iNeJwNy26EFa",
   "scope": "Real HTTP requests through the hosted Request/Response API, D1-compatible real SQLite transactions, fresh marketplace instances per request, real local-validator SPL/System execution and durable restart recovery. This is not a Cloudflare D1 deployment test or a mainnet Raydium Fee Key sale. Raydium authenticity is tested separately against actual mainnet accounts.",
   "privateKeysPersisted": false,
-  "requestInstances": 52,
+  "requestInstances": 53,
   "passed": 10,
   "failed": 0,
   "cases": [
@@ -20,22 +20,22 @@
     "Repeat submission does not pay twice or duplicate the receipt",
     "Durable public receipt matches actual finalized validator transaction"
   ],
-  "mint": "HGSR1bF9zyFWvcJAC6BJNjuoztGLVchPJDGcBXegGNiT",
-  "seller": "83Xgt9t1BVVmGwmSDo14RWzaejaram8zHiW1uq54GEpw",
-  "buyer": "5SBXBCPZ8iJCZwbmrHSo2aYvwm9CEr9EWcPsT2ZFqMqM",
+  "mint": "8iwPm7zgU88T4JCWF2g8YAv6KvBhvae8pCo93HJri6Q5",
+  "seller": "94T8y4g28Hu9tZ5ChLBzHbFkt8cLEVLh6qQ39uASTWc1",
+  "buyer": "E61qSV47TSw5kX5xuT9NwJEUf3iod3SsDjeJzbTF6Ggh",
   "priceLamports": "100000001",
   "receipt": {
-    "id": "3iqE8RWeD7RKqtvors3uyJMeXfkcipi12pzgxEgH7KDibDvPWisgdG5sna1hNNPJ1mPTJg44Vv5F5tE5ihMiw7Ye",
+    "id": "5Jn2PSU5aMqkS8k2NCC5tWuMyJJF1u3m9i9QuhGg5z1MCpbNm9zpZf9jM7GSPiQtfSKd1caykpvSey8A5rNjAd3Q",
     "cluster": "localnet",
-    "signature": "3iqE8RWeD7RKqtvors3uyJMeXfkcipi12pzgxEgH7KDibDvPWisgdG5sna1hNNPJ1mPTJg44Vv5F5tE5ihMiw7Ye",
+    "signature": "5Jn2PSU5aMqkS8k2NCC5tWuMyJJF1u3m9i9QuhGg5z1MCpbNm9zpZf9jM7GSPiQtfSKd1caykpvSey8A5rNjAd3Q",
     "slot": 31,
     "commitment": "finalized",
-    "mint": "HGSR1bF9zyFWvcJAC6BJNjuoztGLVchPJDGcBXegGNiT",
-    "buyer": "5SBXBCPZ8iJCZwbmrHSo2aYvwm9CEr9EWcPsT2ZFqMqM",
-    "seller": "83Xgt9t1BVVmGwmSDo14RWzaejaram8zHiW1uq54GEpw",
+    "mint": "8iwPm7zgU88T4JCWF2g8YAv6KvBhvae8pCo93HJri6Q5",
+    "buyer": "E61qSV47TSw5kX5xuT9NwJEUf3iod3SsDjeJzbTF6Ggh",
+    "seller": "94T8y4g28Hu9tZ5ChLBzHbFkt8cLEVLh6qQ39uASTWc1",
     "priceLamports": "100000001",
-    "messageSha256": "d0e920c4862cf9928222bfe9cbaf58766cf3778e31be332efc85697eec9cc3b7",
-    "createdAt": "2026-10-17T19:07:44.368Z"
+    "messageSha256": "1a19cf360097eefd8694bbab7a0e343a270b62a424cf85c3ada9161654dfe1d3",
+    "createdAt": "2026-10-17T19:26:27.357Z"
   },
   "chainReceipt": {
     "slot": 31,
@@ -73,8 +73,8 @@
     "preTokenBalances": [
       {
         "accountIndex": 3,
-        "mint": "HGSR1bF9zyFWvcJAC6BJNjuoztGLVchPJDGcBXegGNiT",
-        "owner": "83Xgt9t1BVVmGwmSDo14RWzaejaram8zHiW1uq54GEpw",
+        "mint": "8iwPm7zgU88T4JCWF2g8YAv6KvBhvae8pCo93HJri6Q5",
+        "owner": "94T8y4g28Hu9tZ5ChLBzHbFkt8cLEVLh6qQ39uASTWc1",
         "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
         "uiTokenAmount": {
           "amount": "1",
@@ -87,8 +87,8 @@
     "postTokenBalances": [
       {
         "accountIndex": 2,
-        "mint": "HGSR1bF9zyFWvcJAC6BJNjuoztGLVchPJDGcBXegGNiT",
-        "owner": "5SBXBCPZ8iJCZwbmrHSo2aYvwm9CEr9EWcPsT2ZFqMqM",
+        "mint": "8iwPm7zgU88T4JCWF2g8YAv6KvBhvae8pCo93HJri6Q5",
+        "owner": "E61qSV47TSw5kX5xuT9NwJEUf3iod3SsDjeJzbTF6Ggh",
         "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
         "uiTokenAmount": {
           "amount": "1",
@@ -99,8 +99,8 @@
       },
       {
         "accountIndex": 3,
-        "mint": "HGSR1bF9zyFWvcJAC6BJNjuoztGLVchPJDGcBXegGNiT",
-        "owner": "83Xgt9t1BVVmGwmSDo14RWzaejaram8zHiW1uq54GEpw",
+        "mint": "8iwPm7zgU88T4JCWF2g8YAv6KvBhvae8pCo93HJri6Q5",
+        "owner": "94T8y4g28Hu9tZ5ChLBzHbFkt8cLEVLh6qQ39uASTWc1",
         "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
         "uiTokenAmount": {
           "amount": "0",
@@ -113,11 +113,11 @@
   },
   "sourceSha256": {
     "src/hosted/d1-store.mjs": "5237abb08e2a3878a4dc9ab057a79d9516de8577a712359e70016407b166cd38",
-    "src/hosted/marketplace.mjs": "966b6073c5221a82ae2c25935cb87120e19ece65e95a1493c376e1b8bfc4f95a",
+    "src/hosted/marketplace.mjs": "27a87af854303881377edf2cbf8cfe7524aa18f7de115f704717eb48fc34538d",
     "src/hosted/http.mjs": "8429521dc0b2b0a30638ad2e3a6862de6ec7eddf229ea67e16df6f8dc59f8423",
     "src/hosted/migration.sql": "828d719926771cb971d0185a524c6b7f3598d8a2a14c9548b5b133b668840d82",
-    "src/chain/settlement.mjs": "e6e80a37b537f008f1e5b91335a9f88a5248a0e09ab58db68f64369f0084f89f",
+    "src/chain/settlement.mjs": "92cc7145ba58f6c3533c7f638567e7e68251533ddc5aabb127871cf8cf462451",
     "scripts/test-hosted-local.mjs": "69f598a6882880e42fe80c67380a06bb7a1c0baf85ff90012cf4486e7dbdcb87",
-    "tests/hosted.test.mjs": "305045d7c4912684dc6adc9dc88f7937332b63e2e1f605ac7799784d96080178"
+    "tests/hosted.test.mjs": "cf2e3f9d47d9ab2443c96a9616e37f85a687d6d8624be8fe96e8280393a08470"
   }
 }

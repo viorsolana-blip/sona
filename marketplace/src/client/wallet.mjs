@@ -8,6 +8,30 @@ export const bytesToBase64 = bytes => btoa(String.fromCharCode(...bytes));
 export const base64ToBytes = value => Uint8Array.from(atob(value), char => char.charCodeAt(0));
 const equalBytes = (a, b) => a.length === b.length && a.every((byte, index) => byte === b[index]);
 
+/** Refuse arbitrary signing payloads from an authentication API response. */
+export function assertAuthenticationChallenge(challenge, { address, origin, cluster, now = Date.now() }) {
+  if (!['mainnet-beta', 'devnet', 'testnet'].includes(cluster)) throw new Error('Unsupported authentication network.');
+  const walletAddress = new PublicKey(address).toBase58();
+  const expectedOrigin = new URL(origin).origin;
+  const lines = typeof challenge?.message === 'string' ? challenge.message.split('\n') : [];
+  if (typeof challenge?.challengeId !== 'string' || !/^[a-f0-9-]{36}$/.test(challenge.challengeId)
+    || lines.length !== 9 || lines[0] !== 'Sona wallet authentication'
+    || lines[1] !== `Origin: ${expectedOrigin}` || lines[2] !== `Network: ${cluster}`
+    || lines[3] !== `Wallet: ${walletAddress}` || !/^Nonce: [a-f0-9]{48}$/.test(lines[4])
+    || !lines[5].startsWith('Issued at: ') || !lines[6].startsWith('Expires at: ')
+    || lines[7] !== '' || lines[8] !== 'Authenticate this wallet with Sona. This message does not authorize an asset transfer.') {
+    throw new Error('The wallet authentication message does not match this Sona connection. No signature requested.');
+  }
+  const issuedText = lines[5].slice(11), expiresText = lines[6].slice(12);
+  const issued = Date.parse(issuedText), expires = Date.parse(expiresText);
+  if (!Number.isFinite(issued) || !Number.isFinite(expires)
+    || new Date(issued).toISOString() !== issuedText || new Date(expires).toISOString() !== expiresText
+    || issued > now + 60_000 || expires <= now || expires <= issued || expires - issued > 300_000) {
+    throw new Error('The wallet authentication message has expired or has invalid timing. Request a fresh message.');
+  }
+  return true;
+}
+
 /** Reconstruct the three permitted sale instructions from the reviewed terms. */
 export function assertSettlementTransaction(transactionBase64, terms) {
   if (!/^[1-9][0-9]*$/.test(terms.priceLamports) || BigInt(terms.priceLamports) > (1n << 64n) - 1n) throw new Error('Invalid sale price.');
@@ -125,6 +149,10 @@ export function createWalletController({ host = globalThis.window, registry = ge
     const bytes = base64ToBytes(transactionBase64);
     const transaction = Transaction.from(bytes);
     const originalMessage = transaction.serializeMessage();
+    if (!transaction.verifySignatures(false)) throw new Error('The transaction contains an invalid existing signature.');
+    const existingSignatures = transaction.signatures.filter(item => item.signature).map(item => ({
+      address: item.publicKey.toBase58(), signature: Uint8Array.from(item.signature),
+    }));
     const signerEntry = transaction.signatures.find(item => item.publicKey.toBase58() === snapshot.expectedAddress);
     if (!signerEntry) throw new Error('This transaction does not require your wallet signature.');
     let signed;
@@ -134,6 +162,10 @@ export function createWalletController({ host = globalThis.window, registry = ge
     } else signed = await snapshot.selected.provider.signTransaction(transaction);
     assertUnchanged(snapshot);
     if (!equalBytes(originalMessage, signed.serializeMessage())) throw new Error('The wallet changed the transaction. Signature rejected.');
+    for (const existing of existingSignatures) {
+      const preserved = signed.signatures.find(item => item.publicKey.toBase58() === existing.address)?.signature;
+      if (!preserved || !equalBytes(existing.signature, preserved)) throw new Error('The wallet removed or changed an existing transaction signature.');
+    }
     const signature = signed.signatures.find(item => item.publicKey.toBase58() === snapshot.expectedAddress)?.signature;
     if (!signature || !signed.verifySignatures(false)) throw new Error('The wallet returned an invalid transaction signature.');
     return bytesToBase64(signed.serialize({ requireAllSignatures: false, verifySignatures: true }));

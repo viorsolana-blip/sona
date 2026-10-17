@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "executedAt": "2026-10-17T19:30:44.777Z",
+  "executedAt": "2026-10-17T19:38:23.671Z",
   "origin": "http://127.0.0.1:4180",
   "mode": "local-workerd-d1-and-disposable-authentication",
   "network": "mainnet-beta",
@@ -27,10 +27,14 @@
     "build/connector-preview-worker.mjs": "c1b6b2c420cb67d9e28f8f4ae440f578c0dfd4cb840a12cfe4b58076629a17ba",
     "build/sites-vite-plugin.LICENSE": "7de1e115d165f176e68f962acdb809b5ab8d8ae78d3981e0701392b2ac50c713",
     "build/sites-vite-plugin.ts": "07af20e7097d9ed1d76f7c446d02997550b8fc5ca89668b249e25eabd62c6834",
-    "build/sites-worker.ts": "f87906a222b9b636de9f586fb38566616e5034f8ab8e640748c6e667b1f1d3a3",
+    "build/sites-worker.ts": "a4873e7e98bc1f3c51179c3a4297a1a1b797a3a952c53f175b8f48e789e4cea8",
     "drizzle/0000_silent_angel.sql": "adfaa738805653be94ee1c3d3ea29ec5dc4f4ee45497a04919356336d992b31e",
     "drizzle/meta/0000_snapshot.json": "d3ca9a8b7fb0ddce4f53ca2d55287027d92c252eb277a47fa38ea68bf8da9183",
-    "drizzle/meta/_journal.json": "f77280ec209db77303ffd310f24f033d1df105e0cfee0d1b356e17b07714f2cf"
+    "drizzle/meta/_journal.json": "f77280ec209db77303ffd310f24f033d1df105e0cfee0d1b356e17b07714f2cf",
+    "public/_headers": "77d81674ee590115455ba09eb77276eacb3ded885f95c8aaee3d2424b455e772",
+    "vite.config.ts": "69563364b52d6a6e760e68ab5ba7fccdd07d5f36f56fa6997a3e1b9406fc71d9",
+    "marketplace/dist/app/index.html": "ee57c3292b0ed27bfadf58ad131fb42d8a659d0695db87bc2db4c8e2d51a9766",
+    "marketplace/dist/technical/index.html": "0cf227c026dfb54c1f11e8d4531502e9a8a71864e20f48aef09cfa8b4606d9ba"
   },
   "scope": "HTTP/Workers/D1/authentication and current third-party protocol reads. Not a marketplace settlement, browser extension session or security audit.",
   "checks": [
@@ -39,7 +43,7 @@
       "passed": true
     },
     {
-      "name": "Public dapp has anti-framing and MIME protections",
+      "name": "Public documents retain exact HTML and have anti-framing and MIME protections",
       "passed": true
     },
     {
@@ -56,7 +60,7 @@
       "observation": {
         "verified": true,
         "readOnly": true,
-        "observedAt": "2026-10-17T19:30:44.730Z",
+        "observedAt": "2026-10-17T19:38:23.624Z",
         "signingFlowSupported": false,
         "feeKey": {
           "verified": true,
@@ -75,7 +79,7 @@
           "mintProgramA": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
           "mintProgramB": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
           "originalLockOwner": "3wt6CgisHM3jkiCnhVzvLHwcvJyevUbyUYWeT7VAcCqT",
-          "slot": 458153223,
+          "slot": 458155332,
           "cluster": "mainnet-beta",
           "protocol": "raydium-cpmm",
           "kind": "fee-rights",

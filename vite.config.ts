@@ -4,6 +4,8 @@ import hostingConfig from "./.openai/hosting.json";
 import { readExecutionProfile } from "./scripts/execution-profile.mjs";
 import { sites } from "./build/sites-vite-plugin";
 import { connectorPreview } from "./build/connector-preview-plugin.mjs";
+import { readFileSync, rmSync } from 'node:fs';
+import { resolve } from 'node:path';
 
 const SITE_CREATOR_PLACEHOLDER_DATABASE_ID =
   "00000000-0000-4000-8000-000000000000";
@@ -65,6 +67,22 @@ export default defineConfig(async ({ command }) => {
       vinext(),
       sites({ mockAuth: !managedLinux }),
       connectorPreview(),
+      {
+        name: 'sona-worker-protected-documents',
+        apply: 'build',
+        applyToEnvironment: (environment) => environment.name === 'client',
+        closeBundle() {
+          // Keep authored HTML intact; only omit these generated static copies
+          // so the hosting asset gateway cannot bypass the Worker's policy.
+          for (const path of ['app/index.html','technical/index.html']) {
+            const generated = resolve('dist/client',path);
+            if (!readFileSync(generated).equals(readFileSync(resolve('marketplace/dist',path)))) {
+              throw new Error(`Protected document differs from authored HTML: ${path}`);
+            }
+            rmSync(generated);
+          }
+        },
+      },
       cloudflare({
         viteEnvironment: { name: "rsc", childEnvironments: ["ssr"] },
         inspectorPort: false,

@@ -6,6 +6,8 @@ import { handleApi } from '../marketplace/src/hosted/http.mjs';
 import { verifyNetwork } from '../marketplace/src/server/network.mjs';
 import { verifyFeeKey, discoverFeeKeys } from '../marketplace/src/chain/raydium.mjs';
 import { protectResponse } from '../marketplace/src/security/response-headers.mjs';
+import appDocument from '../marketplace/dist/app/index.html?raw';
+import technicalDocument from '../marketplace/dist/technical/index.html?raw';
 
 const publicOrigin = 'https://sona-liquidity-marketplace.official-alexslobodi.chatgpt.site';
 // An immutable network identity may be cached; orders and authentication never are.
@@ -16,6 +18,14 @@ export default {
     if (['/app','/technical','/policies/terms-conditions'].includes(url.pathname)) {
       url.pathname += '/';
       return protectResponse(Response.redirect(url,307),url.pathname);
+    }
+    // These exact existing documents are delivered by the Worker, because the
+    // production asset gateway does not currently honor custom asset headers.
+    const document = ['/app/','/app/index.html'].includes(url.pathname) ? appDocument
+      : ['/technical/','/technical/index.html'].includes(url.pathname) ? technicalDocument : null;
+    if (document !== null) {
+      if (!['GET','HEAD'].includes(request.method)) return protectResponse(new Response(null,{status:405,headers:{Allow:'GET, HEAD'}}),url.pathname);
+      return protectResponse(new Response(request.method==='HEAD'?null:document,{headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-cache'}}),url.pathname);
     }
     if (url.pathname.startsWith('/api/')) {
       try {

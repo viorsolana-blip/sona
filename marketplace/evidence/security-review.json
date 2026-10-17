@@ -44,7 +44,7 @@
     },
     {
       "id": "SONA-07",
-      "status": "remediated-with-regressions"
+      "status": "remediated-locally-awaiting-public-delivery-verification"
     },
     {
       "id": "SONA-08",
@@ -101,7 +101,7 @@
   "dependencyReport": "security-dependencies.json",
   "mainnetVerificationGuide": "https://github.com/viorsolana-blip/sona/blob/main/marketplace/docs/MAINNET-VERIFICATION.md",
   "sourceSha256": {
-    "build/sites-worker.ts": "f87906a222b9b636de9f586fb38566616e5034f8ab8e640748c6e667b1f1d3a3",
+    "build/sites-worker.ts": "a4873e7e98bc1f3c51179c3a4297a1a1b797a3a952c53f175b8f48e789e4cea8",
     "marketplace/dist/app/app.js": "261c20d96772b363584aa2060bc44a14fdec60b7c0ad17544a94e05e2dc8d5fe",
     "marketplace/dist/app/wallet.js": "b337723f16a6f3a3980b8b7c8046e9d6023d4eb770703fce8231f35bb9fbd584",
     "marketplace/package-lock.json": "e4efd6bfe42e7c3ea748d4d9862cd0c7259cba3a5ac126847dcda06e610e5de8",
@@ -137,9 +137,12 @@
     "marketplace/tests/wallet.test.mjs": "9eb9cb7c7e643566535d7f7190a08cc694b7ad71e1d2c81f61ffc49d60766148",
     "package-lock.json": "186d67a7e7dab7bafb81e5d04587295c7c1c0593c35752e9bb37f760f62faabd",
     "package.json": "2f1f3194df3ca93598cb85bf3b64a7582f39eed6a5728e12d5b2a220fc559497",
-    "scripts/verify-public.mjs": "466d919f9aeaf47c46eeec452888793b85fc0ca2390c102e7812f947d8cdf0e2",
+    "scripts/verify-public.mjs": "acaba8e177534d0ae0c23f81617bb6980c687f199f2d7f1d45f3a6154f22ffd1",
     "public/_headers": "77d81674ee590115455ba09eb77276eacb3ded885f95c8aaee3d2424b455e772",
-    "scripts/prepare-public.mjs": "bf3b2fa347b2b55237fddf94d4c372f5cbbd4860abdf70fa630bcc4c50dab803"
+    "scripts/prepare-public.mjs": "9408a19b14fcf96fbdc5d46e0bf1c82d9b3e46ebcf771a8f807395180fe9e746",
+    "vite.config.ts": "69563364b52d6a6e760e68ab5ba7fccdd07d5f36f56fa6997a3e1b9406fc71d9",
+    "marketplace/dist/app/index.html": "ee57c3292b0ed27bfadf58ad131fb42d8a659d0695db87bc2db4c8e2d51a9766",
+    "marketplace/dist/technical/index.html": "0cf227c026dfb54c1f11e8d4531502e9a8a71864e20f48aef09cfa8b4606d9ba"
   },
   "limitations": [
     "This is a development-team AI-assisted review, not an independent security audit.",

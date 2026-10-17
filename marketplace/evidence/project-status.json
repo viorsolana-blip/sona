@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "project": "Sona",
-  "declaredStage": "functional-local-implementation",
+  "declaredStage": "development",
   "declaredCapabilities": {
     "liveWallet": true,
     "livePositions": true,
@@ -15,13 +15,13 @@
     "supportedInstrument": "raydium-cpmm-burn-and-earn-fee-key"
   },
   "deployment": {
-    "publicOrigin": null,
-    "cluster": null,
+    "publicOrigin": "https://sona-liquidity-marketplace.official-alexslobodi.chatgpt.site",
+    "cluster": "mainnet-beta",
     "securityReviewUrl": null
   },
   "sourceProvenance": {
-    "repositoryUrl": null,
-    "revision": null
+    "repositoryUrl": "https://github.com/viorsolana-blip/sona",
+    "revision": "4749a37ce89ca3ed4228f0cd12bdbbd982f92b21"
   },
   "executionReceipts": []
 }

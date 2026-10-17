@@ -2,9 +2,13 @@
   "schemaVersion": 2,
   "project": "Sona",
   "assessedOn": "2026-10-18",
-  "status": "working-local-implementation",
-  "scope": "Implemented wallet, verified Raydium CPMM inventory, authenticated persistent listings and bilateral atomic settlement. Local validator execution and a separate mainnet read are recorded; no production deployment or Sona mainnet sale is attested.",
-  "runtime": "Node.js 24+, SQLite, HTML/CSS/JavaScript frontend",
+  "status": "public-implementation",
+  "scope": "Public wallet-authenticated Raydium CPMM Fee Key marketplace implementation with D1 persistence and bilateral atomic settlement construction. The deployed Workers/D1 service passed real authentication, replay/origin rejection and read-only protocol checks. Atomic settlement was executed separately on an isolated local validator. No Sona mainnet sale or security audit is attested.",
+  "runtime": {
+    "hosted": "Cloudflare Workers with D1 persistence and the existing HTML/CSS/JavaScript interface",
+    "localReference": "Node.js 24+ with SQLite",
+    "hostedDeploymentVerified": true
+  },
   "network": {
     "defaultCluster": "mainnet-beta",
     "runtimeConfiguration": "/api/config",
@@ -14,7 +18,7 @@
     "walletIntegration": true,
     "customSonaProgramRequired": false,
     "settlementPrograms": "Existing SPL Token, Associated Token and System programs",
-    "publicDeployment": null
+    "publicDeployment": "https://sona-liquidity-marketplace.official-alexslobodi.chatgpt.site"
   },
   "capabilities": {
     "marketSearchAndFilters": "implemented",
@@ -24,19 +28,49 @@
     "feesAndYieldEstimates": "not-inferred",
     "positionOwnershipVerification": "raydium-cpmm-fee-key-rpc-checks",
     "protocolTransferValidation": "mint-holder-lock-pool-escrow-and-vault-checks",
-    "listingPersistence": "sqlite-with-wallet-authentication",
+    "listingPersistence": "D1 in hosted implementation; SQLite in local reference service",
     "counterpartyOrderDiscovery": "server-hosted-public-listings",
     "financialSettlement": "seller-then-buyer-co-signed-atomic-transaction",
     "completionStatus": "finalized-chain-confirmation",
-    "confidentialSettlement": "not-implemented"
+    "confidentialSettlement": "not-implemented",
+    "readOnlyFeeKeyVerification": "GET /api/verify/:mint with optional tokenAccount query; live holder and canonical protocol checks without a wallet"
   },
-  "supportedTradingIntegrations": ["Raydium CPMM Burn & Earn Fee Key secondary transfer"],
+  "supportedTradingIntegrations": [
+    "Raydium CPMM Burn & Earn Fee Key secondary transfer"
+  ],
   "sourceEvidence": [
-    {"path":"/app/app.js","description":"Live UI data and signed action handlers"},
-    {"path":"/source/src/client/wallet.mjs","description":"Wallet adapters and client canonical transaction verification"},
-    {"path":"/source/src/chain/raydium.mjs","description":"RPC discovery and protocol-specific authenticity checks"},
-    {"path":"/source/src/chain/settlement.mjs","description":"Atomic exchange and signature validation"},
-    {"path":"/source/src/server/marketplace.mjs","description":"Authentication, persistent listing and settlement lifecycle"}
+    {
+      "path": "/app/app.js",
+      "description": "Live UI data and signed action handlers"
+    },
+    {
+      "path": "/source/src/client/wallet.mjs",
+      "description": "Wallet adapters and client canonical transaction verification"
+    },
+    {
+      "path": "/source/src/chain/raydium.mjs",
+      "description": "RPC discovery and protocol-specific authenticity checks"
+    },
+    {
+      "path": "/source/src/chain/settlement.mjs",
+      "description": "Atomic exchange and signature validation"
+    },
+    {
+      "path": "/source/src/server/marketplace.mjs",
+      "description": "Authentication, persistent listing and settlement lifecycle"
+    },
+    {
+      "path": "/source/src/hosted/marketplace.mjs",
+      "description": "Hosted Workers/D1 authenticated marketplace lifecycle"
+    },
+    {
+      "path": "/source/src/hosted/http.mjs",
+      "description": "Hosted HTTP routing and read-only verification endpoint"
+    },
+    {
+      "path": "/source/src/hosted/d1-store.mjs",
+      "description": "Hosted D1 persistence adapter"
+    }
   ],
   "verification": {
     "localSettlementExecution": "/source/evidence/settlement-local.json",
@@ -47,7 +81,17 @@
     "mainnetSettlementReceipts": [],
     "liveReceiptEndpoint": "/api/receipts",
     "independentSecurityReview": null,
-    "publicSourceRepository": null
+    "publicSourceRepository": "https://github.com/viorsolana-blip/sona",
+    "readOnlyEndpoint": "/api/verify/:mint?tokenAccount=:optionalTokenAccount",
+    "hostedRuntimeScope": "Actual public Workers/D1 HTTP authentication, nonce consumption, replay/origin rejection, session logout and live third-party Raydium reads are recorded separately from local-validator settlement. No public purchase or browser-extension session is claimed.",
+    "referenceHolderScope": "The recorded third-party reference Fee Key is held by a program address. It proves read compatibility, not support for selling that asset through the ordinary-wallet signing flow.",
+    "referenceMint": "GVXkdXXtZRF9ZW81D6amGu5nLEw8FJA4XSD8sGdSnC8o",
+    "buildManifest": "/build-manifest.json",
+    "hostedAdapterLocalExecution": "/source/evidence/hosted-local.json",
+    "hostedReleaseSettlementLocalExecution": "/source/evidence/hosted-settlement-local.json",
+    "referenceTokenAccount": "6i9ctDoxQXSwTNUqGrfXfTj9USr5doKKjvu3wZv5DMS7",
+    "publicRuntimeExecution": "/source/evidence/public-runtime.json",
+    "localWorkerdExecution": "/source/evidence/workerd-local.json"
   },
   "limitations": [
     "A seller must be available to approve each buyer. This is not an escrow-backed unattended fill.",
@@ -56,6 +100,15 @@
     "The public mainnet Fee Key read concerns an unrelated holder and is not seeded as a listing or claimed as a Sona user.",
     "No CLMM, partial-rights, redemption, fee claiming, new lock creation or confidential settlement support.",
     "Public RPC is free to access without keys but can throttle or fail. Real network transactions still have fees.",
-    "No originality, first-to-market, security-audit, public-production-readiness or guaranteed-rating attestation is made."
-  ]
+    "No originality, first-to-market, security-audit, public-production-readiness or guaranteed-rating attestation is made.",
+    "Public runtime checks sent no blockchain transactions. A supported real Fee Key sale on the public network remains unverified."
+  ],
+  "deploymentState": "public-verified",
+  "publication": {
+    "publicOrigin": "https://sona-liquidity-marketplace.official-alexslobodi.chatgpt.site",
+    "repositoryUrl": "https://github.com/viorsolana-blip/sona",
+    "verifiedImplementationRevision": "4749a37ce89ca3ed4228f0cd12bdbbd982f92b21",
+    "runtimeEvidence": "/source/evidence/public-runtime.json",
+    "verification": "Public deployment and source availability confirmed. Runtime checks cover HTTP/Workers/D1 authentication and read-only protocol verification; no marketplace settlement was sent."
+  }
 }

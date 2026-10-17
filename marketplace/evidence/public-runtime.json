@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "executedAt": "2026-10-17T19:13:58.123Z",
+  "origin": "https://sona-liquidity-marketplace.official-alexslobodi.chatgpt.site",
+  "mode": "anonymous-public-runtime-and-disposable-authentication",
+  "network": "mainnet-beta",
+  "fundedWallet": false,
+  "transactionsSent": 0,
+  "deploymentSourceRevision": "4749a37ce89ca3ed4228f0cd12bdbbd982f92b21",
+  "serverSourceHashes": {
+    "marketplace/src/chain/raydium.mjs": "adc690a86bd0feee28caa45dfffc87582a1eab11e5ee7299658c6457c3250d59",
+    "marketplace/src/chain/settlement.mjs": "e6e80a37b537f008f1e5b91335a9f88a5248a0e09ab58db68f64369f0084f89f",
+    "marketplace/src/client/polyfills.mjs": "0445cf67876500ac7da8f57c8d882f926f66d801c44c9a723c7b1aafe164f323",
+    "marketplace/src/client/wallet.mjs": "2bdc911e3112775fb3c3ff8f5a278551882d90e1139d598949b201f19ff20aa2",
+    "marketplace/src/hosted/d1-store.mjs": "5237abb08e2a3878a4dc9ab057a79d9516de8577a712359e70016407b166cd38",
+    "marketplace/src/hosted/hosted/d1-store.mjs": "915c57d2cd63abe54dafdbc2e7360ad23f57a1206ce7a8b19a4fbd09cc60a9fe",
+    "marketplace/src/hosted/hosted/http.mjs": "3d6389c4764250b24fc886cd2304df5494e001b491eea0bd292bbe0896b06ab7",
+    "marketplace/src/hosted/hosted/marketplace.mjs": "775ccff9316e825090924b2878721c05c9298e6bc892743ca1b4f5761d281d2b",
+    "marketplace/src/hosted/hosted/migration.sql": "828d719926771cb971d0185a524c6b7f3598d8a2a14c9548b5b133b668840d82",
+    "marketplace/src/hosted/http.mjs": "8429521dc0b2b0a30638ad2e3a6862de6ec7eddf229ea67e16df6f8dc59f8423",
+    "marketplace/src/hosted/marketplace.mjs": "966b6073c5221a82ae2c25935cb87120e19ece65e95a1493c376e1b8bfc4f95a",
+    "marketplace/src/hosted/migration.sql": "828d719926771cb971d0185a524c6b7f3598d8a2a14c9548b5b133b668840d82",
+    "marketplace/src/server/http.mjs": "3787c63a5eac27ad75fb639f5c3572c09490a7d3edfdfd32b5b304f2ddbc5876",
+    "marketplace/src/server/index.mjs": "5279f41b6b110409a4f62fb762c6cd6c7c509d45897f0294693bb5be2ff4bd2e",
+    "marketplace/src/server/marketplace.mjs": "d8e2f9c30d2dd1b1a95c1b3fa5cb476ccd9feee4dfdc85cabac7ffa971becca1",
+    "marketplace/src/server/network.mjs": "9d4bc7aefa1deee638fead4327c9613c4af291cf536736772a692ce966d292b0",
+    "marketplace/src/server/store.mjs": "6cbe88d4e48426af505027be1c4c797d5a85278d4e56963c36d1661796c8d9c7",
+    "build/connector-preview-plugin.mjs": "a6a9fe2086e302f94a3f91e3c1a68a45bb3aa07d4a79faf01b14732191eb4e80",
+    "build/connector-preview-worker.mjs": "c1b6b2c420cb67d9e28f8f4ae440f578c0dfd4cb840a12cfe4b58076629a17ba",
+    "build/sites-vite-plugin.LICENSE": "7de1e115d165f176e68f962acdb809b5ab8d8ae78d3981e0701392b2ac50c713",
+    "build/sites-vite-plugin.ts": "07af20e7097d9ed1d76f7c446d02997550b8fc5ca89668b249e25eabd62c6834",
+    "build/sites-worker.ts": "6d4b4802754af74b24a8a9f8542f4ac3c7aaf9135ca666f61ac2a981ee24a626",
+    "drizzle/0000_silent_angel.sql": "adfaa738805653be94ee1c3d3ea29ec5dc4f4ee45497a04919356336d992b31e",
+    "drizzle/meta/0000_snapshot.json": "d3ca9a8b7fb0ddce4f53ca2d55287027d92c252eb277a47fa38ea68bf8da9183",
+    "drizzle/meta/_journal.json": "f77280ec209db77303ffd310f24f033d1df105e0cfee0d1b356e17b07714f2cf"
+  },
+  "scope": "HTTP/Workers/D1/authentication and current third-party protocol reads. Not a marketplace settlement, browser extension session or security audit.",
+  "checks": [
+    {
+      "name": "Public build manifest identifies the inspected source",
+      "passed": true
+    },
+    {
+      "name": "Anonymous runtime identifies mainnet and durable D1",
+      "passed": true
+    },
+    {
+      "name": "Public listing and finalized receipt APIs respond",
+      "passed": true
+    },
+    {
+      "name": "Observed third-party mainnet accounts; not a Sona sale",
+      "passed": true,
+      "observation": {
+        "verified": true,
+        "readOnly": true,
+        "observedAt": "2026-10-17T19:13:56.910Z",
+        "signingFlowSupported": false,
+        "feeKey": {
+          "verified": true,
+          "id": "GVXkdXXtZRF9ZW81D6amGu5nLEw8FJA4XSD8sGdSnC8o",
+          "mint": "GVXkdXXtZRF9ZW81D6amGu5nLEw8FJA4XSD8sGdSnC8o",
+          "owner": "AKesWP7KUE9QSnZuU35yQE8HcWQbTsRGMKAbaqESHVrx",
+          "tokenAccount": "6i9ctDoxQXSwTNUqGrfXfTj9USr5doKKjvu3wZv5DMS7",
+          "tokenProgram": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+          "lockAccount": "GAHVFUQAVEKgwvcZbU3verA5QPPk4jBvGdaZuhqgJLXU",
+          "poolId": "4FBWLAbYs6TXSnbsGCyUNsu2gq3CWCHVo5ujYBKvfmG6",
+          "lpMint": "5p9cyBAx9wZcZ9CeKhttiRKwykuvLioY1ut4zbPCWvHo",
+          "lockedLpAmount": "863268213040",
+          "lpDecimals": 9,
+          "mintA": "So11111111111111111111111111111111111111112",
+          "mintB": "22FoFYTCCm3f8HQJ13z8K7zhydvqmEB56ZhYxhMRmboo",
+          "mintProgramA": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+          "mintProgramB": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+          "originalLockOwner": "3wt6CgisHM3jkiCnhVzvLHwcvJyevUbyUYWeT7VAcCqT",
+          "slot": 458148587,
+          "cluster": "mainnet-beta",
+          "protocol": "raydium-cpmm",
+          "kind": "fee-rights",
+          "evidence": {
+            "commitment": "confirmed",
+            "lockProgram": "LockrWmn6K5twhz3y9w1dQERbmgSaRkfnTeTKbpofwE",
+            "poolProgram": "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C",
+            "escrow": "A3Hdukkh1BWeoVo5d5CVPLf13LiA2xUzaFgb46VcQZvY",
+            "accounts": {
+              "GVXkdXXtZRF9ZW81D6amGu5nLEw8FJA4XSD8sGdSnC8o": {
+                "owner": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                "bytes": 82,
+                "sha256": "4f5b0464389b0ee155b98f1871eaf9787a77dd00c72432de8c52a9e6bb3f734b"
+              },
+              "6i9ctDoxQXSwTNUqGrfXfTj9USr5doKKjvu3wZv5DMS7": {
+                "owner": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                "bytes": 165,
+                "sha256": "f51a56f995755cf2c29309352343a03fa2b84a60396d3eb990e6ed807549185b"
+              },
+              "GAHVFUQAVEKgwvcZbU3verA5QPPk4jBvGdaZuhqgJLXU": {
+                "owner": "LockrWmn6K5twhz3y9w1dQERbmgSaRkfnTeTKbpofwE",
+                "bytes": 256,
+                "sha256": "677a4fe84b384e8cf34580ddc64e517cfca3a2280c82f58aba2af8a6d9e33cb2"
+              },
+              "4FBWLAbYs6TXSnbsGCyUNsu2gq3CWCHVo5ujYBKvfmG6": {
+                "owner": "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C",
+                "bytes": 637,
+                "sha256": "c72cf014432e08dd1564ab96a65afd4afbdc51c31b46dae7a5bb31014c84f945"
+              },
+              "5p9cyBAx9wZcZ9CeKhttiRKwykuvLioY1ut4zbPCWvHo": {
+                "owner": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                "bytes": 82,
+                "sha256": "18415671ae5c67e63cab5e896e814b69d92dfc8b4c9b83c6f797317e48be3208"
+              },
+              "A3Hdukkh1BWeoVo5d5CVPLf13LiA2xUzaFgb46VcQZvY": {
+                "owner": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                "bytes": 165,
+                "sha256": "efa2888bfb22a0a8f380764d44bbb5cb73b7e915c6117894ac88d777a72457c0"
+              },
+              "6JofGPUezDC2KAu2VRY7NQSrWTRkfVZnTWqupSztMxLx": {
+                "owner": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                "bytes": 165,
+                "sha256": "f14d7aa743abad2e2607f6e2a9ebbe271ed7b01e35cf26477a8ab0a61f7ca17b"
+              },
+              "CNwj1xzUuAitiPSXqq3HMRE5ySDTMdn1D2JNtVjjZYUU": {
+                "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+                "bytes": 165,
+                "sha256": "e91e23f63374e8f602dd93c7941473b5df6c3b4090750a5f67c66029e969b640"
+              }
+            }
+          }
+        },
+        "scope": "Raydium CPMM Burn & Earn account verification. This does not create a listing, prove a Sona sale, or authorize a transaction."
+      }
+    },
+    {
+      "name": "Current third-party Raydium Fee Key verifies without a wallet",
+      "passed": true
+    },
+    {
+      "name": "Fresh valueless wallet receives origin-bound challenge",
+      "passed": true
+    },
+    {
+      "name": "Actual Ed25519 signature authenticates through durable storage",
+      "passed": true
+    },
+    {
+      "name": "Consumed authentication signature cannot be replayed",
+      "passed": true
+    },
+    {
+      "name": "Foreign browser origin cannot mutate marketplace",
+      "passed": true
+    },
+    {
+      "name": "Invalid inventory is rejected after persisted-session authentication",
+      "passed": true
+    },
+    {
+      "name": "Logout invalidates the stored session",
+      "passed": true
+    }
+  ]
+}

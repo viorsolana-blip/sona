@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "executedAt": "2026-10-17T19:08:30.834Z",
+  "executedAt": "2026-10-17T19:10:12.705Z",
   "origin": "http://127.0.0.1:4180",
   "mode": "local-workerd-d1-and-disposable-authentication",
   "network": "mainnet-beta",
@@ -22,7 +22,7 @@
       "observation": {
         "verified": true,
         "readOnly": true,
-        "observedAt": "2026-10-17T19:08:30.782Z",
+        "observedAt": "2026-10-17T19:10:12.654Z",
         "signingFlowSupported": false,
         "feeKey": {
           "verified": true,
@@ -41,7 +41,7 @@
           "mintProgramA": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
           "mintProgramB": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
           "originalLockOwner": "3wt6CgisHM3jkiCnhVzvLHwcvJyevUbyUYWeT7VAcCqT",
-          "slot": 458147092,
+          "slot": 458147557,
           "cluster": "mainnet-beta",
           "protocol": "raydium-cpmm",
           "kind": "fee-rights",

@@ -13,6 +13,10 @@ The public deployment address is `https://sona-liquidity-marketplace.official-al
 | `/api/config` | The running network, settlement mode and available configuration. Compare it with the source rather than assuming static copy establishes runtime behavior. |
 | `/api/listings` | Current stored listings. An empty array must not be replaced with invented activity. |
 | `/api/receipts` | Receipts returned by the running marketplace. Local-validator fixtures and unrelated third-party transactions must not be presented as customer sales. |
+| `/build-manifest.json` | Published GitHub revision and SHA-256 hashes of implementation files. |
+| `/source/evidence/public-runtime.json` | Recorded anonymous public checks of actual Workers/D1 authentication, replay/origin rejection, logout and live Raydium account reads. |
+
+The technical page includes a wallet-free verifier for any supplied Fee Key mint and optional holder token account. Its public reference is a third-party, program-held asset used only for protocol reads; it is not a Sona listing or sale.
 
 A successful HTTP response proves reachability at that time, not long-term availability, safe settlement or wallet ownership. Review authenticated endpoints in source; a missing-wallet or unauthorized response is expected for an unauthenticated inspection. Public RPC errors should be visible, not replaced by fictional balances or positions.
 

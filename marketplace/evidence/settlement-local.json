@@ -1,12 +1,12 @@
 {
   "schema": "sona-settlement-local-evidence-v1",
-  "generatedAt": "2026-10-17T18:44:18.422Z",
+  "generatedAt": "2026-10-17T19:13:32.789Z",
   "environment": "isolated local solana-test-validator; valueless test SOL and freshly minted SPL NFT fixtures",
   "scope": "Real SPL Token/Associated Token/System Program execution and client transaction-integrity checks. This does not prove Raydium mainnet Fee Key settlement or public deployment.",
   "validator": {
     "feature-set": 4215500110,
     "solana-core": "1.18.20",
-    "genesisHash": "CK2zC1atUy5ePJKQgZZsGx4Z8Vs6f1nkPyzDXmzQqC2Q"
+    "genesisHash": "H4MsfMVdiTS34Z2wiMdbNn2oRGRuzrNg55Lk5rrPLTXz"
   },
   "privateKeysPersisted": false,
   "sourceSha256": {
@@ -18,20 +18,20 @@
     {
       "name": "atomic NFT transfer and exact SOL payment",
       "passed": true,
-      "mint": "9XAKMLockpGukFHGXSPunuVV2kHuQfQ6RSB1FDrXFcvG",
-      "buyer": "2NYC3uSyciMngrpihC98FbVLxxJABPBV9AJ6fGzspY7B",
-      "seller": "eV2hFuhKjP2vKbT3vTEW4qtiNc5zbLJTYbzLE3ZmdGT",
+      "mint": "4hFNehVq9mJ4QPzJZY7dgsg4SqroBg2JrYKsPzWvVsF9",
+      "buyer": "9EvaikYkq2VqY4h1d2z7Y2pooEZUBc1HTXsGcsM4FUAJ",
+      "seller": "7qrVBJtp2GavYvBJEmZAt4c4DrUS4hpo61jDpK2X9of1",
       "priceLamports": "250000001",
       "sellerBefore": 2000000000,
       "sellerAfter": 2250000001,
       "buyerBefore": 4000000000,
       "buyerAfter": 3747950719,
-      "messageSha256": "f16f8931e5a76c95aef3a83470fdeab456ff938bc91983d2f3c8f60687846062",
-      "transactionBase64": "As3ykQv3zvO6KZfpRWhjWZeaODq1vR0wawmnMuynaMnaTNm8H9IGo13QRUpsxVmI/prS3IrvNaGGvsgeEIm46AV2pGqPWEA8vA1MNFsUnCl1RxkMNwikHaBgEpTcQTuUIpJuO155/Rmc/K+W4OI+2CXwd+ZimJiH0VB/ddOQgUcOAgAECBRgJrGtb5MHhFuR29AIAhmye5zX246563f+kzS2HpOaCZouwvxgDT5LstTKWeqcdNSwG2V9rLgiLlR06zYqanAWdpmiVwYvY0TTkIZpsnW1pl1EGMlzQ3BobV832yIHfJJUf8Up2xzg/bAicRvkBLWjc8jIKFRjUzbwwfF/T7KkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB+l3QpqMQPezK0QYmmyBUcTo8jIgEHo9DhSuqTqjdnrYyXJY9OJInxuz0QKRSODYMLWhOZ2v8QhASOe9jb6fhZBt324ddloZPZy+FGzut5rBy0he1fWzeROoz1hX7/AKmYGoAiqPLxW9VbkuMbWR/a3Gj6RgdPE4n7P09bR2GNnQMGBgACAAUEBwEBBwQDBQIBCgwBAAAAAAAAAAAEAgABDAIAAACBsuYOAAAAAA==",
+      "messageSha256": "265de0028605ba6e7ebd58386435001cf3ad0e702936286f8dce3c0b0aee2519",
+      "transactionBase64": "As8n95gXzKfnuF8+i/I21JUhIqOgN6gNJkqAgaGithvB0ywPklT484Ih70XruFnlEhqwxoblc8MN7Q5zb8y1/Ai2mhBOOGK9LDaDMGDYMssGCP+nWfDfLqCRHaLoYUhsXK/gKbtZ8gunJd81XWFX9HoLwyJ4h5U4MghTaA4fGOcEAgAECHpuoW37Y4emIYwZj3cmIvHFciV63eMx12te0t/bFl3HZan0Re+yF9ryctHda0YNh0526rxo5AwZnrgBfeAgydQqBDwVR/z+m2IGmgOtpqiZPLRJ8d4PHj9zIpFK0wcVvaJv69Z6KzRaAzCBslubiYHmaO/0PR3FBW9i43Bl6/JzAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA24ouIzyJg6RILjLCS5GVrt5UCPNVR+NwnW6K+4W39TIyXJY9OJInxuz0QKRSODYMLWhOZ2v8QhASOe9jb6fhZBt324ddloZPZy+FGzut5rBy0he1fWzeROoz1hX7/AKm9DwnLJioWrTE7j1l8Y54Ro9iQoKnZalM8t/qhyzNO9gMGBgACAAUEBwEBBwQDBQIBCgwBAAAAAAAAAAAEAgABDAIAAACBsuYOAAAAAA==",
       "receipt": {
-        "signature": "57pSYopBn54euQ4cQer5kXwuoBySdnWn4d9fhHmxxdLu6XbNhjyEVt5ALGUam8R3HfcphYRLRYnECUd3F1reFqrC",
+        "signature": "59DjBHC6dZRmSp9BMMnEfoCcwAP5cdJKphDeGXz2knRYbwvqwCnitvrAUCY1V3w5Ha3YY5WefkDHvz627CRXfHUT",
         "slot": 9,
-        "blockTime": 1792262631,
+        "blockTime": 1792264386,
         "error": null,
         "feeLamports": 10000,
         "computeUnitsConsumed": 26642,
@@ -87,8 +87,8 @@
         "preTokenBalances": [
           {
             "accountIndex": 3,
-            "mint": "9XAKMLockpGukFHGXSPunuVV2kHuQfQ6RSB1FDrXFcvG",
-            "owner": "eV2hFuhKjP2vKbT3vTEW4qtiNc5zbLJTYbzLE3ZmdGT",
+            "mint": "4hFNehVq9mJ4QPzJZY7dgsg4SqroBg2JrYKsPzWvVsF9",
+            "owner": "7qrVBJtp2GavYvBJEmZAt4c4DrUS4hpo61jDpK2X9of1",
             "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
             "uiTokenAmount": {
               "amount": "1",
@@ -101,8 +101,8 @@
         "postTokenBalances": [
           {
             "accountIndex": 2,
-            "mint": "9XAKMLockpGukFHGXSPunuVV2kHuQfQ6RSB1FDrXFcvG",
-            "owner": "2NYC3uSyciMngrpihC98FbVLxxJABPBV9AJ6fGzspY7B",
+            "mint": "4hFNehVq9mJ4QPzJZY7dgsg4SqroBg2JrYKsPzWvVsF9",
+            "owner": "9EvaikYkq2VqY4h1d2z7Y2pooEZUBc1HTXsGcsM4FUAJ",
             "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
             "uiTokenAmount": {
               "amount": "1",
@@ -113,8 +113,8 @@
           },
           {
             "accountIndex": 3,
-            "mint": "9XAKMLockpGukFHGXSPunuVV2kHuQfQ6RSB1FDrXFcvG",
-            "owner": "eV2hFuhKjP2vKbT3vTEW4qtiNc5zbLJTYbzLE3ZmdGT",
+            "mint": "4hFNehVq9mJ4QPzJZY7dgsg4SqroBg2JrYKsPzWvVsF9",
+            "owner": "7qrVBJtp2GavYvBJEmZAt4c4DrUS4hpo61jDpK2X9of1",
             "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
             "uiTokenAmount": {
               "amount": "0",
@@ -129,7 +129,7 @@
     {
       "name": "replay cannot execute or debit twice",
       "passed": true,
-      "originalSignature": "57pSYopBn54euQ4cQer5kXwuoBySdnWn4d9fhHmxxdLu6XbNhjyEVt5ALGUam8R3HfcphYRLRYnECUd3F1reFqrC",
+      "originalSignature": "59DjBHC6dZRmSp9BMMnEfoCcwAP5cdJKphDeGXz2knRYbwvqwCnitvrAUCY1V3w5Ha3YY5WefkDHvz627CRXfHUT",
       "replayResponse": "Simulation failed. \nMessage: Transaction simulation failed: This transaction has already been processed. \nLogs: \n[]. \nCatch the `SendTransactionError` and call `getLogs()` on it for full details."
     },
     {
@@ -139,9 +139,9 @@
       "destinationExistsAfter": false,
       "sellerPaymentLamports": "0",
       "receipt": {
-        "signature": "Ukp8Bpit1Xy3i3zVarLpW1rQmDBBbNW5WD7GEt2yk5JZy5AYZW5tE7C21uWXj9d3maCt4H8ATjnU6wCjxWbqjxo",
+        "signature": "5J9CtqAvu6LQUDkrJZLbHSdCY3YbANNuinbteUfCWsipuzsjerLjyxPdHwQN11XKzPJfsNMp9q9cyuBfQ7QBnWTA",
         "slot": 15,
-        "blockTime": 1792262634,
+        "blockTime": 1792264389,
         "error": {
           "InstructionError": [
             2,
@@ -151,13 +151,13 @@
           ]
         },
         "feeLamports": 10000,
-        "computeUnitsConsumed": 28142,
+        "computeUnitsConsumed": 31142,
         "logMessages": [
           "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL invoke [1]",
           "Program log: CreateIdempotent",
           "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]",
           "Program log: Instruction: GetAccountDataSize",
-          "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 1569 of 593095 compute units",
+          "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 1569 of 590095 compute units",
           "Program return: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA pQAAAAAAAAA=",
           "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
           "Program 11111111111111111111111111111111 invoke [2]",
@@ -166,17 +166,17 @@
           "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]",
           "Program log: Instruction: InitializeImmutableOwner",
           "Program log: Please upgrade to SPL Token 2022 for immutable owner support",
-          "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 1405 of 586508 compute units",
+          "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 1405 of 583508 compute units",
           "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
           "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]",
           "Program log: Instruction: InitializeAccount3",
-          "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4188 of 582626 compute units",
+          "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4188 of 579626 compute units",
           "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
-          "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 21845 of 600000 compute units",
+          "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 24845 of 600000 compute units",
           "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL success",
           "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [1]",
           "Program log: Instruction: TransferChecked",
-          "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 6147 of 578155 compute units",
+          "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 6147 of 575155 compute units",
           "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
           "Program 11111111111111111111111111111111 invoke [1]",
           "Transfer: insufficient lamports 7950720, need 3000000000",
@@ -205,8 +205,8 @@
         "preTokenBalances": [
           {
             "accountIndex": 3,
-            "mint": "H6UreLSVa5vAZZhUu8JRs5HZBRH4V1Lt4FWeXYEQkNBL",
-            "owner": "eV2hFuhKjP2vKbT3vTEW4qtiNc5zbLJTYbzLE3ZmdGT",
+            "mint": "BfKpQRfWru85dVQL4hEXEeM1WE2wQLTk3jzruCqaKeF3",
+            "owner": "7qrVBJtp2GavYvBJEmZAt4c4DrUS4hpo61jDpK2X9of1",
             "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
             "uiTokenAmount": {
               "amount": "1",
@@ -219,8 +219,8 @@
         "postTokenBalances": [
           {
             "accountIndex": 3,
-            "mint": "H6UreLSVa5vAZZhUu8JRs5HZBRH4V1Lt4FWeXYEQkNBL",
-            "owner": "eV2hFuhKjP2vKbT3vTEW4qtiNc5zbLJTYbzLE3ZmdGT",
+            "mint": "BfKpQRfWru85dVQL4hEXEeM1WE2wQLTk3jzruCqaKeF3",
+            "owner": "7qrVBJtp2GavYvBJEmZAt4c4DrUS4hpo61jDpK2X9of1",
             "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
             "uiTokenAmount": {
               "amount": "1",
@@ -236,9 +236,9 @@
       "name": "moved ownership blocks settlement without paying the seller",
       "passed": true,
       "receipt": {
-        "signature": "z4siebbYRpdv4AnPvYDrzmdVJDkfjTGSfWBWeNSx6bR2AYGs32EeRMwcFcbxeKXJ5Ak2ChKNtzycTp51h3DrGi1",
+        "signature": "286gmJ6FYZ6cBRPYjRqP81haddC8be51ytHASFQm7Gwsjqwpgq5vwJxYWgUco6gStAaDN2ajmy4X1pwyeGdNAz3R",
         "slot": 22,
-        "blockTime": 1792262638,
+        "blockTime": 1792264392,
         "error": {
           "InstructionError": [
             1,
@@ -248,13 +248,13 @@
           ]
         },
         "feeLamports": 10000,
-        "computeUnitsConsumed": 24830,
+        "computeUnitsConsumed": 26330,
         "logMessages": [
           "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL invoke [1]",
           "Program log: CreateIdempotent",
           "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]",
           "Program log: Instruction: GetAccountDataSize",
-          "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 1569 of 594595 compute units",
+          "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 1569 of 593095 compute units",
           "Program return: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA pQAAAAAAAAA=",
           "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
           "Program 11111111111111111111111111111111 invoke [2]",
@@ -263,25 +263,25 @@
           "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]",
           "Program log: Instruction: InitializeImmutableOwner",
           "Program log: Please upgrade to SPL Token 2022 for immutable owner support",
-          "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 1405 of 588008 compute units",
+          "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 1405 of 586508 compute units",
           "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
           "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]",
           "Program log: Instruction: InitializeAccount3",
-          "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4188 of 584126 compute units",
+          "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4188 of 582626 compute units",
           "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
-          "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 20345 of 600000 compute units",
+          "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 21845 of 600000 compute units",
           "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL success",
           "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [1]",
           "Program log: Instruction: TransferChecked",
           "Program log: Error: insufficient funds",
-          "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4485 of 579655 compute units",
+          "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4485 of 578155 compute units",
           "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA failed: custom program error: 0x1"
         ],
         "preBalances": [
           3747950719,
           2250000001,
-          0,
           2039280,
+          0,
           1,
           1461600,
           731913600,
@@ -290,8 +290,8 @@
         "postBalances": [
           3747940719,
           2250000001,
-          0,
           2039280,
+          0,
           1,
           1461600,
           731913600,
@@ -299,9 +299,9 @@
         ],
         "preTokenBalances": [
           {
-            "accountIndex": 3,
-            "mint": "25NipaWASxNqnXtdYbUeEk4CrCKzX6DxqRV7DzZMsou5",
-            "owner": "eV2hFuhKjP2vKbT3vTEW4qtiNc5zbLJTYbzLE3ZmdGT",
+            "accountIndex": 2,
+            "mint": "8Cfv9rwLxjGAm8ueTRuChCQUfRAtaVAVs94qzqcJoXvA",
+            "owner": "7qrVBJtp2GavYvBJEmZAt4c4DrUS4hpo61jDpK2X9of1",
             "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
             "uiTokenAmount": {
               "amount": "0",
@@ -313,9 +313,9 @@
         ],
         "postTokenBalances": [
           {
-            "accountIndex": 3,
-            "mint": "25NipaWASxNqnXtdYbUeEk4CrCKzX6DxqRV7DzZMsou5",
-            "owner": "eV2hFuhKjP2vKbT3vTEW4qtiNc5zbLJTYbzLE3ZmdGT",
+            "accountIndex": 2,
+            "mint": "8Cfv9rwLxjGAm8ueTRuChCQUfRAtaVAVs94qzqcJoXvA",
+            "owner": "7qrVBJtp2GavYvBJEmZAt4c4DrUS4hpo61jDpK2X9of1",
             "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
             "uiTokenAmount": {
               "amount": "0",

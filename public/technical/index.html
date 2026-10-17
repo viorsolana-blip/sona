@@ -20,8 +20,8 @@
   <p class="date">Implementation and evidence · 18 October 2026</p>
   <h1>What works today.</h1>
   <p class="lead">Sona connects Solana wallets, verifies Raydium CPMM Fee Keys, stores authenticated listings and builds an atomic exchange signed by both buyer and seller.</p>
-  <p id="publication-state" class="status">Public release prepared; deployment and repository availability await verification.</p>
-  <p>The Node/SQLite settlement and full HTTP workflow have been executed against an isolated Solana validator. The hosted implementation uses Cloudflare Workers and D1. A separate read-only check validated an existing third-party Fee Key on mainnet. These are distinct results: no Sona mainnet sale or independent security audit is claimed.</p>
+  <p id="publication-state" class="status">Public implementation. Runtime and source availability verified.</p>
+  <p>The public Cloudflare Workers/D1 service has been checked with anonymous requests, a fresh wallet’s authentication signature, replay and origin rejection, session invalidation and current Raydium account reads. Atomic settlement has separately executed on an isolated Solana validator. No Sona mainnet sale or independent security audit is claimed.</p>
   <h2>The exchange</h2>
   <p>A seller lists a verified Fee Key at a fixed SOL price. A buyer requests the purchase. The seller signs a short-lived transaction, then the buyer reviews and signs the same transaction. It creates the buyer’s token account if needed, transfers exactly one Fee Key and pays the seller. All instruction effects succeed together or roll back together; transaction fees may still apply.</p>
   <p>Listings and requests are hosted by Sona. Assets stay in the parties’ wallets until settlement. There is no Sona custody or new escrow program to deploy. Seller approval is required for each buyer, and an approval already released cannot be revoked by merely canceling a listing.</p>
@@ -33,7 +33,7 @@
     <tr><td>Listings and requests</td><td>Signed nonce authentication, shared D1 persistence in the hosted implementation, exact lamport prices, listing expiry and authorized updates. The local reference service uses SQLite. Each sale requires both wallets.</td></tr>
     <tr><td>Atomic settlement</td><td>Canonical transaction checks in the browser and server; finalized confirmation before a completed sale is recorded. Local validator artifacts include actual instruction logs and before/after balances.</td></tr>
     <tr><td>Public receipts</td><td><a href="/api/receipts">The receipt endpoint</a> exposes actual completed trades from this running service. Local test receipts are kept in separate evidence files and never inserted as marketplace trades.</td></tr>
-    <tr><td>Release status</td><td>Public deployment and repository verification are pending. Recorded local tests do not establish hosted D1 behavior or a mainnet sale. An independent security review remains outstanding.</td></tr>
+    <tr><td>Release status</td><td>Public HTTPS service and source repository are available. Recorded public checks cover Workers/D1 authentication and read-only protocol verification. A real mainnet Fee Key sale and independent security review remain unverified.</td></tr>
   </tbody></table>
   <h2>Verify a Fee Key</h2>
   <p>Read current Solana account state without connecting a wallet. This checks the mint, current holder, canonical Raydium lock, pool, LP escrow and vaults. It does not list an asset or authorize a transaction.</p>
@@ -49,6 +49,8 @@
   </form>
   <h2>Inspect the evidence</h2>
   <ul class="sources">
+    <li><a href="/source/evidence/public-runtime.json">Public runtime verification</a> — anonymous API access, actual Ed25519 authentication, persisted-session checks, replay and foreign-origin rejection, logout and a current third-party Raydium read. No transaction was sent.</li>
+    <li><a href="/source/evidence/workerd-local.json">Local workerd/D1 runtime verification</a> — the same request and authentication checks in the actual local Workers runtime, with a read-only mainnet observation. This is separate from validator settlement tests.</li>
     <li><a href="/source/evidence/settlement-local.json">Local validator execution</a> — atomic transfers, failure rollback and transaction-integrity cases using purpose-created SPL NFTs.</li>
     <li><a href="/source/evidence/backend-local.json">Local HTTP-to-chain execution</a> — authentication, persistent listing, both signatures, finalized receipt and restart persistence.</li>
     <li><a href="/source/evidence/hosted-local.json">Hosted adapter execution on a local validator</a> — real HTTP requests, a D1-compatible SQLite adapter, fresh request instances and durable recovery. This is not execution in Cloudflare’s deployed D1 runtime.</li>
@@ -60,7 +62,7 @@
   </ul>
   <h2>Read and reproduce</h2>
   <ul class="sources">
-    <li><a href="https://github.com/viorsolana-blip/sona" rel="noopener noreferrer">Sona source repository</a> — publication pending verification. <a href="https://sona-liquidity-marketplace.official-alexslobodi.chatgpt.site" rel="noopener noreferrer">Planned public service</a>.</li>
+    <li><a href="https://github.com/viorsolana-blip/sona" rel="noopener noreferrer">Sona source repository</a> · <a href="https://sona-liquidity-marketplace.official-alexslobodi.chatgpt.site" rel="noopener noreferrer">Public service</a>. Use the build manifest to identify the deployed source revision.</li>
     <li><a href="../app/app.js">Marketplace UI source</a> · <a href="/source/src/client/wallet.mjs">wallet signing and browser transaction checks</a>.</li>
     <li><a href="/source/src/chain/raydium.mjs">Fee Key verification</a> · <a href="/source/src/chain/settlement.mjs">atomic settlement</a> · <a href="/source/src/server/marketplace.mjs">local Node marketplace reference</a>.</li>
     <li>Hosted implementation: <a href="/source/src/hosted/marketplace.mjs">marketplace lifecycle</a> · <a href="/source/src/hosted/http.mjs">HTTP handler</a> · <a href="/source/src/hosted/d1-store.mjs">D1 persistence</a>. This is separate from the Node/SQLite reference tested in the local execution artifacts.</li>

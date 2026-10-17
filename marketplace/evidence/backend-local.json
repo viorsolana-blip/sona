@@ -1,6 +1,6 @@
 {
   "schema": "sona-backend-local-evidence-v1",
-  "generatedAt": "2026-10-17T18:44:18.420Z",
+  "generatedAt": "2026-10-17T19:13:32.786Z",
   "scope": "Actual HTTP authentication, SQLite listing/request/approval, atomic SPL/System transaction, finalized receipt and restart persistence. Isolated local validator with a test NFT. Raydium authenticity is separately tested against mainnet accounts; this is not a mainnet Fee Key sale.",
   "cluster": "localnet",
   "passed": 14,
@@ -21,23 +21,23 @@
     "idempotent repeat submission",
     "SQLite persistence after restart"
   ],
-  "signature": "2cVqYwoTWVB7ob1F1LFZjqrdZkWzSPwkJbERUr5UR1HwRPPGvWavCMsyJzUBfDczvjdbswFegPFBsV4Y5f4iEK3E",
-  "mint": "618HJa1LWgryN9nFBPcbLTSULazXo659ti6hXSNNY6Hc",
-  "seller": "eV2hFuhKjP2vKbT3vTEW4qtiNc5zbLJTYbzLE3ZmdGT",
-  "buyer": "2NYC3uSyciMngrpihC98FbVLxxJABPBV9AJ6fGzspY7B",
+  "signature": "5VXnqfqH5Eweq8GpEt1KfxXutU37SVVWxKyR8EzzVqFiUnBsVE5Y3PRWzwXaQbfTup5g9agnrtRHJGujL1pGqQLp",
+  "mint": "6V8jXSi3LCuJgmWgf1KtEyFfDmXSY3NMczdRW6MDQb3L",
+  "seller": "7qrVBJtp2GavYvBJEmZAt4c4DrUS4hpo61jDpK2X9of1",
+  "buyer": "9EvaikYkq2VqY4h1d2z7Y2pooEZUBc1HTXsGcsM4FUAJ",
   "priceLamports": "100000001",
   "receipt": {
-    "id": "2cVqYwoTWVB7ob1F1LFZjqrdZkWzSPwkJbERUr5UR1HwRPPGvWavCMsyJzUBfDczvjdbswFegPFBsV4Y5f4iEK3E",
+    "id": "5VXnqfqH5Eweq8GpEt1KfxXutU37SVVWxKyR8EzzVqFiUnBsVE5Y3PRWzwXaQbfTup5g9agnrtRHJGujL1pGqQLp",
     "cluster": "localnet",
-    "signature": "2cVqYwoTWVB7ob1F1LFZjqrdZkWzSPwkJbERUr5UR1HwRPPGvWavCMsyJzUBfDczvjdbswFegPFBsV4Y5f4iEK3E",
+    "signature": "5VXnqfqH5Eweq8GpEt1KfxXutU37SVVWxKyR8EzzVqFiUnBsVE5Y3PRWzwXaQbfTup5g9agnrtRHJGujL1pGqQLp",
     "slot": 31,
     "commitment": "finalized",
-    "mint": "618HJa1LWgryN9nFBPcbLTSULazXo659ti6hXSNNY6Hc",
-    "buyer": "2NYC3uSyciMngrpihC98FbVLxxJABPBV9AJ6fGzspY7B",
-    "seller": "eV2hFuhKjP2vKbT3vTEW4qtiNc5zbLJTYbzLE3ZmdGT",
+    "mint": "6V8jXSi3LCuJgmWgf1KtEyFfDmXSY3NMczdRW6MDQb3L",
+    "buyer": "9EvaikYkq2VqY4h1d2z7Y2pooEZUBc1HTXsGcsM4FUAJ",
+    "seller": "7qrVBJtp2GavYvBJEmZAt4c4DrUS4hpo61jDpK2X9of1",
     "priceLamports": "100000001",
-    "messageSha256": "5661df064ca1b79f50ac206b654810bd111c0d28c9f3d9263cd52872a96b7e0c",
-    "createdAt": "2026-10-17T18:44:18.404Z"
+    "messageSha256": "c63520c212f102c3c0c4d4bfaa07b585f62f8a89934a185eff06658271147f82",
+    "createdAt": "2026-10-17T19:13:32.769Z"
   },
   "sourceSha256": {
     "src/server/marketplace.mjs": "d8e2f9c30d2dd1b1a95c1b3fa5cb476ccd9feee4dfdc85cabac7ffa971becca1",

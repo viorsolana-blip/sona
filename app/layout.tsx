@@ -5,8 +5,8 @@ export const metadata: Metadata = {
   title: "Sona — Solana Liquidity Marketplace",
   description: "A marketplace for verified Raydium CPMM Fee Keys on Solana.",
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
+    icon: "/assets/sona-symbol.png",
+    shortcut: "/assets/sona-symbol.png",
   },
 };
 

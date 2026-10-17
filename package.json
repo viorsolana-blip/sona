@@ -1,0 +1,59 @@
+{
+  "name": "sona-public-marketplace",
+  "version": "0.3.0",
+  "private": true,
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "install:ci": "node scripts/install-ci.mjs",
+    "dev": "node scripts/run-framework.mjs dev",
+    "build": "node scripts/run-framework.mjs build",
+    "start": "node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js dev --config dist/server/wrangler.json --local --persist-to .wrangler/state --ip 127.0.0.1 --inspector-port 0",
+    "db:generate": "drizzle-kit generate",
+    "test": "npm --prefix marketplace test",
+    "test:hosted": "node --test marketplace/tests/hosted*.test.mjs",
+    "prebuild": "node scripts/prepare-public.mjs"
+  },
+  "dependencies": {
+    "drizzle-orm": "0.45.2",
+    "next": "16.4.2",
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
+    "@solana/spl-token": "0.4.14",
+    "@solana/web3.js": "1.98.4",
+    "@wallet-standard/app": "1.1.0",
+    "bs58": "6.0.0",
+    "buffer": "6.0.3",
+    "tweetnacl": "1.0.3"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "1.37.1",
+    "@cloudflare/workers-types": "4.20260515.1",
+    "@tailwindcss/postcss": "4.2.1",
+    "@types/node": "22.19.19",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.2",
+    "@vitejs/plugin-rsc": "0.5.26",
+    "drizzle-kit": "0.31.10",
+    "json-rpc-2.0": "1.7.1",
+    "raw-body": "3.0.2",
+    "react-server-dom-webpack": "19.2.6",
+    "tailwindcss": "4.2.1",
+    "typescript": "5.9.3",
+    "vinext": "1.0.0-beta.5",
+    "vite": "8.0.13",
+    "wrangler": "4.92.0"
+  },
+  "type": "module",
+  "overrides": {
+    "miniflare": {
+      "sharp": "0.35.5"
+    },
+    "jayson": "5.0.0",
+    "bigint-buffer": "file:./marketplace/vendor/bigint-buffer",
+    "sharp": "0.35.5",
+    "ws@>=8.0.0 <8.21.0": "8.21.0"
+  }
+}

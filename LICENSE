@@ -1,0 +1,19 @@
+Sona source and asset rights notice
+
+Copyright in Sona-authored source and documentation remains with its respective
+copyright holders. This public repository is provided for inspection and
+verification. No additional general redistribution, relicensing or trademark
+permission is granted by this notice. Existing rights under applicable law and
+the hosting platform's terms are unaffected.
+
+Third-party code remains governed by its own license. Existing copyright and
+license notices must be preserved. In particular:
+
+- build/sites-vite-plugin.LICENSE contains the OpenAI MIT notice for that plugin.
+- vendor/shadcn-tailwind-4.13.0.LICENSE.md contains the shadcn MIT notice.
+- npm dependencies have their own licenses, available in installed packages.
+- Supplied Framer exports, fonts, illustrations, logos and brand assets are not
+  relicensed by this repository. Their presence does not imply ownership of
+  third-party marks or endorsement by their owners.
+
+See docs/SOURCE-PROVENANCE.md for source boundaries and attribution locations.

@@ -1,0 +1,82 @@
+name: Verify source
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  marketplace:
+    name: Marketplace tests and wallet build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: marketplace
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: marketplace/package-lock.json
+      - name: Install locked marketplace dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Build the wallet bundle from source
+        run: npm run build
+      - name: Run marketplace tests
+        run: npm test
+      - name: State the verification scope
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<'SUMMARY'
+          Marketplace unit and browser-bundle tests ran against this commit.
+          The optional local-validator test is not enabled by this job.
+          This run does not prove hosted D1 execution, a connected browser wallet,
+          a mainnet sale, or an independent security review.
+          SUMMARY
+
+  hosted-build:
+    name: Portable hosted application build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      CLOUDFLARE_CF_FETCH_ENABLED: 'false'
+      WRANGLER_SEND_METRICS: 'false'
+      SHARP_IGNORE_GLOBAL_LIBVIPS: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            marketplace/package-lock.json
+      - name: Install locked hosted dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Install locked marketplace dependencies
+        run: npm --prefix marketplace ci --no-audit --no-fund
+      - name: Rebuild the wallet bundle
+        run: npm --prefix marketplace run build
+      - name: Build the portable hosted application
+        run: npm run build
+      - name: State the verification scope
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<'SUMMARY'
+          The hosted application compiled from this commit using repository-local tools.
+          No deployment credentials, paid API keys, private wallet keys or mainnet funds
+          are used by this workflow. Build success is not a hosted integration test.
+          SUMMARY

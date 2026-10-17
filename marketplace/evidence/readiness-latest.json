@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 2,
+  "project": "Sona",
+  "productionReady": false,
+  "exitCode": 1,
+  "observedStage": "implementation-with-recorded-local-execution",
+  "scope": "Offline source and recorded-evidence inventory; no network execution, security certification or score prediction.",
+  "verificationPolicy": "Code presence, declared metadata and hash-matched recorded artifacts are distinct evidence levels. The offline gate cannot certify production readiness or independent execution.",
+  "inspectedPaths": [
+    "dist/app/app.js",
+    "src/client/wallet.mjs",
+    "src/chain/raydium.mjs",
+    "src/chain/settlement.mjs",
+    "src/server/index.mjs",
+    "src/server/http.mjs",
+    "src/server/marketplace.mjs",
+    "src/server/store.mjs",
+    "scripts/test-settlement-local.mjs",
+    "scripts/test-backend-local.mjs",
+    "scripts/verify-raydium-live.mjs",
+    "src/server/network.mjs",
+    "src/client/polyfills.mjs",
+    "scripts/build-wallet.mjs",
+    "dist/app/wallet.js",
+    "vendor/bigint-buffer/index.cjs",
+    "vendor/bigint-buffer/package.json",
+    "tests/browser-bundle.test.mjs",
+    "tests/bigint-buffer.test.mjs",
+    "tests/wallet.test.mjs",
+    "tests/raydium.test.mjs",
+    "tests/settlement.test.mjs",
+    "tests/marketplace.test.mjs",
+    "package.json",
+    "package-lock.json",
+    "evidence/settlement-local.json",
+    "evidence/backend-local.json",
+    "evidence/raydium-mainnet-read.json"
+  ],
+  "missingPaths": [],
+  "observations": [
+    {
+      "path": "src/server/marketplace.mjs",
+      "description": "Listings and purchase coordination are server-hosted. Co-signed settlement is non-custodial; this does not make the order service decentralized."
+    }
+  ],
+  "checks": [
+    {
+      "id": "live-wallet",
+      "status": "source-present",
+      "reason": "Wallet Standard and injected adapters are wired to the UI. Automated adapter tests are available; a real browser-extension session is separate evidence.",
+      "evidencePaths": [
+        "dist/app/app.js",
+        "src/client/wallet.mjs"
+      ]
+    },
+    {
+      "id": "live-position-loading",
+      "status": "source-present",
+      "reason": "RPC balance and verified Fee Key discovery source are present; no fictional fallback is imported by the UI.",
+      "evidencePaths": [
+        "src/server/marketplace.mjs",
+        "src/chain/raydium.mjs"
+      ]
+    },
+    {
+      "id": "protocol-validation",
+      "status": "source-present",
+      "reason": "Raydium CPMM Burn & Earn decoder and ownership/lock/mint checks are present. The separate mainnet-read artifact supplies a recorded live observation.",
+      "evidencePaths": [
+        "src/chain/raydium.mjs"
+      ]
+    },
+    {
+      "id": "settlement",
+      "status": "source-present",
+      "reason": "Atomic SPL NFT transfer plus exact SOL payment, both signatures and canonical-message checks are implemented. Runtime evidence is assessed separately.",
+      "evidencePaths": [
+        "src/chain/settlement.mjs",
+        "src/server/marketplace.mjs",
+        "src/client/wallet.mjs"
+      ]
+    },
+    {
+      "id": "local-settlement-execution",
+      "evidencePaths": [
+        "evidence/settlement-local.json"
+      ],
+      "scope": "Isolated local validator; purpose-created SPL NFTs and valueless SOL. No Raydium mainnet sale.",
+      "status": "recorded-current-source",
+      "reason": "Recorded artifact passes structural checks and its listed source hashes match. This command has not independently rerun or authenticated the execution.",
+      "recordedAt": "2026-10-17T18:44:18.422Z",
+      "passedCases": 6,
+      "sourceHashCount": 3
+    },
+    {
+      "id": "local-backend-execution",
+      "evidencePaths": [
+        "evidence/backend-local.json"
+      ],
+      "scope": "HTTP authentication, persistent listings and co-signed settlement against the isolated local validator. Test NFT authenticity is injected only in the test runner.",
+      "status": "recorded-current-source",
+      "reason": "Recorded artifact passes structural checks and its listed source hashes match. This command has not independently rerun or authenticated the execution.",
+      "recordedAt": "2026-10-17T18:44:18.420Z",
+      "passedCases": 14,
+      "sourceHashCount": 19
+    },
+    {
+      "id": "mainnet-read-only",
+      "evidencePaths": [
+        "evidence/raydium-mainnet-read.json"
+      ],
+      "scope": "Read-only validation of an existing third-party Fee Key. Not a Sona listing, customer or sale.",
+      "status": "recorded-current-source",
+      "reason": "Recorded artifact passes structural checks and its listed source hashes match. This command has not independently rerun or authenticated the execution.",
+      "recordedAt": "2026-10-17T18:43:13.335Z",
+      "passedCases": null,
+      "sourceHashCount": 3
+    },
+    {
+      "id": "public-deployment",
+      "status": "missing",
+      "reason": "A declared URL is not verified availability, configuration or operational readiness. No custom Sona program deployment is required for this architecture.",
+      "evidencePaths": []
+    },
+    {
+      "id": "mainnet-settlement",
+      "status": "missing",
+      "reason": "Public signatures require independent inspection of success, signers, amounts, mint and lock invariants. Local transactions and mainnet account reads are not mainnet sales.",
+      "evidencePaths": []
+    },
+    {
+      "id": "source-provenance",
+      "status": "missing",
+      "reason": "Public repository accessibility and correspondence to this running build remain independently unverified.",
+      "evidencePaths": []
+    },
+    {
+      "id": "independent-security-review",
+      "status": "missing",
+      "reason": "Security review scope, findings and correspondence to this revision require independent review.",
+      "evidencePaths": []
+    }
+  ],
+  "inputErrors": []
+}

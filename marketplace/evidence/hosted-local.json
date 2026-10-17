@@ -1,0 +1,123 @@
+{
+  "schema": "sona-hosted-local-evidence-v1",
+  "generatedAt": "2026-10-17T19:07:44.379Z",
+  "cluster": "localnet",
+  "genesisHash": "GEBsWC1h69pwpuVVjhymwWbEBvT52eUVwLdkTqk7eo4f",
+  "scope": "Real HTTP requests through the hosted Request/Response API, D1-compatible real SQLite transactions, fresh marketplace instances per request, real local-validator SPL/System execution and durable restart recovery. This is not a Cloudflare D1 deployment test or a mainnet Raydium Fee Key sale. Raydium authenticity is tested separately against actual mainnet accounts.",
+  "privateKeysPersisted": false,
+  "requestInstances": 52,
+  "passed": 10,
+  "failed": 0,
+  "cases": [
+    "Fresh wallet signatures authenticate across separate request instances",
+    "Unauthenticated and cross-origin mutations rejected",
+    "Durable listing visible from a new request instance",
+    "Only trade participants can inspect signing payloads",
+    "Seller approval survives requests and cannot be falsely canceled",
+    "Exact signed transaction persisted before actual broadcast; lost response remains pending",
+    "Reopened persistent database and new request recover actual finalized transaction",
+    "Exact 100000001-lamport payment and one NFT transfer on the local validator",
+    "Repeat submission does not pay twice or duplicate the receipt",
+    "Durable public receipt matches actual finalized validator transaction"
+  ],
+  "mint": "HGSR1bF9zyFWvcJAC6BJNjuoztGLVchPJDGcBXegGNiT",
+  "seller": "83Xgt9t1BVVmGwmSDo14RWzaejaram8zHiW1uq54GEpw",
+  "buyer": "5SBXBCPZ8iJCZwbmrHSo2aYvwm9CEr9EWcPsT2ZFqMqM",
+  "priceLamports": "100000001",
+  "receipt": {
+    "id": "3iqE8RWeD7RKqtvors3uyJMeXfkcipi12pzgxEgH7KDibDvPWisgdG5sna1hNNPJ1mPTJg44Vv5F5tE5ihMiw7Ye",
+    "cluster": "localnet",
+    "signature": "3iqE8RWeD7RKqtvors3uyJMeXfkcipi12pzgxEgH7KDibDvPWisgdG5sna1hNNPJ1mPTJg44Vv5F5tE5ihMiw7Ye",
+    "slot": 31,
+    "commitment": "finalized",
+    "mint": "HGSR1bF9zyFWvcJAC6BJNjuoztGLVchPJDGcBXegGNiT",
+    "buyer": "5SBXBCPZ8iJCZwbmrHSo2aYvwm9CEr9EWcPsT2ZFqMqM",
+    "seller": "83Xgt9t1BVVmGwmSDo14RWzaejaram8zHiW1uq54GEpw",
+    "priceLamports": "100000001",
+    "messageSha256": "d0e920c4862cf9928222bfe9cbaf58766cf3778e31be332efc85697eec9cc3b7",
+    "createdAt": "2026-10-17T19:07:44.368Z"
+  },
+  "chainReceipt": {
+    "slot": 31,
+    "error": null,
+    "feeLamports": 10000,
+    "logMessages": [
+      "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL invoke [1]",
+      "Program log: CreateIdempotent",
+      "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]",
+      "Program log: Instruction: GetAccountDataSize",
+      "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 1569 of 594595 compute units",
+      "Program return: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA pQAAAAAAAAA=",
+      "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
+      "Program 11111111111111111111111111111111 invoke [2]",
+      "Program 11111111111111111111111111111111 success",
+      "Program log: Initialize the associated token account",
+      "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]",
+      "Program log: Instruction: InitializeImmutableOwner",
+      "Program log: Please upgrade to SPL Token 2022 for immutable owner support",
+      "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 1405 of 588008 compute units",
+      "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
+      "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]",
+      "Program log: Instruction: InitializeAccount3",
+      "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4188 of 584126 compute units",
+      "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
+      "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 20345 of 600000 compute units",
+      "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL success",
+      "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [1]",
+      "Program log: Instruction: TransferChecked",
+      "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 6147 of 579655 compute units",
+      "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success",
+      "Program 11111111111111111111111111111111 invoke [1]",
+      "Program 11111111111111111111111111111111 success"
+    ],
+    "preTokenBalances": [
+      {
+        "accountIndex": 3,
+        "mint": "HGSR1bF9zyFWvcJAC6BJNjuoztGLVchPJDGcBXegGNiT",
+        "owner": "83Xgt9t1BVVmGwmSDo14RWzaejaram8zHiW1uq54GEpw",
+        "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+        "uiTokenAmount": {
+          "amount": "1",
+          "decimals": 0,
+          "uiAmount": 1,
+          "uiAmountString": "1"
+        }
+      }
+    ],
+    "postTokenBalances": [
+      {
+        "accountIndex": 2,
+        "mint": "HGSR1bF9zyFWvcJAC6BJNjuoztGLVchPJDGcBXegGNiT",
+        "owner": "5SBXBCPZ8iJCZwbmrHSo2aYvwm9CEr9EWcPsT2ZFqMqM",
+        "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+        "uiTokenAmount": {
+          "amount": "1",
+          "decimals": 0,
+          "uiAmount": 1,
+          "uiAmountString": "1"
+        }
+      },
+      {
+        "accountIndex": 3,
+        "mint": "HGSR1bF9zyFWvcJAC6BJNjuoztGLVchPJDGcBXegGNiT",
+        "owner": "83Xgt9t1BVVmGwmSDo14RWzaejaram8zHiW1uq54GEpw",
+        "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+        "uiTokenAmount": {
+          "amount": "0",
+          "decimals": 0,
+          "uiAmount": null,
+          "uiAmountString": "0"
+        }
+      }
+    ]
+  },
+  "sourceSha256": {
+    "src/hosted/d1-store.mjs": "5237abb08e2a3878a4dc9ab057a79d9516de8577a712359e70016407b166cd38",
+    "src/hosted/marketplace.mjs": "966b6073c5221a82ae2c25935cb87120e19ece65e95a1493c376e1b8bfc4f95a",
+    "src/hosted/http.mjs": "8429521dc0b2b0a30638ad2e3a6862de6ec7eddf229ea67e16df6f8dc59f8423",
+    "src/hosted/migration.sql": "828d719926771cb971d0185a524c6b7f3598d8a2a14c9548b5b133b668840d82",
+    "src/chain/settlement.mjs": "e6e80a37b537f008f1e5b91335a9f88a5248a0e09ab58db68f64369f0084f89f",
+    "scripts/test-hosted-local.mjs": "69f598a6882880e42fe80c67380a06bb7a1c0baf85ff90012cf4486e7dbdcb87",
+    "tests/hosted.test.mjs": "305045d7c4912684dc6adc9dc88f7937332b63e2e1f605ac7799784d96080178"
+  }
+}

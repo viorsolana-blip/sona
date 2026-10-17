@@ -1,0 +1,25 @@
+import {Keypair} from '@solana/web3.js';
+import nacl from 'tweetnacl';
+import {writeFileSync,readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+const origin=process.argv[2]||'https://sona-liquidity-marketplace.official-alexslobodi.chatgpt.site';
+const output=process.argv[3]||'marketplace/evidence/public-runtime.json';
+const checks=[];
+async function check(name,fn){await fn();checks.push({name,passed:true});console.log('PASS',name);}
+async function request(path,options={}){const r=await fetch(origin+path,{...options,headers:{'Content-Type':'application/json',...options.headers},signal:AbortSignal.timeout(60000)});return {status:r.status,body:await r.json()};}
+function assert(value,msg){if(!value)throw new Error(msg);}
+const wallet=Keypair.generate();let token;
+try{
+await check('Anonymous runtime identifies mainnet and durable D1',async()=>{const r=await request('/api/config');assert(r.status===200 && r.body.cluster==='mainnet-beta' && r.body.persistence==='Cloudflare D1','Unexpected runtime '+JSON.stringify(r));});
+await check('Public listing and finalized receipt APIs respond',async()=>{for(const [p,key] of [['/api/listings','listings'],['/api/receipts','receipts']]){const r=await request(p);assert(r.status===200&&Array.isArray(r.body[key]),p+' failed');}});
+await check('Current third-party Raydium Fee Key verifies without a wallet',async()=>{const r=await request('/api/verify/GVXkdXXtZRF9ZW81D6amGu5nLEw8FJA4XSD8sGdSnC8o?tokenAccount=6i9ctDoxQXSwTNUqGrfXfTj9USr5doKKjvu3wZv5DMS7');assert(r.status===200&&r.body.verified===true&&r.body.readOnly===true&&Number.isSafeInteger(r.body.feeKey?.slot),'Verification failed '+JSON.stringify(r));checks.push({name:'Observed third-party mainnet accounts; not a Sona sale',passed:true,observation:r.body});});
+let challenge,payload;
+await check('Fresh valueless wallet receives origin-bound challenge',async()=>{const r=await request('/api/auth/challenge',{method:'POST',body:JSON.stringify({address:wallet.publicKey.toBase58()})});assert(r.status===200&&r.body.message.includes(origin),'Challenge failed');challenge=r.body;payload={address:wallet.publicKey.toBase58(),challengeId:challenge.challengeId,signatureBase64:Buffer.from(nacl.sign.detached(Buffer.from(challenge.message),wallet.secretKey)).toString('base64')};});
+await check('Actual Ed25519 signature authenticates through durable storage',async()=>{const r=await request('/api/auth/verify',{method:'POST',body:JSON.stringify(payload)});assert(r.status===200&&typeof r.body.token==='string','Authentication failed '+JSON.stringify(r));token=r.body.token;});
+await check('Consumed authentication signature cannot be replayed',async()=>{const r=await request('/api/auth/verify',{method:'POST',body:JSON.stringify(payload)});assert(r.status===401,'Replay accepted');});
+await check('Foreign browser origin cannot mutate marketplace',async()=>{const r=await request('/api/listings',{method:'POST',headers:{Origin:'https://unrelated.invalid',Authorization:'Bearer '+token},body:'{}'});assert(r.status===403,'Foreign origin accepted');});
+await check('Invalid inventory is rejected after persisted-session authentication',async()=>{const r=await request('/api/listings',{method:'POST',headers:{Authorization:'Bearer '+token},body:JSON.stringify({mint:'invalid',priceLamports:'1000000',expiresInDays:1})});assert([400,422].includes(r.status),'Expected inventory rejection, got '+JSON.stringify(r));});
+await check('Logout invalidates the stored session',async()=>{await request('/api/auth/logout',{method:'POST',headers:{Authorization:'Bearer '+token},body:'{}'});const r=await request('/api/listings',{method:'POST',headers:{Authorization:'Bearer '+token},body:'{}'});assert(r.status===401,'Logged-out session accepted');token=null;});
+const report={schemaVersion:1,executedAt:new Date().toISOString(),origin,mode:new URL(origin).hostname==='127.0.0.1'?'local-workerd-d1-and-disposable-authentication':'anonymous-public-runtime-and-disposable-authentication',network:'mainnet-beta',fundedWallet:false,transactionsSent:0,scope:'HTTP/Workers/D1/authentication and current third-party protocol reads. Not a marketplace settlement, browser extension session or security audit.',checks};
+writeFileSync(output,JSON.stringify(report,null,2)+'\n');
+}catch(e){console.error(e.message);process.exitCode=1;}finally{if(token)await request('/api/auth/logout',{method:'POST',headers:{Authorization:'Bearer '+token},body:'{}'}).catch(()=>{});wallet.secretKey.fill(0);}

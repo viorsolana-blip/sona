@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 2,
+  "project": "Sona",
+  "assessedOn": "2026-10-18",
+  "status": "public-release-awaiting-verification",
+  "scope": "Implemented wallet connection, Raydium CPMM Fee Key verification, authenticated listings and bilateral atomic settlement. Public release verification is pending. Local Node/SQLite validator execution and a separate mainnet read are recorded; neither establishes hosted D1 execution or a Sona mainnet sale.",
+  "runtime": {
+    "hosted": "Cloudflare Workers with D1 persistence and the existing HTML/CSS/JavaScript interface",
+    "localReference": "Node.js 24+ with SQLite",
+    "hostedDeploymentVerified": false
+  },
+  "network": {
+    "defaultCluster": "mainnet-beta",
+    "runtimeConfiguration": "/api/config",
+    "startupNetworkCheck": "expected-genesis-hash",
+    "databaseIsolation": "cluster-and-genesis-bound",
+    "rpcIntegration": true,
+    "walletIntegration": true,
+    "customSonaProgramRequired": false,
+    "settlementPrograms": "Existing SPL Token, Associated Token and System programs",
+    "publicDeployment": null
+  },
+  "capabilities": {
+    "marketSearchAndFilters": "implemented",
+    "watchlist": "browser-local",
+    "marketInventory": "authenticated-listings-with-verified-fee-keys",
+    "balances": "rpc-wallet-balance",
+    "feesAndYieldEstimates": "not-inferred",
+    "positionOwnershipVerification": "raydium-cpmm-fee-key-rpc-checks",
+    "protocolTransferValidation": "mint-holder-lock-pool-escrow-and-vault-checks",
+    "listingPersistence": "D1 in hosted implementation; SQLite in local reference service",
+    "counterpartyOrderDiscovery": "server-hosted-public-listings",
+    "financialSettlement": "seller-then-buyer-co-signed-atomic-transaction",
+    "completionStatus": "finalized-chain-confirmation",
+    "confidentialSettlement": "not-implemented",
+    "readOnlyFeeKeyVerification": "GET /api/verify/:mint with optional tokenAccount query; live holder and canonical protocol checks without a wallet"
+  },
+  "supportedTradingIntegrations": [
+    "Raydium CPMM Burn & Earn Fee Key secondary transfer"
+  ],
+  "sourceEvidence": [
+    {
+      "path": "/app/app.js",
+      "description": "Live UI data and signed action handlers"
+    },
+    {
+      "path": "/source/src/client/wallet.mjs",
+      "description": "Wallet adapters and client canonical transaction verification"
+    },
+    {
+      "path": "/source/src/chain/raydium.mjs",
+      "description": "RPC discovery and protocol-specific authenticity checks"
+    },
+    {
+      "path": "/source/src/chain/settlement.mjs",
+      "description": "Atomic exchange and signature validation"
+    },
+    {
+      "path": "/source/src/server/marketplace.mjs",
+      "description": "Authentication, persistent listing and settlement lifecycle"
+    },
+    {
+      "path": "/source/src/hosted/marketplace.mjs",
+      "description": "Hosted Workers/D1 authenticated marketplace lifecycle"
+    },
+    {
+      "path": "/source/src/hosted/http.mjs",
+      "description": "Hosted HTTP routing and read-only verification endpoint"
+    },
+    {
+      "path": "/source/src/hosted/d1-store.mjs",
+      "description": "Hosted D1 persistence adapter"
+    }
+  ],
+  "verification": {
+    "localSettlementExecution": "/source/evidence/settlement-local.json",
+    "localBackendExecution": "/source/evidence/backend-local.json",
+    "mainnetReadOnly": "/source/evidence/raydium-mainnet-read.json",
+    "artifactScope": "Recorded artifacts carry source hashes. Run the offline readiness checker for current source correspondence; rerun the actual scripts after source changes.",
+    "walletVerificationScope": "Automated adapter and UI action tests; no independently observed extension session claimed",
+    "mainnetSettlementReceipts": [],
+    "liveReceiptEndpoint": "/api/receipts",
+    "independentSecurityReview": null,
+    "publicSourceRepository": null,
+    "readOnlyEndpoint": "/api/verify/:mint?tokenAccount=:optionalTokenAccount",
+    "hostedRuntimeScope": "Hosted Request/Response execution is recorded using a D1-compatible SQLite adapter and an isolated Solana validator. This is separate from Cloudflare deployed D1 execution, which remains pending publication verification.",
+    "referenceHolderScope": "The recorded third-party reference Fee Key is held by a program address. It proves read compatibility, not support for selling that asset through the ordinary-wallet signing flow.",
+    "referenceMint": "GVXkdXXtZRF9ZW81D6amGu5nLEw8FJA4XSD8sGdSnC8o",
+    "buildManifest": "/build-manifest.json",
+    "hostedAdapterLocalExecution": "/source/evidence/hosted-local.json",
+    "hostedReleaseSettlementLocalExecution": "/source/evidence/hosted-settlement-local.json",
+    "referenceTokenAccount": "6i9ctDoxQXSwTNUqGrfXfTj9USr5doKKjvu3wZv5DMS7"
+  },
+  "limitations": [
+    "A seller must be available to approve each buyer. This is not an escrow-backed unattended fill.",
+    "Listings and purchase coordination are hosted by Sona; non-custodial settlement does not decentralize the order service.",
+    "Local tests use valueless SOL and purpose-created SPL NFTs. They are not mainnet Raydium sales.",
+    "The public mainnet Fee Key read concerns an unrelated holder and is not seeded as a listing or claimed as a Sona user.",
+    "No CLMM, partial-rights, redemption, fee claiming, new lock creation or confidential settlement support.",
+    "Public RPC is free to access without keys but can throttle or fail. Real network transactions still have fees.",
+    "No originality, first-to-market, security-audit, public-production-readiness or guaranteed-rating attestation is made.",
+    "Publication and source availability are pending verification; listed target URLs are not a deployment attestation."
+  ],
+  "deploymentState": "awaiting-verification",
+  "plannedPublication": {
+    "publicOrigin": "https://sona-liquidity-marketplace.official-alexslobodi.chatgpt.site",
+    "repositoryUrl": "https://github.com/viorsolana-blip/sona",
+    "verification": "URLs are publication targets, not evidence of availability until a successful public check is recorded."
+  }
+}

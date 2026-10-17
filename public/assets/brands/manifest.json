@@ -1,0 +1,90 @@
+{
+  "SOL": {
+    "file": "sol.svg",
+    "path": "../assets/brands/sol.svg",
+    "kind": "token",
+    "source": "https://solana.com/src/img/branding/solanaLogoMark.svg",
+    "sourcePage": "https://solana.com/branding",
+    "sha256": "3d3401109aa061dec40a8659f1847817a8e647f98de1e65e76e86a95bbe1f08a"
+  },
+  "USDC": {
+    "file": "usdc.png",
+    "path": "../assets/brands/usdc.png",
+    "kind": "token",
+    "source": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+    "sourcePage": "https://github.com/solana-labs/token-list",
+    "sha256": "6d14601d0b1109046e366592b8c0f256ffb075f69180b65dddd97ae665d49f9e"
+  },
+  "BONK": {
+    "file": "bonk.png",
+    "path": "../assets/brands/bonk.png",
+    "kind": "token",
+    "source": "https://bonkcoin.com/icon4.png?icon4.08630b02.png",
+    "sourcePage": "https://bonkcoin.com/",
+    "sha256": "cb25ec2b36726dc827f66ba1c0a56ca362ce98b35f37e0e7bc977999cdd171d2"
+  },
+  "WIF": {
+    "file": "wif.png",
+    "path": "../assets/brands/wif.png",
+    "kind": "token",
+    "source": "https://dogwifcoin.org/wp-content/uploads/2023/11/cropped-wif_icon_512x512.png",
+    "sourcePage": "https://dogwifcoin.org/",
+    "sha256": "7ff7449784976604c370ec170346e7bbb7998a39d92a6b9d974954fa2940298b"
+  },
+  "JUP": {
+    "file": "jup.svg",
+    "path": "../assets/brands/jup.svg",
+    "kind": "token",
+    "source": "https://jup.ag/favicon.svg",
+    "sourcePage": "https://jup.ag/",
+    "sha256": "36198236d8b6cfea00f3aa1341fed4d9a11edd6a20192de3ac12bf51407e2007"
+  },
+  "Raydium": {
+    "file": "raydium.svg",
+    "path": "../assets/brands/raydium.svg",
+    "kind": "protocol",
+    "source": "https://raw.githubusercontent.com/raydium-io/media-assets/master/logo.svg",
+    "sourcePage": "https://github.com/raydium-io/media-assets",
+    "sha256": "06dbcf576a1876cd3a09aa5fd33799c3f72d4f69b996874d08d53eb9f25f3396"
+  },
+  "Orca": {
+    "file": "orca.png",
+    "path": "../assets/brands/orca.png",
+    "kind": "protocol",
+    "source": "https://www.orca.so/images/favicon.png",
+    "sourcePage": "https://www.orca.so/",
+    "sha256": "157b6c282f0b5d788c99c137447fed735c245431bb6ded83ad9123207d2dcd70"
+  },
+  "Meteora": {
+    "file": "meteora.svg",
+    "path": "../assets/brands/meteora.svg",
+    "kind": "protocol",
+    "source": "https://www.meteora.ag/icons/v2.svg",
+    "sourcePage": "https://www.meteora.ag/",
+    "sha256": "d5494619e99b6db62ce55a479b94926f5784d30f0d96c361172ee6458b8f3636"
+  },
+  "Phantom": {
+    "file": "phantom.svg",
+    "path": "../assets/brands/phantom.svg",
+    "kind": "wallet",
+    "source": "https://phantom.com/_web_platform_assets/favicon.svg",
+    "sourcePage": "https://phantom.com/",
+    "sha256": "3f601873ff260e9ef88109ac52c2bfc50642d49151f8c805e3fccc8ca5d6ce7b"
+  },
+  "Solflare": {
+    "file": "solflare.svg",
+    "path": "../assets/brands/solflare.svg",
+    "kind": "wallet",
+    "source": "https://www.solflare.com/wp-content/uploads/2024/11/App-Icon.svg",
+    "sourcePage": "https://www.solflare.com/",
+    "sha256": "792b1985a75726b03655429e8debfa49c63452c44a18c487ba22ef1eeb072afe"
+  },
+  "Backpack": {
+    "file": "backpack.png",
+    "path": "../assets/brands/backpack.png",
+    "kind": "wallet",
+    "source": "https://backpack.app/icon/128x128.png",
+    "sourcePage": "https://backpack.app/",
+    "sha256": "9dd6cc8b1f50f4b575ad23e79656eef720ee05820a3011bfda7aa61b54d56af6"
+  }
+}

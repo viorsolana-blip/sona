@@ -1,0 +1,24 @@
+{
+  "schema": "sona-settlement-devnet-evidence-v1",
+  "generatedAt": "2026-10-17T18:39:57.648Z",
+  "rpc": "https://api.devnet.solana.com",
+  "cluster": "devnet",
+  "scope": "Public devnet execution of the canonical SPL NFT-for-SOL settlement. The minted NFT is a test fixture, not a Raydium Fee Key. This is not proof of mainnet marketplace deployment or mainnet settlement.",
+  "privateKeysPersisted": false,
+  "usesExistingWallets": false,
+  "paidServicesUsed": false,
+  "faucetRequests": 1,
+  "payer": "FLB8Ba7M5vuSSrQUuUUaGkUcwQAw1XEJ2gLpFHK3s2ur",
+  "seller": "HvtAmYBnc2uvSuVfR5QQmZjEMUWpmBumwpgBR1UXsEvD",
+  "buyer": "DtWg3n6ajd5eoL5otTq5BLjU9dQ17tjpZXbtg2GfPHFZ",
+  "transactions": [],
+  "status": "blocked",
+  "stage": "free-faucet",
+  "genesisHash": "EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG",
+  "reason": "airdrop to FLB8Ba7M5vuSSrQUuUUaGkUcwQAw1XEJ2gLpFHK3s2ur failed: Internal error",
+  "nextStep": "No repeated faucet requests were made. Rerun only when the public devnet faucet/RPC is available.",
+  "sourceSha256": {
+    "src/chain/settlement.mjs": "e6e80a37b537f008f1e5b91335a9f88a5248a0e09ab58db68f64369f0084f89f",
+    "scripts/test-settlement-devnet.mjs": "3200aebe2fa43403960f713598d750de339982c2a03303e1107b1b37e5857c9b"
+  }
+}

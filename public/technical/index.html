@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Sona — implementation details</title>
+  <meta name="description" content="The current scope of Sona's implementation, source evidence and remaining development work.">
+  <style>
+    @font-face{font-family:Inter;src:url('../assets/GrgcKwrN6d3Uz8EwcLHZxwEfC4.woff2') format('woff2');font-style:normal;font-weight:400;font-display:swap}
+    @font-face{font-family:'Inter Display';src:url('../assets/iwWTDc49ENF2tCHbqlNARXw6Ug.woff2') format('woff2');font-style:normal;font-weight:500;font-display:swap}
+    *{box-sizing:border-box}body{margin:0;background:#f3f3ef;color:#1c1c1a;font-family:Inter,Arial,sans-serif;line-height:1.65}main{max-width:960px;margin:0 auto;padding:48px 28px 80px}nav{display:flex;justify-content:space-between;gap:24px;align-items:center;margin-bottom:64px}nav img{width:144px;height:auto;display:block}a{color:inherit;text-underline-offset:4px}h1,h2{font-weight:500;letter-spacing:-.035em;line-height:1.15}h1{font-size:clamp(40px,7vw,64px);margin:0 0 24px}h2{font-size:28px;margin:48px 0 20px}p{margin:12px 0;max-width:75ch}.date{color:#71766a;font-size:14px}.status{color:#a33209;font-weight:500}.lead{font-size:20px}table{border-collapse:collapse;width:100%;margin:24px 0}th,td{text-align:left;vertical-align:top;padding:15px 16px 15px 0;border-bottom:1px solid #d9dbd2}th{font-weight:500}td:first-child{width:36%}li{margin:9px 0}code{font-size:.9em;overflow-wrap:anywhere}.sources{padding-left:22px}footer{margin-top:52px;padding-top:24px;border-top:1px solid #d9dbd2;color:#71766a}a:focus-visible{outline:2px solid #cc3906;outline-offset:5px}@media(max-width:600px){main{padding:28px 20px 56px}nav{margin-bottom:48px}table{font-size:14px}td:first-child{width:39%}}
+    h1,h2{font-family:'Inter Display',Inter,sans-serif}
+    .verification .account-label{margin-top:18px}.verification .reference-button{background:transparent;color:#1c1c1a;border:1px solid #d9dbd2;padding:9px 14px;font-size:14px}.verification-actions{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:16px}
+    .verification{margin:24px 0;padding:24px;border:1px solid #d9dbd2;border-radius:20px;background:#fff}.verification label{display:block;margin-bottom:8px;font-weight:500}.verification-fields{display:flex;gap:12px}.verification input{flex:1;min-width:0;width:100%;padding:14px 16px;border:1px solid #d9dbd2;border-radius:12px;background:#f9f9f6;color:inherit;font:inherit;font-size:14px}.verification button{border:0;border-radius:12px;padding:14px 20px;background:#1c1c1a;color:#fff;font:inherit;cursor:pointer;white-space:nowrap}.verification button:disabled{opacity:.6;cursor:wait}.verification input:focus-visible,.verification button:focus-visible{outline:2px solid #cc3906;outline-offset:3px}.verification p{font-size:14px;color:#71766a}.verification-result{margin-top:20px;padding-top:16px;border-top:1px solid #d9dbd2}.verification-result dl{display:grid;grid-template-columns:160px 1fr;gap:10px 20px;font-size:14px}.verification-result dt{color:#71766a}.verification-result dd{margin:0;overflow-wrap:anywhere}.verification-result pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:420px;overflow:auto;padding:16px;background:#f3f3ef;border-radius:12px;font-size:12px}.verification-result summary{cursor:pointer;font-size:14px}.verification-result .verification-error{color:#a33209}@media(max-width:600px){.verification{padding:20px}.verification-fields{flex-direction:column}.verification-result dl{grid-template-columns:1fr;gap:4px}.verification-result dd{margin-bottom:10px}}
+  </style>
+</head>
+<body>
+<main>
+  <nav aria-label="Page navigation"><a href="../" aria-label="Sona homepage"><img src="../assets/sona-wordmark.svg" alt="Sona"></a><a href="../app/">Back to marketplace</a></nav>
+  <p class="date">Implementation and evidence · 18 October 2026</p>
+  <h1>What works today.</h1>
+  <p class="lead">Sona connects Solana wallets, verifies Raydium CPMM Fee Keys, stores authenticated listings and builds an atomic exchange signed by both buyer and seller.</p>
+  <p id="publication-state" class="status">Public release prepared; deployment and repository availability await verification.</p>
+  <p>The Node/SQLite settlement and full HTTP workflow have been executed against an isolated Solana validator. The hosted implementation uses Cloudflare Workers and D1. A separate read-only check validated an existing third-party Fee Key on mainnet. These are distinct results: no Sona mainnet sale or independent security audit is claimed.</p>
+  <h2>The exchange</h2>
+  <p>A seller lists a verified Fee Key at a fixed SOL price. A buyer requests the purchase. The seller signs a short-lived transaction, then the buyer reviews and signs the same transaction. It creates the buyer’s token account if needed, transfers exactly one Fee Key and pays the seller. All instruction effects succeed together or roll back together; transaction fees may still apply.</p>
+  <p>Listings and requests are hosted by Sona. Assets stay in the parties’ wallets until settlement. There is no Sona custody or new escrow program to deploy. Seller approval is required for each buyer, and an approval already released cannot be revoked by merely canceling a listing.</p>
+  <h2>Current implementation</h2>
+  <table><thead><tr><th scope="col">Capability</th><th scope="col">Implementation and evidence</th></tr></thead><tbody>
+    <tr><td>Wallet connection</td><td>Wallet Standard and injected Phantom, Solflare and Backpack support. Public key, account changes, disconnect and exact-message signing are handled. Automated adapter tests do not substitute for an independently observed extension session.</td></tr>
+    <tr><td>Wallet balances and inventory</td><td>Solana RPC reads and program-account validation. No seeded market, fictional balance or browser-local purchase state. The watchlist alone stays local.</td></tr>
+    <tr><td>Raydium eligibility</td><td>CPMM Burn &amp; Earn Fee Keys only. Checks cover the current holder, NFT mint, canonical lock, pool, LP escrow and vault relationships. Live mainnet read evidence is linked below.</td></tr>
+    <tr><td>Listings and requests</td><td>Signed nonce authentication, shared D1 persistence in the hosted implementation, exact lamport prices, listing expiry and authorized updates. The local reference service uses SQLite. Each sale requires both wallets.</td></tr>
+    <tr><td>Atomic settlement</td><td>Canonical transaction checks in the browser and server; finalized confirmation before a completed sale is recorded. Local validator artifacts include actual instruction logs and before/after balances.</td></tr>
+    <tr><td>Public receipts</td><td><a href="/api/receipts">The receipt endpoint</a> exposes actual completed trades from this running service. Local test receipts are kept in separate evidence files and never inserted as marketplace trades.</td></tr>
+    <tr><td>Release status</td><td>Public deployment and repository verification are pending. Recorded local tests do not establish hosted D1 behavior or a mainnet sale. An independent security review remains outstanding.</td></tr>
+  </tbody></table>
+  <h2>Verify a Fee Key</h2>
+  <p>Read current Solana account state without connecting a wallet. This checks the mint, current holder, canonical Raydium lock, pool, LP escrow and vaults. It does not list an asset or authorize a transaction.</p>
+  <form class="verification" id="fee-key-verifier">
+    <label for="fee-key-mint">Fee Key mint address</label>
+    <div class="verification-fields"><input id="fee-key-mint" name="mint" type="text" value="GVXkdXXtZRF9ZW81D6amGu5nLEw8FJA4XSD8sGdSnC8o" required minlength="32" maxlength="44" pattern="[1-9A-HJ-NP-Za-km-z]{32,44}" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="reference-scope"><button id="verify-submit" type="submit">Verify on Solana</button></div>
+    <label class="account-label" for="fee-key-token-account">Token account <span class="date">(optional)</span></label>
+    <input id="fee-key-token-account" name="tokenAccount" type="text" value="6i9ctDoxQXSwTNUqGrfXfTj9USr5doKKjvu3wZv5DMS7" minlength="32" maxlength="44" pattern="[1-9A-HJ-NP-Za-km-z]{32,44}" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="token-account-help">
+    <p id="token-account-help">Paste the Fee Key’s token account from your wallet or a Solana explorer to avoid a network-wide holder lookup. This is the token account, not your wallet address. Its mint, balance and owner are still verified on chain.</p>
+    <p id="reference-scope">The prefilled address is an unrelated third party’s Fee Key used for read compatibility. Its recorded holder is a program address, unsupported by Sona’s signing flow. It is not a Sona listing, customer or sale; the current holder may change.</p>
+    <div class="verification-actions"><button id="use-reference" class="reference-button" type="button">Use public reference</button><a id="verification-json-link" href="/api/verify/GVXkdXXtZRF9ZW81D6amGu5nLEw8FJA4XSD8sGdSnC8o?tokenAccount=6i9ctDoxQXSwTNUqGrfXfTj9USr5doKKjvu3wZv5DMS7">Read-only JSON</a></div>
+    <div id="verification-result" class="verification-result" aria-live="polite" aria-atomic="true" hidden></div>
+  </form>
+  <h2>Inspect the evidence</h2>
+  <ul class="sources">
+    <li><a href="/source/evidence/settlement-local.json">Local validator execution</a> — atomic transfers, failure rollback and transaction-integrity cases using purpose-created SPL NFTs.</li>
+    <li><a href="/source/evidence/backend-local.json">Local HTTP-to-chain execution</a> — authentication, persistent listing, both signatures, finalized receipt and restart persistence.</li>
+    <li><a href="/source/evidence/hosted-local.json">Hosted adapter execution on a local validator</a> — real HTTP requests, a D1-compatible SQLite adapter, fresh request instances and durable recovery. This is not execution in Cloudflare’s deployed D1 runtime.</li>
+    <li><a href="/source/evidence/hosted-settlement-local.json">Hosted release settlement checks</a> — actual atomic transfer, exact payment, rollback, replay and signature-integrity checks on the same isolated local validator using purpose-created SPL NFTs.</li>
+    <li><a href="/source/evidence/raydium-mainnet-read.json">Mainnet read-only observation</a> — an existing third-party Fee Key, with account hashes and a recorded slot. This is not a Sona sale, listing or customer.</li>
+    <li><a href="/source/evidence/RAYDIUM-SOURCES.md">Raydium source provenance</a> — pinned official references, account layouts and eligibility limits.</li>
+    <li><a href="../technical-status.json">Structured capability status</a> and <a href="/source/evidence/project-status.json">release declarations</a>.</li>
+    <li><a href="/build-manifest.json">Build manifest</a> — repository revision and SHA-256 hashes for the published implementation and migrations. Compare the recorded revision and files with the public source; a manifest alone is not an independent audit.</li>
+  </ul>
+  <h2>Read and reproduce</h2>
+  <ul class="sources">
+    <li><a href="https://github.com/viorsolana-blip/sona" rel="noopener noreferrer">Sona source repository</a> — publication pending verification. <a href="https://sona-liquidity-marketplace.official-alexslobodi.chatgpt.site" rel="noopener noreferrer">Planned public service</a>.</li>
+    <li><a href="../app/app.js">Marketplace UI source</a> · <a href="/source/src/client/wallet.mjs">wallet signing and browser transaction checks</a>.</li>
+    <li><a href="/source/src/chain/raydium.mjs">Fee Key verification</a> · <a href="/source/src/chain/settlement.mjs">atomic settlement</a> · <a href="/source/src/server/marketplace.mjs">local Node marketplace reference</a>.</li>
+    <li>Hosted implementation: <a href="/source/src/hosted/marketplace.mjs">marketplace lifecycle</a> · <a href="/source/src/hosted/http.mjs">HTTP handler</a> · <a href="/source/src/hosted/d1-store.mjs">D1 persistence</a>. This is separate from the Node/SQLite reference tested in the local execution artifacts.</li>
+    <li><a href="/source/scripts/test-backend-local.mjs">Local integration runner</a> · <a href="/source/scripts/test-settlement-local.mjs">validator runner</a> · <a href="/source/scripts/verify-raydium-live.mjs">read-only mainnet verifier</a>.</li>
+    <li><a href="/source/scripts/check-readiness.mjs">Offline evidence gate</a> — detects source changes after recorded execution; matching hashes are not an independent audit.</li>
+    <li><a href="/source/docs/TECHNICAL-READINESS.md">Full implementation notes and reproduction commands</a>.</li>
+  </ul>
+  <h2>Scope and costs</h2>
+  <p>The current integration transfers an entire CPMM Fee Key held by an ordinary signing wallet. Program-owned and multisig-held keys are not supported by this signing flow. It does not support CLMM positions, partial rights, LP redemption, fee claiming, new liquidity locks or confidential settlement. Public RPC can throttle; read failures are shown instead of fabricated holdings.</p>
+  <p>No paid RPC key is required. Listing does not require a deposit. A real purchase still costs Solana network fees and, when needed, buyer token-account rent. Hosted operation is subject to platform and public RPC limits; an independent security review remains outstanding.</p>
+  <footer>The same source and evidence are available to every visitor. Recorded local execution, read-only mainnet verification and a completed mainnet marketplace sale are different claims. This page is not a score guarantee or security certification.</footer>
+</main>
+<script>
+(() => {
+  const form = document.getElementById('fee-key-verifier');
+  const input = document.getElementById('fee-key-mint');
+  const tokenInput = document.getElementById('fee-key-token-account');
+  const button = document.getElementById('verify-submit');
+  const referenceButton = document.getElementById('use-reference');
+  const result = document.getElementById('verification-result');
+  const jsonLink = document.getElementById('verification-json-link');
+  const validMint = value => /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(value);
+  const endpoint = (mint, tokenAccount) => '/api/verify/' + encodeURIComponent(mint) + (tokenAccount ? '?tokenAccount=' + encodeURIComponent(tokenAccount) : '');
+  const updateLink = () => {
+    const mint = input.value.trim();
+    const tokenAccount = tokenInput.value.trim();
+    jsonLink.hidden = !validMint(mint) || (tokenAccount !== '' && !validMint(tokenAccount));
+    if (!jsonLink.hidden) jsonLink.href = endpoint(mint, tokenAccount);
+  };
+  input.addEventListener('input', updateLink);
+  tokenInput.addEventListener('input', updateLink);
+  referenceButton.addEventListener('click', () => {
+    input.value = 'GVXkdXXtZRF9ZW81D6amGu5nLEw8FJA4XSD8sGdSnC8o';
+    tokenInput.value = '6i9ctDoxQXSwTNUqGrfXfTj9USr5doKKjvu3wZv5DMS7';
+    updateLink();
+  });
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    const mint = input.value.trim();
+    const tokenAccount = tokenInput.value.trim();
+    if (!validMint(mint) || (tokenAccount !== '' && !validMint(tokenAccount)) || button.disabled) return;
+    button.disabled = true;
+    referenceButton.disabled = true;
+    button.textContent = 'Checking accounts…';
+    result.hidden = false;
+    result.replaceChildren();
+    const message = document.createElement('p');
+    message.textContent = 'Reading current account state from Solana…';
+    result.append(message);
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 25000);
+    try {
+      const response = await fetch(endpoint(mint, tokenAccount), { method: 'GET', headers: { Accept: 'application/json' }, cache: 'no-store', signal: controller.signal });
+      let data;
+      try { data = await response.json(); } catch { throw new Error('The verification service did not return a valid response. Retry shortly.'); }
+      if (!response.ok) throw new Error(typeof data?.error?.message === 'string' ? data.error.message : 'The verification service is unavailable. Retry shortly.');
+      if (data?.verified !== true || data?.readOnly !== true || data?.feeKey?.mint !== mint || data.feeKey.verified !== true || typeof data.signingFlowSupported !== 'boolean') throw new Error('This response did not establish a verified Fee Key.');
+      if (tokenAccount && data.feeKey.tokenAccount !== tokenAccount) throw new Error('The response did not verify the requested token account.');
+      result.replaceChildren();
+      const heading = document.createElement('strong');
+      heading.textContent = 'Raydium CPMM Fee Key verified';
+      result.append(heading);
+      const fields = document.createElement('dl');
+      for (const [label, value] of [
+        ['Network', data.feeKey.cluster], ['Observed slot', data.feeKey.slot],
+        ['Observed at', data.observedAt], ['Mint', data.feeKey.mint],
+        ['Token account', data.feeKey.tokenAccount], ['Current holder', data.feeKey.owner], ['Raydium lock', data.feeKey.lockAccount],
+        ['Pool', data.feeKey.poolId], ['Locked LP base units', data.feeKey.lockedLpAmount],
+        ['Signing flow', data.signingFlowSupported ? 'Ordinary signing address; holder authorization is still required.' : 'Unsupported program-owned or multisig holder.'],
+      ]) {
+        const term = document.createElement('dt'); term.textContent = label;
+        const description = document.createElement('dd'); description.textContent = value == null ? 'Not returned' : String(value);
+        fields.append(term, description);
+      }
+      result.append(fields);
+      const scope = document.createElement('p');
+      scope.textContent = 'This read establishes account compatibility at the returned slot. It does not establish a Sona listing, customer, sale, yield or asset value. Ownership is rechecked before a purchase.';
+      result.append(scope);
+      const details = document.createElement('details');
+      const summary = document.createElement('summary'); summary.textContent = 'Inspect the complete response';
+      const raw = document.createElement('pre'); raw.textContent = JSON.stringify(data, null, 2);
+      details.append(summary, raw); result.append(details);
+    } catch (error) {
+      result.replaceChildren();
+      const failure = document.createElement('p'); failure.className = 'verification-error';
+      failure.textContent = error.name === 'AbortError' ? 'The Solana read timed out. No verification result is assumed; retry shortly.' : error.message;
+      result.append(failure);
+    } finally {
+      clearTimeout(timeout);
+      button.disabled = false;
+      referenceButton.disabled = false;
+      button.textContent = 'Verify on Solana';
+    }
+  });
+})();
+</script>
+</body>
+</html>

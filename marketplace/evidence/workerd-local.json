@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "executedAt": "2026-10-17T19:08:30.834Z",
+  "origin": "http://127.0.0.1:4180",
+  "mode": "local-workerd-d1-and-disposable-authentication",
+  "network": "mainnet-beta",
+  "fundedWallet": false,
+  "transactionsSent": 0,
+  "scope": "HTTP/Workers/D1/authentication and current third-party protocol reads. Not a marketplace settlement, browser extension session or security audit.",
+  "checks": [
+    {
+      "name": "Anonymous runtime identifies mainnet and durable D1",
+      "passed": true
+    },
+    {
+      "name": "Public listing and finalized receipt APIs respond",
+      "passed": true
+    },
+    {
+      "name": "Observed third-party mainnet accounts; not a Sona sale",
+      "passed": true,
+      "observation": {
+        "verified": true,
+        "readOnly": true,
+        "observedAt": "2026-10-17T19:08:30.782Z",
+        "signingFlowSupported": false,
+        "feeKey": {
+          "verified": true,
+          "id": "GVXkdXXtZRF9ZW81D6amGu5nLEw8FJA4XSD8sGdSnC8o",
+          "mint": "GVXkdXXtZRF9ZW81D6amGu5nLEw8FJA4XSD8sGdSnC8o",
+          "owner": "AKesWP7KUE9QSnZuU35yQE8HcWQbTsRGMKAbaqESHVrx",
+          "tokenAccount": "6i9ctDoxQXSwTNUqGrfXfTj9USr5doKKjvu3wZv5DMS7",
+          "tokenProgram": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+          "lockAccount": "GAHVFUQAVEKgwvcZbU3verA5QPPk4jBvGdaZuhqgJLXU",
+          "poolId": "4FBWLAbYs6TXSnbsGCyUNsu2gq3CWCHVo5ujYBKvfmG6",
+          "lpMint": "5p9cyBAx9wZcZ9CeKhttiRKwykuvLioY1ut4zbPCWvHo",
+          "lockedLpAmount": "863268213040",
+          "lpDecimals": 9,
+          "mintA": "So11111111111111111111111111111111111111112",
+          "mintB": "22FoFYTCCm3f8HQJ13z8K7zhydvqmEB56ZhYxhMRmboo",
+          "mintProgramA": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+          "mintProgramB": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+          "originalLockOwner": "3wt6CgisHM3jkiCnhVzvLHwcvJyevUbyUYWeT7VAcCqT",
+          "slot": 458147092,
+          "cluster": "mainnet-beta",
+          "protocol": "raydium-cpmm",
+          "kind": "fee-rights",
+          "evidence": {
+            "commitment": "confirmed",
+            "lockProgram": "LockrWmn6K5twhz3y9w1dQERbmgSaRkfnTeTKbpofwE",
+            "poolProgram": "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C",
+            "escrow": "A3Hdukkh1BWeoVo5d5CVPLf13LiA2xUzaFgb46VcQZvY",
+            "accounts": {
+              "GVXkdXXtZRF9ZW81D6amGu5nLEw8FJA4XSD8sGdSnC8o": {
+                "owner": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                "bytes": 82,
+                "sha256": "4f5b0464389b0ee155b98f1871eaf9787a77dd00c72432de8c52a9e6bb3f734b"
+              },
+              "6i9ctDoxQXSwTNUqGrfXfTj9USr5doKKjvu3wZv5DMS7": {
+                "owner": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                "bytes": 165,
+                "sha256": "f51a56f995755cf2c29309352343a03fa2b84a60396d3eb990e6ed807549185b"
+              },
+              "GAHVFUQAVEKgwvcZbU3verA5QPPk4jBvGdaZuhqgJLXU": {
+                "owner": "LockrWmn6K5twhz3y9w1dQERbmgSaRkfnTeTKbpofwE",
+                "bytes": 256,
+                "sha256": "677a4fe84b384e8cf34580ddc64e517cfca3a2280c82f58aba2af8a6d9e33cb2"
+              },
+              "4FBWLAbYs6TXSnbsGCyUNsu2gq3CWCHVo5ujYBKvfmG6": {
+                "owner": "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C",
+                "bytes": 637,
+                "sha256": "c72cf014432e08dd1564ab96a65afd4afbdc51c31b46dae7a5bb31014c84f945"
+              },
+              "5p9cyBAx9wZcZ9CeKhttiRKwykuvLioY1ut4zbPCWvHo": {
+                "owner": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                "bytes": 82,
+                "sha256": "18415671ae5c67e63cab5e896e814b69d92dfc8b4c9b83c6f797317e48be3208"
+              },
+              "A3Hdukkh1BWeoVo5d5CVPLf13LiA2xUzaFgb46VcQZvY": {
+                "owner": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                "bytes": 165,
+                "sha256": "efa2888bfb22a0a8f380764d44bbb5cb73b7e915c6117894ac88d777a72457c0"
+              },
+              "6JofGPUezDC2KAu2VRY7NQSrWTRkfVZnTWqupSztMxLx": {
+                "owner": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+                "bytes": 165,
+                "sha256": "f14d7aa743abad2e2607f6e2a9ebbe271ed7b01e35cf26477a8ab0a61f7ca17b"
+              },
+              "CNwj1xzUuAitiPSXqq3HMRE5ySDTMdn1D2JNtVjjZYUU": {
+                "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+                "bytes": 165,
+                "sha256": "e91e23f63374e8f602dd93c7941473b5df6c3b4090750a5f67c66029e969b640"
+              }
+            }
+          }
+        },
+        "scope": "Raydium CPMM Burn & Earn account verification. This does not create a listing, prove a Sona sale, or authorize a transaction."
+      }
+    },
+    {
+      "name": "Current third-party Raydium Fee Key verifies without a wallet",
+      "passed": true
+    },
+    {
+      "name": "Fresh valueless wallet receives origin-bound challenge",
+      "passed": true
+    },
+    {
+      "name": "Actual Ed25519 signature authenticates through durable storage",
+      "passed": true
+    },
+    {
+      "name": "Consumed authentication signature cannot be replayed",
+      "passed": true
+    },
+    {
+      "name": "Foreign browser origin cannot mutate marketplace",
+      "passed": true
+    },
+    {
+      "name": "Invalid inventory is rejected after persisted-session authentication",
+      "passed": true
+    },
+    {
+      "name": "Logout invalidates the stored session",
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "checkedAt": "2026-10-17T19:08:53.927Z",
+  "scope": "npm audit --omit=dev against root hosted lockfile",
+  "packageLockSha256": "a2a1b3a8cb8de3361f0f644feedb3698439651085ecb3bd6970a4ed65bff13ac",
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "dependencies": {
+      "prod": 86,
+      "dev": 387,
+      "optional": 203,
+      "peer": 17,
+      "peerOptional": 0,
+      "total": 489
+    }
+  },
+  "vulnerabilities": {}
+}

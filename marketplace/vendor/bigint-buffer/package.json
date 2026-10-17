@@ -1,0 +1,9 @@
+{
+  "name": "@sona/bigint-buffer-safe",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Locally reviewed pure-JavaScript bigint-buffer API compatibility shim; no native bindings",
+  "main": "index.cjs",
+  "files": ["index.cjs", "README.md"],
+  "engines": { "node": ">=18" }
+}

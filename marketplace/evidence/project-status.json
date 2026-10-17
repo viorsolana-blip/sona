@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 2,
+  "project": "Sona",
+  "declaredStage": "functional-local-implementation",
+  "declaredCapabilities": {
+    "liveWallet": true,
+    "livePositions": true,
+    "protocolValidation": true,
+    "settlement": true
+  },
+  "architecture": {
+    "settlementMode": "bilateral-co-signed",
+    "custody": "user-wallets",
+    "customSonaProgramRequired": false,
+    "supportedInstrument": "raydium-cpmm-burn-and-earn-fee-key"
+  },
+  "deployment": {
+    "publicOrigin": null,
+    "cluster": null,
+    "securityReviewUrl": null
+  },
+  "sourceProvenance": {
+    "repositoryUrl": null,
+    "revision": null
+  },
+  "executionReceipts": []
+}

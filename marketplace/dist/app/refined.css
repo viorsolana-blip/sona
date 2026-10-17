@@ -1,0 +1,306 @@
+/* Sona exchange: the type, spacing and restraint of the main site. */
+:root{--ink:#20211f;--muted:#777a73;--line:#e5e6e0;--sage:#f1f2ed;--green:#71756c;--radius:20px}
+body{font-family:Inter,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.side-eyebrow,.side-foot,.eyebrow,.nav-count,.demo-label,.preview-label,.hero-note,.count-badge,.market-table th,.price small,.table-bottom,.app-footer,.small-print,.step b,.private-key,.guide-step>span{font-family:Inter,Arial,sans-serif;text-transform:none;letter-spacing:0}
+.side-eyebrow{font-size:10px;line-height:1.4;color:#80837c;margin-top:26px;margin-bottom:20px}
+.side-foot{font-size:10px;color:#92958c}
+.nav-count{font-size:10px;font-variant-numeric:tabular-nums}
+.nav-item{color:#777a73}.nav-item.active svg{color:inherit}.nav-item:hover:not(.active){background:#f3f4ef}
+.side-help{color:#71756c}.side-create:hover{border-color:#b9bcb2;background:#fafbf8}
+.breadcrumb-home,.slash{color:#92958d}.breadcrumb-home{font-size:12px}
+.top-actions{gap:18px}.network{color:#60635c}.network img{display:block;width:16px;height:16px;object-fit:contain}
+.demo-label,.preview-label{font-size:11px;color:#80847a;background:none;padding:0;display:flex;align-items:center;gap:6px}
+.preview-label svg{width:13px;height:13px}
+.wallet-btn:hover,.primary:hover{background:#34362f}
+.eyebrow{font-size:12px;line-height:1.4;color:#7b7e74}
+.hero .eyebrow{font-size:12px;letter-spacing:0;color:#787b72}
+.hero h1 em{color:#93978b}
+.hero-copy>p{color:#73776b}.hero-note{font-size:10px;color:#73776b}
+.hero-feature .eyebrow{font-size:11px;color:#b0b2a8}
+.hero-feature p{color:#b7b9ae}.hero-feature .text-link{font-size:12px;color:#e4d8c6}
+.count-badge{font-size:11px;font-variant-numeric:tabular-nums}
+.market-summary{font-size:11px;color:#81847c}.sort-control select{font-size:11px;color:#61665b}
+.market-table th{font-size:11px;color:#818579;background:#fafbf7;padding-top:15px;padding-bottom:15px}
+.market-table td{border-top-color:#eceee6}.market-table tr[data-id]:hover{background:#fafbf7}
+.pair-name{font-weight:400;font-size:13px;letter-spacing:-.15px;color:#252822}
+.pair-meta{color:#71756c;font-size:10px;gap:5px}
+.pair-meta .tiny-dot{background:#81847c;width:2px;height:2px}
+.token{background:#fff!important;border-color:#fff}
+.token img,.asset-logo{object-fit:contain!important;display:block;width:100%;height:100%}
+.token.quote{background:#fff;border-color:white}
+.protocol-logo{display:inline-block;width:14px;height:14px;object-fit:contain;flex-shrink:0;vertical-align:middle}
+.price{font-variant-numeric:tabular-nums}.price small{font-size:10px;color:#81847c}
+.sub{color:#81847c}.positive{color:#71756c}
+.type-tag{background:#f6f7f3;border-color:#e7eadf;color:#71756c;border-radius:5px;font-size:10px}
+.type-tag.lp{background:#f7f5f2;border-color:#e8e4dc;color:#71756c}
+.lock{color:#71756c}.lock svg{color:#81847c}
+.table-bottom{font-size:11px;line-height:1.45;color:#81847c;padding-top:17px;padding-bottom:17px}
+.table-bottom span:last-child{color:#81847c}.table-bottom svg{color:#81847c}
+.app-footer{font-size:10px;line-height:1.5;color:#81847c}
+.card-middle .eyebrow{font-size:11px}.card-footer{font-size:10px;color:#81847c}
+.card-bottom,.card-footer{background:#fafbf8}.position-card:hover{transform:translateY(-2px);box-shadow:0 5px 16px #20251808}
+.page-intro h1{font-size:38px;letter-spacing:-1.5px}.page-intro .eyebrow{font-size:12px}
+.page-intro p{color:#71756c}.stat>span,.stat p{color:#81847c}.stat strong{font-variant-numeric:tabular-nums}
+.stat.dark>span,.stat.dark p{color:#b8bdb0}.stat.dark strong small{color:#b8bdb0}
+.empty-icon{background:#f1f3eb;color:#81847c;border-radius:14px}.empty-state p{color:#71756c}
+.activity-icon{background:#f1f4ea;color:#71756c}.activity-row small{color:#81847c}.activity-amount{font-variant-numeric:tabular-nums}
+.muted{color:#81847c}
+/* Dialogs use the same clear heading and control language as the marketplace. */
+.overlay{background:rgba(24,25,23,.23);backdrop-filter:none;-webkit-backdrop-filter:none}
+.overlay.center{padding:24px}
+.modal{width:460px;border-radius:20px;padding:30px 32px 28px;max-height:calc(100dvh - 48px);background:#fff;box-shadow:0 18px 70px rgba(24,25,23,.13);animation:rise-in .18s ease-out}
+.modal.wide{width:540px}
+.modal .close-corner{top:22px;right:24px;color:#81847c}
+.dialog-chrome{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:29px;margin-bottom:29px}
+.dialog-chrome>span:first-child,.dialog-chrome .dialog-brand,.dialog-brand{display:flex;align-items:center;gap:7px}
+.dialog-chrome img{object-fit:contain;display:block;width:24px;height:25px}
+.dialog-chrome img.brand-symbol,.dialog-chrome img.dialog-symbol{width:25px;height:27px}
+.dialog-chrome img.brand-word,.dialog-chrome img.dialog-wordmark,.dialog-chrome img[src*="wordmark"]{width:62px;height:auto}
+.dialog-chrome .icon-btn{width:28px;height:28px;border-radius:7px;margin-right:-6px;color:#81847c}
+.dialog-chrome .icon-btn svg{width:19px;height:19px}
+.modal h2,.modal-head h2{font-size:28px;line-height:1.16;font-weight:500;letter-spacing:-.9px;margin:0 0 11px;max-width:95%}
+.modal>p,.modal-intro,.modal-head p{font-size:12px;line-height:1.65;color:#71756c;max-width:375px}
+.modal-head{margin-bottom:25px}
+.modal>.eyebrow{display:block;font-size:11px;margin-bottom:9px;color:#81847c}
+.modal-symbol{width:30px;height:30px;margin-bottom:22px}.modal-symbol svg{width:27px;height:27px}
+.modal .icon-btn:hover,.drawer .icon-btn:hover{background:#f1f4ea;color:#252623}
+.modal .primary,.modal .secondary,.drawer .primary,.drawer .secondary{min-height:44px;border-radius:10px;font-size:12px;font-weight:400;padding:12px 16px}
+.modal .primary.orange,.drawer .primary.orange{background:var(--ink);color:#fff}
+.modal .primary.orange:hover,.drawer .primary.orange:hover{background:#252623}
+.modal-actions{margin-top:25px;gap:9px}.modal-actions>.secondary{min-width:84px}
+.modal .primary:disabled,.drawer .primary:disabled{opacity:1;background:#eaeee1;color:#81847c}
+.modal .secondary:hover,.drawer .secondary:hover{background:#f7faf1;border-color:#dedfd8}
+.dialog-foot{border-top:1px solid #eeeeea;margin-top:24px;padding-top:17px;display:flex;justify-content:space-between;align-items:center;gap:15px;font-size:10px;line-height:1.6;color:#81847c}
+.dialog-foot a{color:#71756c}.dialog-foot a:hover{text-decoration:underline;text-underline-offset:3px}
+.wallet-list{display:grid;border-top:1px solid #eeeeea}
+.wallet-row{width:100%;display:flex;align-items:center;gap:13px;text-align:left;background:#fff;border-bottom:1px solid #eeeeea;padding:16px 2px;min-height:68px;border-radius:0;transition:background .16s ease}
+.wallet-row:hover{background:#f9fcf3}.wallet-row:active{transform:none}.wallet-row:focus-visible{outline-offset:-3px}
+.wallet-logo{display:block;width:32px;height:32px;object-fit:contain;flex-shrink:0;border-radius:8px}
+.wallet-logo img{width:100%;height:100%;object-fit:contain}
+.wallet-name{display:flex;align-items:center;gap:8px;font-size:13px;color:#252623;flex:1;line-height:1.4}
+.wallet-name small{display:block;font-size:10px;color:#81847c;margin-top:4px}
+.wallet-availability{font-size:10px;font-weight:400;color:#81847c;margin-left:auto;white-space:nowrap}
+.wallet-row>svg{width:17px;height:17px;margin-left:auto;color:#81847c}
+.wallet-row .wallet-availability+svg{margin-left:4px}
+.wallet-row[aria-busy="true"]{opacity:.65}
+.wallet-preview{width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left;background:none;margin-top:12px;padding:12px 2px;color:#71756c;font-size:11px;border-radius:6px}
+.wallet-preview>svg{width:15px;height:15px}.wallet-preview:hover{color:#252623}
+.connection-note{font-size:10px;line-height:1.65;color:#81847c;margin:21px 0 0;max-width:340px}
+.wallet-option{margin:21px 0 16px;padding:16px;background:#f8fbf1;border-color:#dedfd8;border-radius:10px}.wallet-option:hover{background:#eeeeea}
+.wallet-option .empty-icon{width:32px;height:32px;background:none;color:#71756c;border-radius:0}.wallet-option .empty-icon svg{width:23px;height:23px}
+.wallet-option p{font-size:13px}.wallet-option small{font-size:11px;color:#81847c}
+/* Position sheet: one ledger, open cells, and clear ownership terms. */
+.drawer{width:500px;max-width:100%;padding:29px 30px 30px;background:#fff;box-shadow:-8px 0 55px #2024200a}
+.dialog-top{margin-bottom:27px}.dialog-top .eyebrow{font-size:11px;color:#81847c}.dialog-top .icon-btn{background:none;color:#81847c}
+.detail-pair{gap:13px;margin-bottom:24px}.detail-pair h2{font-size:30px;line-height:1.1;letter-spacing:-1px}
+.detail-pair .token{width:46px;height:46px}.detail-pair .quote{width:25px;height:25px}.detail-pair .token-stack{padding-right:12px}
+.detail-pair p,.detail-protocol{font-size:11px;color:#81847c;line-height:1.5;margin-top:7px;display:flex;align-items:center;gap:6px}
+.detail-protocol .protocol-logo{width:15px;height:15px}
+.price-panel{color:var(--ink);background:transparent;border-radius:0;padding:23px 0 22px;overflow:visible;border-top:1px solid #dedfd8;border-bottom:1px solid #dedfd8}
+.price-panel .eyebrow{font-size:11px;line-height:1.4;color:#81847c}.detail-price{font-size:42px;line-height:1.1;letter-spacing:-1.5px;margin:10px 0 7px;font-variant-numeric:tabular-nums}
+.detail-price small{font-family:Inter,Arial,sans-serif;font-size:14px;letter-spacing:0;font-weight:400;color:#81847c;margin-left:4px}
+.discount{font-size:11px;color:#81847c}.price-panel .type-tag{right:0;top:23px;background:#f5f9ef;border-color:#dedfd8;color:#81847c}
+.detail-tabs{margin-top:23px;margin-bottom:0;gap:26px;border-color:#eeeeea}
+.detail-tabs button{font-size:12px;color:#81847c;padding-bottom:12px;border-bottom-width:1px}
+.detail-tabs .active{color:#252623;border-color:#252623}.detail-tabs button:hover{color:#252623}
+.detail-metrics{gap:0;border-bottom:1px solid #eeeeea;margin-bottom:20px}
+.detail-metric{background:none;border:0;border-radius:0;padding:21px 0;min-height:100px}
+.detail-metric:nth-child(odd){padding-right:18px}.detail-metric:nth-child(even){padding-left:22px;border-left:1px solid #edf3e6}
+.detail-metric:nth-child(n+3){border-top:1px solid #edf3e6}
+.detail-metric>span{font-size:11px;line-height:1.4;color:#81847c}.detail-metric>strong{font-size:21px;line-height:1.2;margin-top:9px;letter-spacing:-.4px;font-variant-numeric:tabular-nums;color:#252623}
+.detail-metric>small{font-size:10px;line-height:1.5;color:#81847c;margin-top:5px}
+.detail-ownership{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:15px 0;border-bottom:1px solid #eeeeea;font-size:11px;color:#81847c}
+.detail-ownership strong,.detail-ownership b{font-weight:400;color:#71756c}.rights-note{display:flex;align-items:flex-start;gap:9px;font-size:11px;line-height:1.65;color:#81847c;margin-top:19px}
+.rights-note svg{width:14px;height:14px;flex-shrink:0;margin-top:2px}
+.detail-description{font-size:12px;line-height:1.7;color:#81847c;margin:21px 0}
+.detail-actions{margin-top:25px;gap:9px}.detail-actions .primary{min-height:46px}.detail-actions .primary>svg{width:17px;height:17px}
+.small-print{font-size:10px;line-height:1.6;color:#81847c;text-align:left;margin-top:14px}
+.notice,.inline-note{display:flex;align-items:flex-start;gap:9px;background:none;border:0;border-radius:0;padding:0;color:#81847c;font-size:11px;line-height:1.65}
+.notice svg,.inline-note svg{width:14px;height:14px;flex-shrink:0;margin-top:2px;color:#81847c}.notice strong{color:inherit;font-weight:400}
+.risk-list{gap:0;margin-top:7px}.risk-list li{padding:18px 0;border-bottom:1px solid #eeeeea;font-size:12px;color:#81847c}.risk-list li:last-child{border:0}
+.risk-list b{font-size:12px;color:#71756c;font-weight:400;margin-bottom:6px}
+/* Review flows use one compact ticket and a typographic amount. */
+.position-ticket{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:17px 0;border-top:1px solid #eeeeea;border-bottom:1px solid #eeeeea;margin:22px 0 0}
+.position-ticket .pair{gap:10px}.position-ticket .pair-name{font-size:13px}.position-ticket .type-tag{font-size:9px}
+.transaction-total{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding:23px 0 20px}
+.transaction-total>span,.transaction-total>div>span{font-size:11px;color:#81847c}
+.transaction-total strong{display:flex;align-items:center;gap:8px;font:500 32px/1.1 'Inter Display',Inter,sans-serif;letter-spacing:-1px;color:#252623;font-variant-numeric:tabular-nums}
+.transaction-total strong small{font:400 12px Inter,Arial,sans-serif;color:#81847c;letter-spacing:0}
+.transaction-total img{width:19px;height:19px;object-fit:contain}.transaction-total .asset-logo{width:19px;height:19px}
+.summary-rows{padding:19px 0;gap:14px;border-color:#eeeeea;margin:21px 0}
+.summary-row{font-size:12px;line-height:1.5;align-items:center;gap:20px}.summary-row span{color:#81847c}
+.summary-row b,.summary-row strong{font-weight:400;text-align:right;color:#71756c;font-variant-numeric:tabular-nums}
+.summary-row.total{font-size:15px;padding-top:17px;border-color:#eeeeea}.summary-row.total b{font-family:'Inter Display',Inter,sans-serif;font-size:21px;letter-spacing:-.5px}
+.check-label{font-size:11px;line-height:1.65;color:#81847c;align-items:flex-start;gap:9px}
+.check-label input{width:14px;height:14px;flex-shrink:0;margin:2px 0 0;accent-color:#252623}
+.success-icon{width:36px;height:36px;border-radius:50%;background:#eeeeea;color:#71756c;margin-bottom:20px}
+.success-icon svg{width:19px;height:19px;stroke-width:1.5}
+/* Listing flow, with distinct form hierarchy and quiet selected states. */
+.steps{margin:23px 0 24px;gap:8px;font-size:11px;justify-content:space-between;color:#81847c}
+.step{gap:7px}.step b{width:22px;height:22px;font-size:10px;background:#eeeeea;border:1px solid #eeeeea;color:#81847c}
+.step.active{color:#252623}.step.active b{background:#252623;border-color:#252623;color:white}
+.step-line{flex:1;max-width:42px;background:#eeeeea}
+.position-choice{margin:0;padding:18px 3px;border:0;border-bottom:1px solid #eeeeea;border-radius:0;background:white;gap:12px;min-height:76px}
+.position-choice:first-of-type{border-top:1px solid #eeeeea}.position-choice.selected{background:#f9fcf5;border-color:#dedfd8}
+.position-choice:hover{background:#f9fcf5}.position-choice .pair-name{font-size:12px}.position-choice .type-tag{font-size:9px}
+.radio-dot{width:16px;height:16px;border-color:#dedfd8;flex-shrink:0}.selected .radio-dot{border-color:#71756c}.selected .radio-dot:after{width:8px;height:8px;background:#71756c}
+.form-grid{gap:22px;margin-top:23px}
+.field label,.field-label{font-size:11px;color:#81847c;line-height:1.5}
+.field input,.field select,.field textarea{border-color:#dedfd8;border-radius:8px;padding:12px 13px;background:#fff;color:#252623;transition:border-color .16s,box-shadow .16s}
+.field input::placeholder{color:#81847c}.field input:hover,.field select:hover{border-color:#dedfd8}
+.field input:focus,.field select:focus,.field textarea:focus{outline:0;border-color:#81847c;box-shadow:0 0 0 3px #20242013}
+.field small{font-size:10px;line-height:1.6;color:#81847c}.field-error{font-size:11px;color:#b44a28}
+.price-input{border-color:#dedfd8;border-radius:9px;background:#fff;padding-right:16px;min-height:58px;transition:border-color .16s,box-shadow .16s}
+.price-input:focus-within{border-color:#81847c;box-shadow:0 0 0 3px #20242013}.price-input input{font-family:'Inter Display',Inter,sans-serif;font-size:28px;letter-spacing:-.7px;border:0;padding-top:15px;padding-bottom:15px;font-variant-numeric:tabular-nums}
+.price-input input:focus{box-shadow:none}.price-input span{font-size:12px;color:#81847c}.price-input img{width:16px;height:16px;object-fit:contain;margin-right:6px}
+.visibility-options{gap:11px}.visibility-option{border-color:#dedfd8;border-radius:9px;padding:15px 14px;background:#fff}
+.visibility-option.selected{border-color:#81847c;background:#fafdf6}.visibility-option:hover{border-color:#81847c}
+.visibility-option svg{width:16px;height:16px;color:#81847c;margin-bottom:13px}.visibility-option span{font-size:12px;color:#71756c}.visibility-option small{font-size:10px;color:#81847c;line-height:1.65}
+.private-key{font-size:11px;line-height:1.6;background:#f9fcf4;border:1px solid #dedfd8;color:#81847c;border-radius:7px;padding:12px}
+.guide-step{gap:17px;padding:20px 0;border-color:#eeeeea}.guide-step>span{font-size:11px;color:#81847c;padding-top:3px}
+.guide-step h3{font-size:16px;letter-spacing:-.3px;color:#71756c}.guide-step p{font-size:12px;line-height:1.7;color:#81847c;margin-top:7px}
+#toast{background:#252623;color:#f4f8ee;box-shadow:0 4px 18px #20242013;border-radius:9px;font-size:11px;padding:13px 18px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #81847c;outline-offset:3px}
+/* All auxiliary text stays legible and neutral. */
+.side-foot,.hero-note,.table-bottom,.app-footer,.pair-meta,.sub,.positive,.lock,.lock svg,.stat>span,.stat p,.empty-state p,.activity-row small,.activity-icon,.muted,.dialog-chrome .icon-btn,.modal .close-corner,.modal>p,.modal-intro,.modal-head p,.modal>.eyebrow,.dialog-foot,.dialog-foot a,.wallet-name small,.wallet-availability,.wallet-row>svg,.wallet-preview,.connection-note,.wallet-option small,.dialog-top .eyebrow,.dialog-top .icon-btn,.detail-pair p,.detail-protocol,.price-panel .eyebrow,.detail-price small,.discount,.detail-tabs button,.detail-metric>span,.detail-metric>small,.detail-ownership,.rights-note,.detail-description,.small-print,.notice,.inline-note,.notice svg,.inline-note svg,.risk-list li,.transaction-total>span,.transaction-total>div>span,.transaction-total strong small,.summary-row span,.check-label,.steps,.step b,.field label,.field-label,.field small,.price-input span,.visibility-option small,.guide-step>span,.guide-step p{color:#777875}
+.wallet-name,.detail-tabs .active,.detail-tabs button:hover,.detail-metric>strong,.detail-ownership strong,.detail-ownership b,.risk-list b,.transaction-total strong,.summary-row b,.summary-row strong,.step.active,.field input,.field select,.field textarea,.visibility-option span,.guide-step h3{color:#252623}
+.wallet-list,.wallet-row,.dialog-foot,.price-panel,.detail-tabs,.detail-metrics,.detail-ownership,.risk-list li,.position-ticket,.summary-rows,.summary-row.total,.position-choice,.guide-step{border-color:#e7e7e1}
+.detail-metric:nth-child(even),.detail-metric:nth-child(n+3){border-color:#eeeeea}
+.wallet-row:hover,.wallet-option,.wallet-option:hover,.position-choice.selected,.position-choice:hover,.visibility-option.selected,.private-key{background:#f7f7f3}
+.modal .primary:disabled,.drawer .primary:disabled{background:#ecece7;color:#81847c}
+.modal .secondary:hover,.drawer .secondary:hover{background:#f7f7f3;border-color:#dedfd8}
+.field input,.field select,.field textarea,.price-input,.visibility-option,.private-key{border-color:#dedfd8}
+.field input:focus,.field select:focus,.field textarea:focus,.price-input:focus-within,.visibility-option.selected{border-color:#81847c}
+.field input::placeholder{color:#81847c}.selected .radio-dot{border-color:#71756c}.selected .radio-dot:after{background:#71756c}
+.step.active b{background:#252623;border-color:#252623;color:white}.step b{background:#f3f3ef;border-color:#eeeeea}.step-line{background:#eeeeea}
+.success-icon{background:#f3f3ef;color:#71756c}.private-key{color:#71756c}
+@media(max-width:1020px){.preview-label{font-size:10px}.app-footer{font-size:10px}}
+@media(max-width:760px){
+ .top-actions{gap:11px}.preview-label{display:none}.network img{width:17px;height:17px}
+ .hero .eyebrow{font-size:11px}.hero-note{font-size:9px}.hero-copy>p{font-size:11px}
+ .market-summary{font-size:10px}.sort-control select{font-size:10px}.table-bottom{font-size:10px;line-height:1.5;padding:15px 16px}
+ .app-footer{font-size:10px;line-height:1.55;gap:7px}.page-intro h1{font-size:33px;letter-spacing:-1.1px}
+ .mobile-row-bottom .sub{font-size:9px}.mobile-market-row .type-tag{font-size:9px}.mobile-market-row .pair-name{font-size:13px}
+ .overlay.center{padding:15px}.modal,.modal.wide{padding:24px;border-radius:18px;max-height:calc(100dvh - 30px)}
+ .modal h2,.modal-head h2{font-size:27px;letter-spacing:-.8px}.modal-head{margin-bottom:23px}.dialog-chrome{margin-bottom:24px}
+ .modal .close-corner{top:18px;right:18px}.modal>p,.modal-intro,.modal-head p{font-size:12px;line-height:1.6}
+ .wallet-row{padding:16px 0;gap:11px}.wallet-name{font-size:13px}.wallet-availability{font-size:10px}.connection-note{font-size:10px}
+ .drawer{padding:24px;width:100%}.detail-pair h2{font-size:29px}.detail-price{font-size:39px}.price-panel{padding-top:22px;padding-bottom:22px}
+ .detail-metric{min-height:101px;padding-top:20px;padding-bottom:20px}.detail-metric:nth-child(even){padding-left:20px}
+ .detail-tabs{gap:25px}.detail-tabs button{font-size:12px}.detail-description,.risk-list li{font-size:12px}
+ .position-ticket{gap:9px}.position-ticket .pair-name{font-size:12px}.position-ticket .type-tag{font-size:9px}
+ .steps{gap:7px;font-size:10px;justify-content:space-between}.step{gap:5px}.step-line{max-width:17px}.step b{width:20px;height:20px}
+ .position-choice{padding:17px 0;gap:9px}.position-choice .type-tag{font-size:8px;padding:5px}.position-choice .pair{gap:8px;min-width:0}.position-choice .pair-name{font-size:12px}.position-choice .token{width:29px;height:29px}.position-choice .quote{width:19px;height:19px}
+ .visibility-option{padding:13px 12px}.visibility-option span{font-size:11px}.visibility-option small{font-size:10px}
+ .dialog-foot{font-size:10px;align-items:flex-start}.modal-actions{margin-top:24px}.modal-actions>.secondary{min-width:75px}
+ .transaction-total strong{font-size:29px}.summary-row{font-size:11px}.check-label,.notice,.inline-note,.rights-note{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){.overlay,.modal,.drawer,.wallet-row,.position-card{animation:none;transition:none}.position-card:hover{transform:none}}
+
+/* The dark portfolio balance retains readable secondary text. */
+.stat.dark>span,.stat.dark p,.stat.dark strong small{color:#b8bdb0}
+/* Asset and transaction details. */
+.hero-network{display:flex;align-items:center;gap:7px}.hero-network img{width:15px;height:15px;object-fit:contain}
+.pair-divider{color:#a1a19c;padding:0 2px}.token .asset-logo{width:100%;height:100%;border-radius:0}.token-stack{padding-right:12px}.token.quote{width:22px;height:22px}
+.table-bottom .asset-logo{width:13px;height:13px}.footer-preview{padding:0;font-size:10px;color:#777875;cursor:pointer}.footer-preview:hover{color:#292a27}
+.wallet-row:disabled{opacity:1;cursor:default}.wallet-row:disabled:hover{background:#fff}.wallet-availability{color:#9b9c96}
+.wallet-preview strong{display:block;font-size:12px;font-weight:400;color:#383936}.wallet-preview small{display:block;margin-top:5px;font-size:11px;color:#85867f}.wallet-preview{border-top:1px solid #e7e7e1;margin-top:19px;padding-top:19px}
+.modal p.connection-note{font-size:10px;line-height:1.6;color:#90918b;margin-top:17px}
+.detail-price small{display:inline-flex;align-items:center;gap:5px}.detail-price .asset-logo{width:19px;height:19px}.detail-metric strong>span{font-family:Inter,sans-serif;font-size:13px;font-weight:400;color:#85867f}
+.rights-note h3{font:400 12px/1.4 Inter,sans-serif;letter-spacing:0;color:#4e504a;margin:0 0 5px}.rights-note p{font-size:11px;line-height:1.65}.detail-ownership>span:last-child{color:#3d3f38}
+.dialog-foot button{display:inline-flex;align-items:center;gap:6px;color:#93958d;font-size:10px;padding:0}.dialog-foot svg{width:12px;height:12px}
+.transaction-total small{display:inline-flex;align-items:center;gap:5px}.price-input>span{display:flex;align-items:center;white-space:nowrap;gap:5px}.price-input img{margin:0}.field-assist{display:flex;justify-content:space-between;gap:14px}
+.dialog-position .detail-pair{margin-top:4px}.dialog-position .dialog-chrome{margin-bottom:32px}
+@media(max-width:760px){.preview-label{display:none}.hero-network{font-size:11px}.app-footer{display:flex;justify-content:space-between}.footer-preview{font-size:9px}.dialog-foot{gap:7px}.dialog-foot button{font-size:9px}.detail-pair h2{font-size:27px}.transaction-total{align-items:center}.transaction-total strong{font-size:30px}.field-assist small{font-size:9px}}
+
+.modal .position-choice + .inline-note{margin-top:18px}.modal .modal-intro + .position-choice{margin-top:8px}
+
+/* Asset geometry is preserved. Circular token holders never trim polygon marks. */
+.token{flex-shrink:0;isolation:isolate;overflow:visible;background:#fff;box-shadow:0 0 0 1px rgba(32,33,31,.05)}
+.token .asset-logo{flex-shrink:0;min-width:0;max-width:100%;max-height:100%;border-radius:0}
+.token [data-brand="sol"]{width:76%;height:76%;padding:0;object-fit:contain!important}
+.token [data-brand="jup"]{width:92%;height:92%}
+.token [data-brand="usdc"],.token [data-brand="bonk"],.token [data-brand="wif"]{border-radius:50%}
+.token.quote{bottom:-2px;border-width:2px;box-shadow:0 0 0 1px rgba(32,33,31,.04)}
+.detail-pair .token.quote{width:26px;height:26px}
+.position-choice .token.quote{width:20px;height:20px}
+.asset-logo,.protocol-logo,.wallet-logo{flex-shrink:0;object-position:center}
+.hero-network .asset-logo,.network img{width:17px;height:auto;aspect-ratio:101/88;flex-shrink:0;max-width:none;border-radius:0;overflow:visible}
+.table-bottom .asset-logo{width:14px;height:auto;aspect-ratio:101/88}
+.detail-price .asset-logo,.transaction-total .asset-logo{width:18px;height:auto;aspect-ratio:101/88;border-radius:0}
+.price-input .asset-logo{width:16px;height:auto;aspect-ratio:101/88;border-radius:0}
+.protocol-logo{border-radius:0;overflow:visible}
+
+/* The desert is a continuous landscape; its leading edge dissolves into paper. */
+.hero-main{isolation:isolate}
+.hero-main:after{inset:auto -1px -1px auto;width:65%;height:100%;background-position:right bottom;background-size:100% auto;background-repeat:no-repeat;opacity:1;mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.3) 12%,#000 30%);-webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.3) 12%,#000 30%);transform-origin:right bottom;transition:transform 800ms cubic-bezier(.22,1,.36,1);z-index:0}
+.hero-copy{z-index:1}.hero-copy>p{max-width:260px}
+.hero-feature .text-link{z-index:2}
+@media(min-width:1600px){.hero-main:after{width:58%}}
+@media(min-width:761px) and (max-width:1100px){.hero-main{height:280px}}
+@media(min-width:761px) and (max-width:1250px){.hero-main:after{width:80%;background-size:100% auto;opacity:.88}.hero-copy>p{max-width:225px}}
+@media(max-width:760px){.hero-main{height:280px}.hero-main:after{width:100%;height:100%;background-size:100% auto;opacity:1;mask-image:linear-gradient(180deg,transparent 48%,#000 74%);-webkit-mask-image:linear-gradient(180deg,transparent 48%,#000 74%)}.hero-network .asset-logo{width:15px}.network img{width:16px}}
+
+/* Feedback follows the action: small travel, settled easing, no looping motion. */
+:root{--ease-settle:cubic-bezier(.22,1,.36,1);--ease-out:cubic-bezier(.16,1,.3,1)}
+button,a{-webkit-tap-highlight-color:transparent}
+button{transition:background-color 180ms ease,border-color 180ms ease,color 180ms ease,box-shadow 180ms ease,transform 220ms var(--ease-settle)}
+button:not(:disabled):active{transform:translateY(1px) scale(.985)}
+.primary,.wallet-btn{box-shadow:0 1px 2px #20211f0d}
+.primary:disabled,.wallet-btn:disabled{box-shadow:none}
+.primary svg,.text-link svg,.side-create>span:last-child,.side-help>span:last-child,.wallet-preview>svg,.row-actions>.icon-btn>svg{transition:transform 280ms var(--ease-settle),color 180ms ease}
+.nav-item{transition:background 180ms ease,color 180ms ease,transform 220ms var(--ease-settle)}
+.tab{transition:background 200ms ease,color 200ms ease,box-shadow 200ms ease}
+.tabs .tab.active{box-shadow:0 1px 2px #20211f0d}
+.search{transition:border-color 180ms ease,box-shadow 180ms ease,background-color 180ms ease}
+.search:focus-within{border-color:#969a91;box-shadow:0 0 0 3px #2024200a;background:#fff}
+.search:focus-within svg{color:#34362f}.search input:focus-visible{outline:0}
+.filter-btn[aria-expanded="true"]{border-color:#bfc1b8;background:#f9f9f6}
+.view-switch button{transition:background 180ms ease,color 180ms ease}
+.market-table tr[data-action="detail"]:focus-visible,.mobile-market-row:focus-visible,.position-card:focus-visible{outline:2px solid #7e8475;outline-offset:-3px}
+.market-table tr[data-id]{transition:background-color 180ms ease}
+.market-table tr[data-id] .row-actions>.icon-btn{opacity:.55;transition:opacity 180ms ease}
+.mobile-market-row{transition:background-color 180ms ease}
+.position-card{transition:transform 320ms var(--ease-settle),border-color 220ms ease,box-shadow 320ms ease}
+.save-button svg{transform-origin:center;transition:fill 180ms ease,stroke 180ms ease}
+.save-button.saved{color:#b94418}.save-button.saved svg{fill:#b9441812}
+.icon-btn:focus-visible{outline-offset:2px}
+.field input,.field select,.price-input,.visibility-option{transition:border-color 180ms ease,background-color 180ms ease,box-shadow 180ms ease}
+.position-choice{transition:background-color 160ms ease,color 160ms ease}
+.radio-dot{transition:border-color 180ms ease,background-color 180ms ease}
+.selected .radio-dot:after{animation:selection-settle 220ms var(--ease-settle)}
+.check-label input{transition:box-shadow 180ms ease;cursor:pointer}
+.check-label:has(input:checked){color:#4e5248}
+.filter-panel{animation:panel-reveal 240ms var(--ease-settle)}
+.modal,.drawer{scrollbar-width:thin;scrollbar-color:#d8dad2 transparent;overscroll-behavior:contain}
+.modal:focus,.drawer:focus{outline:none}
+.overlay{animation:veil-enter 240ms ease both}
+.modal{animation:dialog-enter 350ms var(--ease-out) both}
+.drawer{animation:sheet-enter 400ms var(--ease-out) both}
+.overlay.is-closing{pointer-events:none;animation:veil-exit 170ms ease both}
+.overlay.is-closing .modal{animation:dialog-exit 170ms cubic-bezier(.4,0,1,1) both}
+.overlay.is-closing .drawer{animation:sheet-exit 170ms cubic-bezier(.4,0,1,1) both}
+.dialog-foot a,.dialog-foot button,.footer-preview{transition:color 180ms ease}
+#toast{transition:opacity 180ms ease,transform 280ms var(--ease-settle);max-width:calc(100vw - 40px);text-align:center;line-height:1.5;pointer-events:none}
+@media(hover:hover){
+ .hero-main:hover:after{transform:translateY(-2px) scale(1.015)}
+ .text-link:hover svg,.side-create:hover>span:last-child,.side-help:hover>span:last-child,.wallet-preview:hover>svg{transform:translate(2px,-1px)}
+ .primary:not(:disabled):hover{box-shadow:0 3px 7px #20211f12}
+ .market-table tr[data-id]:hover .row-actions>.icon-btn{opacity:1}
+ .market-table tr[data-id]:hover .row-actions>.icon-btn>svg{transform:translate(2px,-2px)}
+ .mobile-market-row:hover{background:#fafbf7}
+ .position-card:hover{transform:translateY(-2px);border-color:#d2d5c9;box-shadow:0 7px 16px #20211f06}
+ .save-button:hover svg{transform:translateY(-1px)}
+}
+@keyframes selection-settle{from{transform:scale(.65);opacity:.4}to{transform:scale(1);opacity:1}}
+@keyframes panel-reveal{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+@keyframes veil-enter{from{background:rgba(24,25,23,0)}to{background:rgba(24,25,23,.23)}}
+@keyframes veil-exit{from{background:rgba(24,25,23,.23)}to{background:rgba(24,25,23,0)}}
+@keyframes dialog-enter{from{opacity:0;transform:translateY(12px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes dialog-exit{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(7px) scale(.99)}}
+@keyframes sheet-enter{from{opacity:.8;transform:translateX(32px)}to{opacity:1;transform:translateX(0)}}
+@keyframes sheet-exit{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(20px)}}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+ .hero-main:hover:after,.position-card:hover,button:not(:disabled):active{transform:none}
+}

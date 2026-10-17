@@ -1,0 +1,8 @@
+/* Scoped brand substitutions. Original Framer layout, breakpoints and motion remain. */
+.framer-lw1rwd,.framer-zsm7av,.framer-1uewlc1-container,.framer-mo6j1k-container,.framer-1mejf5d{display:none!important}
+.framer-1nbugvf-container{background:#1e1916 url('./sona-banner.png') center/contain no-repeat}
+.framer-1nbugvf-container video{background:transparent!important;object-fit:contain!important}
+img[src*="sona-wordmark"]{object-fit:contain!important}
+.framer-4474yi input{cursor:pointer}
+
+img[src$="solana.svg"],img[src$="liquidity.svg"],img[src$="fee-rights.svg"],img[src$="private-deals.svg"],img[src$="on-chain.svg"]{object-fit:contain!important}

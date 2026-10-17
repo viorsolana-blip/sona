@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f0f0ee"><title>Sona — Liquidity Marketplace</title>
+<meta name="description" content="Sona, a liquidity marketplace for Solana positions and fee rights.">
+<link rel="icon" href="../assets/Ra1fh0MoVH2kB555Dxfse0f7d8E.png">
+<link rel="stylesheet" href="./app.css"><link rel="stylesheet" href="./refined.css?v=4"><script type="module" src="./app.js?v=5"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to marketplace</a>
+<aside class="sidebar" id="sidebar">
+ <a class="brand" href="../index.html" aria-label="Sona home"><img class="brand-symbol" src="../assets/Ra1fh0MoVH2kB555Dxfse0f7d8E.png" alt=""><img class="brand-word" src="../assets/sona-wordmark.svg" alt="SONA"></a>
+ <div class="side-eyebrow">Liquidity marketplace</div>
+ <nav aria-label="Main navigation" id="main-nav"></nav>
+ <button class="side-create" data-action="create"><span class="icon" data-icon="plus"></span>List a position<span>↗</span></button>
+ <div class="side-bottom">
+  <button class="plain side-help" data-action="guide"><span class="icon" data-icon="help"></span>How Sona works<span>↗</span></button>
+  <a class="plain side-help" href="https://x.com/SonaFiTrade" target="_blank" rel="noopener noreferrer"><span class="x-icon">𝕏</span>Join the conversation<span>↗</span></a>
+  <div class="side-art"><img src="../assets/sona-wordmark-light.svg" alt="SONA"><span>A market for<br>locked liquidity.</span></div>
+  <div class="side-foot"><span>Built on Solana</span><span>v0.2</span></div>
+ </div>
+</aside>
+<div class="app-shell">
+ <header class="topbar">
+  <div class="breadcrumb"><button class="icon-btn mobile-toggle" data-action="menu" aria-label="Open navigation"><span data-icon="menu"></span></button><span class="breadcrumb-home">Workspace</span><span class="slash">/</span><span id="page-label">Marketplace</span></div>
+  <div class="top-actions"><span class="network"><img src="../assets/brands/sol.svg" alt="">Solana</span><button class="wallet-btn" id="wallet-button" data-action="wallet"><span data-icon="wallet"></span><span>Connect wallet</span></button></div>
+ </header>
+ <main id="main" tabindex="-1"></main>
+ <footer class="app-footer"><span>© 2026 Sona</span><button class="plain footer-preview" data-action="connection-info">Connection status</button></footer>
+</div>
+<div id="overlay-root"></div><div id="toast" role="status" aria-live="polite"></div>
+</body></html>

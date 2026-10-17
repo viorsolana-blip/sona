@@ -90,8 +90,8 @@
     "hostedAdapterLocalExecution": "/source/evidence/hosted-local.json",
     "hostedReleaseSettlementLocalExecution": "/source/evidence/hosted-settlement-local.json",
     "referenceTokenAccount": "6i9ctDoxQXSwTNUqGrfXfTj9USr5doKKjvu3wZv5DMS7",
-    "publicRuntimeExecution": "/source/evidence/public-runtime.json",
-    "localWorkerdExecution": "/source/evidence/workerd-local.json",
+    "publicRuntimeExecution": "/source/evidence/security-public-runtime.json",
+    "localWorkerdExecution": "/source/evidence/security-workerd-local.json",
     "internalSecurityReview": {
       "type": "internal-ai-assisted",
       "report": "https://github.com/viorsolana-blip/sona/blob/main/docs/security/REVIEW-2026-10-18.md",
@@ -114,8 +114,8 @@
   "publication": {
     "publicOrigin": "https://sona-liquidity-marketplace.official-alexslobodi.chatgpt.site",
     "repositoryUrl": "https://github.com/viorsolana-blip/sona",
-    "verifiedImplementationRevision": "4749a37ce89ca3ed4228f0cd12bdbbd982f92b21",
-    "runtimeEvidence": "/source/evidence/public-runtime.json",
+    "verifiedImplementationRevision": "78fb017d91b9df5d2d356c8a42fdd8db31389208",
+    "runtimeEvidence": "/source/evidence/security-public-runtime.json",
     "verification": "Public deployment and source availability confirmed. Runtime checks cover HTTP/Workers/D1 authentication and read-only protocol verification; no marketplace settlement was sent."
   }
 }

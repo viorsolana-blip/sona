@@ -44,7 +44,7 @@
     },
     {
       "id": "SONA-07",
-      "status": "remediated-locally-awaiting-public-delivery-verification"
+      "status": "remediated-and-publicly-verified"
     },
     {
       "id": "SONA-08",
@@ -96,6 +96,22 @@
         "security-workerd-local.json"
       ],
       "scope": "Actual local Workers/D1, Ed25519 authentication, client challenge validation, response headers and read-only mainnet Raydium reads."
+    },
+    {
+      "command": "node --test scripts/verify-document.test.mjs",
+      "tests": 3,
+      "passed": 3,
+      "failed": 0,
+      "scope": "Strict authored-HTML comparison; only the exact observed Cloudflare script is permitted and separately hashed."
+    },
+    {
+      "command": "node scripts/verify-public.mjs https://sona-liquidity-marketplace.official-alexslobodi.chatgpt.site marketplace/evidence/security-public-runtime.json",
+      "checksPassed": 12,
+      "evidence": [
+        "security-public-runtime.json"
+      ],
+      "deploymentSourceRevision": "78fb017d91b9df5d2d356c8a42fdd8db31389208",
+      "scope": "Actual anonymous public Workers/D1 authentication, document policy and authored HTML verification, plus current third-party Raydium reads. No settlement or funded wallet."
     }
   ],
   "dependencyReport": "security-dependencies.json",
@@ -137,12 +153,15 @@
     "marketplace/tests/wallet.test.mjs": "9eb9cb7c7e643566535d7f7190a08cc694b7ad71e1d2c81f61ffc49d60766148",
     "package-lock.json": "186d67a7e7dab7bafb81e5d04587295c7c1c0593c35752e9bb37f760f62faabd",
     "package.json": "2f1f3194df3ca93598cb85bf3b64a7582f39eed6a5728e12d5b2a220fc559497",
-    "scripts/verify-public.mjs": "acaba8e177534d0ae0c23f81617bb6980c687f199f2d7f1d45f3a6154f22ffd1",
+    "scripts/verify-public.mjs": "c97317eb3027583b8c207fe733ef7c1f9510d98afa6f3017bbd7570783de1299",
     "public/_headers": "77d81674ee590115455ba09eb77276eacb3ded885f95c8aaee3d2424b455e772",
     "scripts/prepare-public.mjs": "9408a19b14fcf96fbdc5d46e0bf1c82d9b3e46ebcf771a8f807395180fe9e746",
     "vite.config.ts": "69563364b52d6a6e760e68ab5ba7fccdd07d5f36f56fa6997a3e1b9406fc71d9",
     "marketplace/dist/app/index.html": "ee57c3292b0ed27bfadf58ad131fb42d8a659d0695db87bc2db4c8e2d51a9766",
-    "marketplace/dist/technical/index.html": "0cf227c026dfb54c1f11e8d4531502e9a8a71864e20f48aef09cfa8b4606d9ba"
+    "marketplace/dist/technical/index.html": "0cf227c026dfb54c1f11e8d4531502e9a8a71864e20f48aef09cfa8b4606d9ba",
+    "scripts/verify-document.mjs": "146bf0010489e614008ba80c229df5d960e57f81346db663c0d90e8002013f75",
+    "scripts/verify-document.test.mjs": "34cf700820ed3d7c05784397f23d08b0534fe18a055af9f6c6314b7ec7bbebc5",
+    "scripts/fixtures/cloudflare-jsd.html": "6a75d68b52efbad75a56e87a7ed4a35db2a3a1eb32339a68733bba7110a10715"
   },
   "limitations": [
     "This is a development-team AI-assisted review, not an independent security audit.",

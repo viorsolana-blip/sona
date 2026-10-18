@@ -6,11 +6,11 @@ import { handleApi } from '../marketplace/src/hosted/http.mjs';
 import { verifyNetwork } from '../marketplace/src/server/network.mjs';
 import { verifyFeeKey, discoverFeeKeys } from '../marketplace/src/chain/raydium.mjs';
 import { protectResponse } from '../marketplace/src/security/response-headers.mjs';
+import { resolveSonaOrigin } from '../marketplace/src/security/origin.mjs';
 import appDocument from '../marketplace/dist/app/index.html?raw';
 import technicalDocument from '../marketplace/dist/technical/index.html?raw';
 import setupDocument from '../marketplace/dist/setup/index.html?raw';
 
-const publicOrigin = 'https://sona-liquidity-marketplace.official-alexslobodi.chatgpt.site';
 // An immutable network identity may be cached; orders and authentication never are.
 let verifiedNetwork: {endpoint:string; hash:string; until:number} | undefined;
 export default {
@@ -31,8 +31,8 @@ export default {
     }
     if (url.pathname.startsWith('/api/')) {
       try {
-        const origin = env.SONA_ORIGIN || publicOrigin;
-        if (url.origin !== origin) return protectResponse(Response.json({error:{code:'HOST_MISMATCH',message:'Use the configured Sona origin.'}}, {status:400}),url.pathname);
+        const origin = resolveSonaOrigin(url.origin, env.SONA_ORIGIN, env.SONA_WWW_ORIGIN);
+        if (!origin) return protectResponse(Response.json({error:{code:'HOST_MISMATCH',message:'Use a configured Sona origin.'}}, {status:400}),url.pathname);
         const endpoint = env.SONA_RPC_URL || 'https://solana-rpc.publicnode.com';
         const connection = new Connection(endpoint, {commitment:'confirmed',disableRetryOnRateLimit:true,
           fetch: (input:any,init:any)=>fetch(input,{...init,signal:AbortSignal.timeout(15_000)})});

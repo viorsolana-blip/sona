@@ -2,7 +2,7 @@
 
 A marketplace for **Raydium CPMM Burn & Earn Fee Keys** on Solana. Holders can list the fee rights represented by a verified Fee Key NFT. A buyer requests a purchase, the seller approves the exact transaction, and both wallets sign an atomic exchange of the NFT for SOL. The underlying liquidity stays locked in Raydium.
 
-[Website](https://sona-liquidity-marketplace.official-alexslobodi.chatgpt.site/) · [Marketplace](https://sona-liquidity-marketplace.official-alexslobodi.chatgpt.site/app/) · [Implementation and evidence](https://sona-liquidity-marketplace.official-alexslobodi.chatgpt.site/technical/) · [CI template](https://github.com/viorsolana-blip/sona/blob/main/docs/ci/verify.yml)
+[Website](https://sonafi.trade/) · [Marketplace](https://sonafi.trade/app/) · [Implementation and evidence](https://sonafi.trade/technical/) · [CI template](https://github.com/viorsolana-blip/sona/blob/main/docs/ci/verify.yml)
 
 ## What is implemented
 
@@ -56,7 +56,7 @@ The root build uses the checked-in Vinext/Sites build tools and lockfile. It doe
 
 ## Evidence and limits
 
-The separate [`/setup/` companion](https://sona-liquidity-marketplace.official-alexslobodi.chatgpt.site/setup/) checks public wallet addresses, supported Fee Keys and current creation/settlement costs. It uses free RPC reads and does not sign or send transactions. See the [controlled setup guide](marketplace/docs/SETUP.md); two operator-owned wallets provide a controlled settlement test, not independent adoption.
+The separate [`/setup/` companion](https://sonafi.trade/setup/) checks public wallet addresses, supported Fee Keys and current creation/settlement costs. It uses free RPC reads and does not sign or send transactions. See the [controlled setup guide](marketplace/docs/SETUP.md); two operator-owned wallets provide a controlled settlement test, not independent adoption.
 
 The [CI template](docs/ci/verify.yml) defines locked dependency installs, marketplace tests, the wallet build and hosted application compilation. It is **inactive**: the GitHub credential used to publish this repository does not permit workflow publication. Local tests and builds have passed; no GitHub Actions run is claimed. The template uses no paid API key and does not connect a wallet or execute a mainnet purchase.
 

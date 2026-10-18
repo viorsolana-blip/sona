@@ -13,7 +13,7 @@
     .verification .account-label{margin-top:18px}.verification .reference-button{background:transparent;color:#1c1c1a;border:1px solid #d9dbd2;padding:9px 14px;font-size:14px}.verification-actions{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:16px}
     .verification{margin:24px 0;padding:24px;border:1px solid #d9dbd2;border-radius:20px;background:#fff}.verification label{display:block;margin-bottom:8px;font-weight:500}.verification-fields{display:flex;gap:12px}.verification input{flex:1;min-width:0;width:100%;padding:14px 16px;border:1px solid #d9dbd2;border-radius:12px;background:#f9f9f6;color:inherit;font:inherit;font-size:14px}.verification button{border:0;border-radius:12px;padding:14px 20px;background:#1c1c1a;color:#fff;font:inherit;cursor:pointer;white-space:nowrap}.verification button:disabled{opacity:.6;cursor:wait}.verification input:focus-visible,.verification button:focus-visible{outline:2px solid #cc3906;outline-offset:3px}.verification p{font-size:14px;color:#71766a}.verification-result{margin-top:20px;padding-top:16px;border-top:1px solid #d9dbd2}.verification-result dl{display:grid;grid-template-columns:160px 1fr;gap:10px 20px;font-size:14px}.verification-result dt{color:#71766a}.verification-result dd{margin:0;overflow-wrap:anywhere}.verification-result pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:420px;overflow:auto;padding:16px;background:#f3f3ef;border-radius:12px;font-size:12px}.verification-result summary{cursor:pointer;font-size:14px}.verification-result .verification-error{color:#a33209}@media(max-width:600px){.verification{padding:20px}.verification-fields{flex-direction:column}.verification-result dl{grid-template-columns:1fr;gap:4px}.verification-result dd{margin-bottom:10px}}
   </style>
-</head>
+<link rel="stylesheet" href="/assets/sona-contract.css?v=1"><script defer src="/assets/sona-contract.js?v=1"></script></head>
 <body>
 <main>
   <nav aria-label="Page navigation"><a href="../" aria-label="Sona homepage"><img src="../assets/sona-wordmark.svg" alt="Sona"></a><a href="../app/">Back to marketplace</a></nav>
@@ -74,7 +74,7 @@
   <h2>Scope and costs</h2>
   <p>The current integration transfers an entire CPMM Fee Key held by an ordinary signing wallet. Program-owned and multisig-held keys are not supported by this signing flow. It does not support CLMM positions, partial rights, LP redemption, fee claiming, new liquidity locks or confidential settlement. Public RPC can throttle; read failures are shown instead of fabricated holdings.</p>
   <p>No paid RPC key is required. Listing does not require a deposit. A real purchase still costs Solana network fees and, when needed, buyer token-account rent. Hosted operation is subject to platform and public RPC limits; an independent security review remains outstanding.</p>
-  <footer>The same source and evidence are available to every visitor. Recorded local execution, read-only mainnet verification and a completed mainnet marketplace sale are different claims. This page is not a score guarantee or security certification.</footer>
+  <footer>The same source and evidence are available to every visitor. Recorded local execution, read-only mainnet verification and a completed mainnet marketplace sale are different claims. This page is not a score guarantee or security certification.<sona-contract class="sona-contract-support">RoCUo6YV4QAddXZMAW68mFs5pL5JVZs8b9vQ2PHpump</sona-contract></footer>
 </main>
 <script>
 (() => {

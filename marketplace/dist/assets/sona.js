@@ -16,6 +16,22 @@
     anchor.setAttribute('aria-label', 'Launch Sona app');
   }
   function refresh() {
+    const contractPlacements = [
+      ['.framer-1v63p98', 'hero', false],
+      ['#flywheel .framer-vmbxve', 'flywheel', true],
+      ['.framer-Uhpcf .framer-10uzs7u', 'footer', true],
+    ];
+    for (const [selector, placement, dark] of contractPlacements) {
+      document.querySelectorAll(selector).forEach(parent => {
+        if (parent.querySelector(`sona-contract[data-placement="${placement}"]`)) return;
+        const contract = document.createElement('sona-contract');
+        contract.dataset.placement = placement;
+        contract.className = `sona-contract-${placement}`;
+        contract.setAttribute('layout', 'stacked');
+        if (dark) contract.setAttribute('theme', 'dark');
+        parent.append(contract);
+      });
+    }
     document.querySelectorAll('.framer-1nbugvf-container video').forEach(video => {
       video.removeAttribute('src');
       video.poster = root + 'assets/sona-banner.png';

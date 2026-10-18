@@ -6,3 +6,9 @@ img[src*="sona-wordmark"]{object-fit:contain!important}
 .framer-4474yi input{cursor:pointer}
 
 img[src$="solana.svg"],img[src$="liquidity.svg"],img[src$="fee-rights.svg"],img[src$="private-deals.svg"],img[src$="on-chain.svg"]{object-fit:contain!important}
+
+/* The address follows the existing CTA rhythm and the footer's dark surface. */
+.sona-contract-hero{width:100%;max-width:470px!important}
+.sona-contract-flywheel{width:100%;max-width:510px!important;margin-top:-24px}
+.sona-contract-footer{width:100%;margin-top:8px}
+@media(max-width:809px){.sona-contract-flywheel{margin-top:-12px}}

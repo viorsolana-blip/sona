@@ -1,0 +1,152 @@
+sona-contract {
+  --sona-contract-ink: #1c1c1a;
+  --sona-contract-muted: #7c7d77;
+  --sona-contract-line: #e5e5df;
+  --sona-contract-surface: rgba(255, 255, 255, .58);
+  --sona-contract-hover: rgba(255, 255, 255, .94);
+  display: inline-block;
+  max-width: 100%;
+  min-width: 0;
+  color: var(--sona-contract-ink);
+  font-family: Inter, "Inter Display", sans-serif;
+  text-transform: none;
+  vertical-align: middle;
+}
+sona-contract[theme="dark"] {
+  --sona-contract-ink: #eee9df;
+  --sona-contract-muted: #b4b0a7;
+  --sona-contract-line: rgba(238, 233, 223, .18);
+  --sona-contract-surface: rgba(255, 255, 255, .025);
+  --sona-contract-hover: rgba(255, 255, 255, .065);
+}
+.sona-contract-support { display: block; width: 100%; max-width: 520px; margin-top: 20px; flex-basis: 100%; }
+.sona-contract__button {
+  appearance: none;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: 100%;
+  max-width: 100%;
+  min-height: 44px;
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--sona-contract-line);
+  border-radius: 10px;
+  background: var(--sona-contract-surface);
+  color: var(--sona-contract-ink);
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-align: left;
+  text-transform: none;
+  cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+@media (hover: hover) {
+  .sona-contract__button:hover { background: var(--sona-contract-hover); }
+}
+.sona-contract__button:focus-visible,
+.sona-contract__selection:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+.sona-contract__label {
+  display: grid;
+  flex: 0 0 auto;
+  color: var(--sona-contract-muted);
+  font-weight: 400;
+  white-space: nowrap;
+}
+.sona-contract__label > span,
+.sona-contract__icons > span { grid-area: 1 / 1; }
+.sona-contract__copied { visibility: hidden; }
+sona-contract[data-copied="true"] .sona-contract__ready { visibility: hidden; }
+sona-contract[data-copied="true"] .sona-contract__copied { visibility: visible; }
+.sona-contract__address {
+  display: block;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: .015em;
+}
+.sona-contract__icons {
+  display: grid;
+  flex: 0 0 17px;
+  width: 17px;
+  height: 17px;
+  margin-left: auto;
+}
+.sona-contract__icons svg {
+  display: block;
+  width: 17px;
+  height: 17px;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+sona-contract[layout="stacked"] .sona-contract__button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 17px;
+  gap: 4px 12px;
+}
+sona-contract[layout="stacked"] .sona-contract__label { grid-column: 1; }
+sona-contract[layout="stacked"] .sona-contract__address { grid-column: 1; }
+sona-contract[layout="stacked"] .sona-contract__icons { grid-column: 2; grid-row: 1 / 3; }
+sona-contract[variant="compact"] .sona-contract__address { white-space: nowrap; }
+.sona-contract__status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.sona-contract__manual {
+  display: grid;
+  gap: 6px;
+  padding-top: 10px;
+  color: var(--sona-contract-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.sona-contract__manual[hidden] { display: none; }
+.sona-contract__selection {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 58px;
+  padding: 8px 10px;
+  border: 1px solid var(--sona-contract-line);
+  border-radius: 6px;
+  background: var(--sona-contract-surface);
+  color: var(--sona-contract-ink);
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+  resize: vertical;
+}
+@media (max-width: 560px) {
+  sona-contract:not([variant="compact"]) .sona-contract__button {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 17px;
+    gap: 4px 12px;
+  }
+  sona-contract:not([variant="compact"]) .sona-contract__label { grid-column: 1; }
+  sona-contract:not([variant="compact"]) .sona-contract__address { grid-column: 1; }
+  sona-contract:not([variant="compact"]) .sona-contract__icons { grid-column: 2; grid-row: 1 / 3; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sona-contract__button { transition: none; }
+}

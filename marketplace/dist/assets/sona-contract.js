@@ -1,6 +1,6 @@
 /* A single, exact contract address shared by every Sona copy control. */
 (() => {
-  const address = 'XXLrHxzRkrSrwfQWrLDKjKw2Y2AtnbyUyQdfjgCpump';
+  const address = 'e82MfB9hRVzCJqwoZCzziPseqXEUHerMKt4MHJCpump';
   const copyIcon = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M15.5 4H6.5A2.5 2.5 0 0 0 4 6.5v9"/></svg>';
   const checkIcon = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg>';
 
